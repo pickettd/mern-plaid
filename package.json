@@ -25,5 +25,8 @@
     "passport-jwt": "^4.0.0",
     "plaid": "^2.10.0",
     "validator": "^10.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.1"
   }
 }
