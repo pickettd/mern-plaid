@@ -111,9 +111,9 @@ class Accounts extends Component {
                 "btn btn-large waves-effect waves-light hoverable blue accent-3 main-btn"
             }}
             plaidLinkProps={{
-              clientName: "YOUR_APP_NAME",
-              key: "YOUR_PUBLIC_KEY",
-              env: "sandbox",
+              clientName: process.env.REACT_APP_NAME,
+              key: process.env.PLAID_PUBLIC_KEY,
+              env: process.env.PLAID_ENV_STRING,
               product: ["transactions"],
               onSuccess: this.handleOnSuccess
             }}

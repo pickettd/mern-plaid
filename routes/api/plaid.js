@@ -9,15 +9,27 @@ const mongoose = require("mongoose");
 const Account = require("../../models/Account");
 const User = require("../../models/User");
 
-const PLAID_CLIENT_ID = "YOUR_CLIENT_ID";
-const PLAID_SECRET = "YOUR_SECRET";
-const PLAID_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
+const PLAID_SECRET = process.env.PLAID_SECRET;
+const PLAID_PUBLIC_KEY = process.env.PLAID_PUBLIC_KEY;
+const PLAID_ENV_STRING = process.env.PLAID_ENV_STRING || "sandbox";
+
+var PLAID_ENVIRONMENT = null;
+if (PLAID_ENV_STRING == "production") {
+  PLAID_ENVIRONMENT = plaid.environments.production;
+}
+else if (PLAID_ENV_STRING == "development") {
+  PLAID_ENVIRONMENT = plaid.environments.development;
+}
+else {
+  PLAID_ENVIRONMENT = plaid.environments.sandbox;
+}
 
 const client = new plaid.Client(
   PLAID_CLIENT_ID,
   PLAID_SECRET,
   PLAID_PUBLIC_KEY,
-  plaid.environments.sandbox,
+  PLAID_ENVIRONMENT,
   { version: "2018-05-22" }
 );
 
