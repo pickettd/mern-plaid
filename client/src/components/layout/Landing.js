@@ -24,8 +24,8 @@ class Landing extends Component {
               alt="Undraw"
             />
             <h4 className="flow-text">
-              <b>Build</b> a personal banking web app with Plaid and the{" "}
-              <span style={{ fontFamily: "monospace" }}>MERN</span> stack
+              <b>Organize</b> your financial transactions with{" "}
+              <span style={{ fontFamily: "monospace" }}>{process.env.REACT_APP_NAME}</span>
             </h4>
             <br />
             <div className="col s6">
