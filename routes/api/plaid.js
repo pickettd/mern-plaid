@@ -11,8 +11,8 @@ const User = require("../../models/User");
 
 const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
 const PLAID_SECRET = process.env.PLAID_SECRET;
-const PLAID_PUBLIC_KEY = process.env.PLAID_PUBLIC_KEY;
-const PLAID_ENV_STRING = process.env.PLAID_ENV_STRING || "sandbox";
+const PLAID_PUBLIC_KEY = process.env.REACT_APP_PLAID_PUBLIC_KEY;
+const PLAID_ENV_STRING = process.env.REACT_APP_PLAID_ENV_STRING || "sandbox";
 
 var PLAID_ENVIRONMENT = null;
 if (PLAID_ENV_STRING == "production") {
