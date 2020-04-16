@@ -8,10 +8,8 @@ services:
   install:
     extends:
       service: base
-    command: yarn add
-    command: yarn install
-    command: yarn add --prefix client
-    command: yarn install --prefix client
+    command: npm install
+    command: npm install --prefix client
   build:
     extends:
       service: base
