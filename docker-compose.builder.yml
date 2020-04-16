@@ -13,4 +13,4 @@ services:
   build:
     extends:
       service: base
-    command: yarn run build --prefix client
+    command: npm run build
