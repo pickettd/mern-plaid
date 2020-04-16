@@ -1,0 +1,18 @@
+version: '2'
+services:
+  base:
+    image: node:10
+    volumes:
+      - .:/home/node/app
+    working_dir: /home/node/app
+  install:
+    extends:
+      service: base
+    command: yarn add
+    command: yarn install
+    command: yarn add --prefix client
+    command: yarn install --prefix client
+  build:
+    extends:
+      service: base
+    command: yarn run build --prefix client
