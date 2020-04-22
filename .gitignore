@@ -1,3 +1,5 @@
 /node_modules
 package-lock.json
 .vagrant
+client/build
+client/node_modules
