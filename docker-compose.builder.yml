@@ -8,8 +8,7 @@ services:
   install:
     extends:
       service: base
-    command: npm install
-    command: npm install --prefix client
+    command: npm run client-install
   build:
     extends:
       service: base
