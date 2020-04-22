@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.0.1",
+    "@material-ui/icons": "^4.0.1",
     "canvas": "^2.5.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
     "material-table": "^1.9.0",
+    "mui-datatables": "^2.14.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

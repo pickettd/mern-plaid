@@ -8,7 +8,8 @@ import {
   deleteAccount
 } from "../../actions/accountActions";
 import { logoutUser } from "../../actions/authActions";
-import MaterialTable from "material-table"; // https://mbrn.github.io/material-table/#/
+//import MaterialTable from "material-table"; // https://mbrn.github.io/material-table/#/
+import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
 
 class Accounts extends Component {
   componentDidMount() {
@@ -62,13 +63,26 @@ class Accounts extends Component {
     ));
 
     // Setting up data table
-    const transactionsColumns = [
+    /*const transactionsColumns = [
       { title: "Account", field: "account" },
       { title: "Date", field: "date", type: "date", defaultSort: "desc" },
       { title: "Name", field: "name" },
       { title: "Amount", field: "amount", type: "numeric" },
       { title: "Category", field: "category" }
+    ];*/
+
+    // Setting up mui table
+    const transactionMUIColumns = [
+      { label: "Account", name: "account" },
+      { label: "Date", name: "date", type: "date", defaultSort: "desc" },
+      { label: "Name", name: "name" },
+      { label: "Amount", name: "amount", type: "numeric" },
+      { label: "Category", name: "category" }
     ];
+    const optionsMUI = {
+      filterType: 'checkbox',
+      selectableRows: 'none'
+    };
 
     let transactionsData = [];
     transactions.forEach(function(account) {
@@ -139,11 +153,17 @@ class Accounts extends Component {
                 )}
                 from the past 30 days
               </p>
-              <MaterialTable
+              <MUIDataTable
+                title={"Search Transactions"}
+                data={transactionsData}
+                columns={transactionMUIColumns}
+                options={optionsMUI}
+              />
+              {/*<MaterialTable
                 columns={transactionsColumns}
                 data={transactionsData}
                 title="Search Transactions"
-              />
+              />*/}
             </>
           )}
         </div>
