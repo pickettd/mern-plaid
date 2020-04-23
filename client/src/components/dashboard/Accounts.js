@@ -74,9 +74,9 @@ class Accounts extends Component {
     // Setting up mui table
     const transactionMUIColumns = [
       { label: "Account", name: "account" },
-      { label: "Date", name: "date", type: "date", defaultSort: "desc" },
+      { label: "Date", name: "date", options: {sortDirection: "desc"} },
       { label: "Name", name: "name" },
-      { label: "Amount", name: "amount", type: "numeric" },
+      { label: "Amount", name: "amount"},
       { label: "Category", name: "category" }
     ];
     const optionsMUI = {
