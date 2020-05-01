@@ -34,11 +34,15 @@ export const loginUser = userData => dispatch => {
       // Set current user
       dispatch(setCurrentUser(decoded));
     })
-    .catch(err =>
+    .catch(err => {
+      let toSend = err;
+      if (err.response) {
+         toSend = err.response.data;
+      }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
-      })
+        payload: toSend
+      })}
     );
 };
 
