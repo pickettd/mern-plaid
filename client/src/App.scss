@@ -24,3 +24,85 @@
     transform: translatey(0px);
   }
 }
+.navbar-fixed{
+  margin-bottom:1.5em;
+}
+nav .brand-logo {
+   font-weight:900;
+  font-size:1.5rem;
+}
+button.logout{
+    position: absolute;
+    right: 0;
+    z-index: 9999999;
+  top:1em;
+  color:#fff;
+}
+.container.header-elements{
+    position: fixed;
+    top: 0;
+    z-index: 999;
+}
+h4.greeting{
+    float: right;
+    margin-right: 7rem;
+    font-size: 1em;
+    color: #fff;
+}
+
+.bank-accounts ul button{
+  width:1.5em;
+  height:1.5em;
+  i.material-icons{
+    display:block;
+    line-height:1.5em;
+    font-size:1.1em;
+  }
+}
+
+
+.App {
+  tr.MuiTableRow-root:nth-child(odd) {
+    background: #e3f2fd;
+}
+  .MuiTypography-root{
+    font-family:'Open Sans' !important;
+  }
+    .MuiTableCell-root{
+      font-family:'Open Sans' !important;
+    }
+  tr.MuiTableRow-root{
+  border-bottom:1px solid #fff;
+  .MuiTableCell-root{
+    border-bottom:1px solid #fff;
+  }
+}
+  .MuiPaper-elevation4 {
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0), 0px 4px 5px 0px rgba(0,0,0,0), 0px 1px 10px 0px rgba(0,0,0,0);
+}
+
+.MuiTableRow-root.MuiTableRow-hover:hover {
+    background-color: inherit;
+  }
+  .MuiTablePagination-root:last-child {
+    padding: 0;
+    background: #fff;
+}
+}
+button.btn-flat.waves-effect.waves-light.hoverable.add-account.main-btn {
+    text-transform: none;
+    font-weight: 900;
+    color: #0D47A1;
+    font-size: .7em;
+    text-align: left;
+    margin-top: -1em;
+}
+.col.s12.full-width {
+    margin-bottom: 1em;
+  .btn{
+    width:100%;
+  }
+}
+p.helper{
+  margin-top:-.5em;
+}

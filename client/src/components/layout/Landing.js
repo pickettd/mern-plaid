@@ -16,7 +16,7 @@ class Landing extends Component {
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
-          <div className="col s12 center-align">
+          <div className="col s6 offset-s3 center-align">
             <img
               src={credit_card}
               style={{ width: "350px" }}
@@ -28,11 +28,10 @@ class Landing extends Component {
               <span style={{ fontFamily: "monospace" }}>{process.env.REACT_APP_NAME}</span>
             </h4>
             <br />
-            <div className="col s6">
+            <div className="col s12 full-width">
               <Link
                 to="/register"
                 style={{
-                  width: "140px",
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}
@@ -41,11 +40,10 @@ class Landing extends Component {
                 Register
               </Link>
             </div>
-            <div className="col s6">
+            <div className="col s12">
               <Link
                 to="/login"
                 style={{
-                  width: "140px",
                   borderRadius: "3px",
                   letterSpacing: "1.5px"
                 }}

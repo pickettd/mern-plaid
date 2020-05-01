@@ -46,7 +46,7 @@ class Dashboard extends Component {
         <div className="row">
           <div className="col s12 center-align">
             <h4>
-              <b>Welcome,</b> {user.name.split(" ")[0]}
+              <b>Aloha {user.name.split(" ")[0]}</b>
             </h4>
             <p className="flow-text grey-text text-darken-1">
               To get started, link your first bank account below
@@ -71,7 +71,7 @@ class Dashboard extends Component {
             </div>
             <button
               onClick={this.onLogoutClick}
-              className="btn btn-large waves-effect waves-light hoverable red accent-3 main-btn"
+              className="btn-flat waves-effect"
             >
               Logout
             </button>
