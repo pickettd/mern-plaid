@@ -10,6 +10,14 @@ import {
 import { logoutUser } from "../../actions/authActions";
 //import MaterialTable from "material-table"; // https://mbrn.github.io/material-table/#/
 import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
+import {
+  VictoryBar,
+  VictoryPie,
+  VictoryChart,
+  VictoryAxis,
+  VictoryTheme,
+  VictoryLegend
+} from "victory"; // https://formidable.com/open-source/victory/docs/
 
 class Accounts extends Component {
   componentDidMount() {
@@ -72,34 +80,69 @@ class Accounts extends Component {
     ];*/
     // Setting up mui table
     const transactionMUIColumns = [
+      { label: "Date", name: "date", options: { sortDirection: "desc" } },
       { label: "Account", name: "account" },
-      { label: "Date", name: "date", options: {sortDirection: "desc"} },
       { label: "Name", name: "name" },
-      { label: "Amount", name: "amount"},
+      { label: "Amount", name: "amount" },
       { label: "Category", name: "category" }
     ];
     const optionsMUI = {
-      filterType: 'checkbox',
-      selectableRows: 'none'
+      filterType: "checkbox",
+      selectableRows: "none"
     };
+    const currencyFormatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2
+    });
+
+    let profit = 0;
+    let income = 0;
+    let spending = 0;
+    let spendingByCategory = {};
+    let categoriesThisMonth = [];
+    let categoryCount = 1;
 
     let transactionsData = [];
     transactions.forEach(function(account) {
       account.transactions.forEach(function(transaction) {
+        // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
+        transaction.amount *= -1;
+
+        profit += transaction.amount;
+        if (transaction.amount < 0) {
+          spending += -1 * transaction.amount;
+
+          if (spendingByCategory[transaction.category[0]]) {
+            spendingByCategory[transaction.category[0]] +=
+              -1 * transaction.amount;
+          } else {
+            categoriesThisMonth.push({
+              x: categoryCount,
+              label: transaction.category[0]
+            });
+            categoryCount++;
+            spendingByCategory[transaction.category[0]] =
+              -1 * transaction.amount;
+          }
+        } else {
+          income += transaction.amount;
+        }
+
         transactionsData.push({
           account: account.accountName,
           date: transaction.date,
           category: transaction.category[0],
           name: transaction.name,
-          amount: transaction.amount
+          amount: currencyFormatter.format(transaction.amount)
         });
       });
     });
 
     return (
       <div>
-        <div class="container header-elements">
-          <h4 class="greeting">
+        <div className="container header-elements">
+          <h4 className="greeting">
             <b>Aloha {user.name.split(" ")[0]}</b>
           </h4>
           <button
@@ -110,40 +153,65 @@ class Accounts extends Component {
           </button>
         </div>
         <div className="row">
-          <div className="col s12">
-            <h5>
+          <h2>
+            <b>Transactions</b>
+          </h2>
+          <div className="col s8">
+            {/*<h5 className="numbers">$1,800</h5>*/}
+            <h5 className="numbers">{currencyFormatter.format(profit)}</h5>
+            <p className="grey-text text-darken-1 helper">Profit this month</p>
+            <div className="row">
+              <div className="col s6 income">
+                {/*<h5 className="numbers">$2,350</h5>*/}
+                <h5 className="numbers">{currencyFormatter.format(income)}</h5>
+                <p className="grey-text text-darken-1 helper">Income</p>
+              </div>
+              <div className="col s6 spending">
+                {/*<h5 className="numbers">$550</h5>*/}
+                <h5 className="numbers">
+                  {currencyFormatter.format(spending)}
+                </h5>
+                <p className="grey-text text-darken-1 helper">Spending</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="col s4">
+            <h5 className="small">
               <b>Linked Accounts</b>
             </h5>
             <p className="grey-text text-darken-1 helper">
               Add or remove your bank accounts below
             </p>
-            <div class="row">
-              <div class="col s6 bank-accounts">
-            <ul>{accountItems}</ul>
-            <PlaidLinkButton
-              buttonProps={{
-                className:
-                  "btn-flat waves-effect waves-light hoverable add-account main-btn"
-              }}
-              plaidLinkProps={{
-                clientName: process.env.REACT_APP_NAME,
-                key: process.env.REACT_APP_PLAID_PUBLIC_KEY,
-                env: process.env.REACT_APP_PLAID_ENV_STRING,
-                product: ["transactions"],
-                onSuccess: this.handleOnSuccess
-              }}
-              onScriptLoad={() => this.setState({ loaded: true })}
-            >
-              + Add Account
-            </PlaidLinkButton>
+            <div className="row">
+              <div className="col s6 bank-accounts">
+                <ul>{accountItems}</ul>
+                <PlaidLinkButton
+                  buttonProps={{
+                    className:
+                      "btn-flat waves-effect waves-light hoverable add-account main-btn"
+                  }}
+                  plaidLinkProps={{
+                    clientName: process.env.REACT_APP_NAME,
+                    key: process.env.REACT_APP_PLAID_PUBLIC_KEY,
+                    env: process.env.REACT_APP_PLAID_ENV_STRING,
+                    product: ["transactions"],
+                    onSuccess: this.handleOnSuccess
+                  }}
+                  onScriptLoad={() => this.setState({ loaded: true })}
+                >
+                  + Add Account
+                </PlaidLinkButton>
               </div>
             </div>
-              <hr style={{ marginTop: "2rem", opacity: "0" }} />
-            <h5>
-              <b>Transactions</b>
-            </h5>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s12">
             {transactionsLoading ? (
-              <p className="grey-text text-darken-1">Fetching transactions...</p>
+              <p className="grey-text text-darken-1">
+                Fetching transactions...
+              </p>
             ) : (
               <>
                 <p className="grey-text text-darken-1 helper">
@@ -169,6 +237,35 @@ class Accounts extends Component {
                 />*/}
               </>
             )}
+            <h5>
+              <b>Charts</b>
+            </h5>
+            {/*<VictoryChart domainPadding={20} theme={VictoryTheme.material}>
+              <VictoryBar />
+            </VictoryChart>*/}
+            <VictoryPie
+              theme={VictoryTheme.material}
+              colorScale={[
+                "#e3f2fd",
+                "#90caf9",
+                "#42a5f5",
+                "#1e88e5",
+                "#1565c0",
+                "#0d47a1",
+                "#448aff",
+                "#2962ff"
+              ]}
+              data={categoriesThisMonth}
+              y={d => spendingByCategory[d.label]}
+            />
+            {/*<VictoryLegend
+              theme={VictoryTheme.material}
+              orientation="horizontal"
+              itemsPerRow={4}
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
+              data={categoriesThisMonth}
+            />*/}
           </div>
         </div>
       </div>
