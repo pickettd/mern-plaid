@@ -63,8 +63,12 @@ h4.greeting{
 
 .App {
   tr.MuiTableRow-root:nth-child(odd) {
-    background: #e3f2fd;
 }
+  th{
+    font-weight:bold;
+    font-size:.7rem;
+    padding-bottom:0;
+  }
   .MuiTypography-root{
     font-family:'Open Sans' !important;
   }
@@ -72,9 +76,10 @@ h4.greeting{
       font-family:'Open Sans' !important;
     }
   tr.MuiTableRow-root{
-  border-bottom:1px solid #fff;
+  border-bottom:1px solid #D4D7D3;
   .MuiTableCell-root{
-    border-bottom:1px solid #fff;
+    border-bottom:1px solid #D4D7D3;
+    padding:1em;
   }
 }
   .MuiPaper-elevation4 {
@@ -82,7 +87,7 @@ h4.greeting{
 }
 
 .MuiTableRow-root.MuiTableRow-hover:hover {
-    background-color: inherit;
+    background-color: #e3f2fd;
   }
   .MuiTablePagination-root:last-child {
     padding: 0;
@@ -105,4 +110,26 @@ button.btn-flat.waves-effect.waves-light.hoverable.add-account.main-btn {
 }
 p.helper{
   margin-top:-.5em;
+}
+h5.numbers{
+  font-weight:900;
+}
+h5.small{
+  font-size:1em;
+}
+.income{
+  border-left:.5em solid #2196f3;
+  text-align:left;
+  h5{
+    margin-top:0;
+  }
+  p{margin-bottom:0;}
+}
+.spending{
+  border-left:.5em solid #0d47a1;
+  text-align:left;
+  h5{
+    margin-top:0;
+  }
+  p{margin-bottom:0;}
 }

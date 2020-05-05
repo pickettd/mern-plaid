@@ -207,6 +207,46 @@ class Accounts extends Component {
           </div>
         </div>
         <div className="row">
+          <div className="col s8">
+            <h5>
+              <b>Spending per Category</b>
+            </h5>
+
+            <VictoryPie
+              theme={VictoryTheme.material}
+              colorScale={[
+                "#e3f2fd",
+                "#90caf9",
+                "#42a5f5",
+                "#1e88e5",
+                "#1565c0",
+                "#0d47a1",
+                "#448aff",
+                "#2962ff"
+              ]}
+              style={{ labels: { fontSize: 8 } }}
+              data={categoriesThisMonth}
+              y={d => spendingByCategory[d.label]}
+            />
+            {/*<VictoryLegend
+              theme={VictoryTheme.material}
+              orientation="horizontal"
+              itemsPerRow={4}
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
+              data={categoriesThisMonth}
+            />*/}
+          </div>
+          <div className="col s4">
+            <h5>
+              <b>Spending Chart</b>
+            </h5>
+            <VictoryChart domainPadding={20} theme={VictoryTheme.material}>
+              <VictoryBar />
+            </VictoryChart>
+          </div>
+        </div>
+        <div className="row">
           <div className="col s12">
             {transactionsLoading ? (
               <p className="grey-text text-darken-1">
@@ -215,7 +255,8 @@ class Accounts extends Component {
             ) : (
               <>
                 <p className="grey-text text-darken-1 helper">
-                  You have <b>{transactionsData.length}</b> transactions from your
+                  You have <b>{transactionsData.length}</b> transactions from
+                  your
                   <b> {accounts.length}</b> linked
                   {accounts.length > 1 ? (
                     <span> accounts </span>
@@ -237,35 +278,6 @@ class Accounts extends Component {
                 />*/}
               </>
             )}
-            <h5>
-              <b>Charts</b>
-            </h5>
-            {/*<VictoryChart domainPadding={20} theme={VictoryTheme.material}>
-              <VictoryBar />
-            </VictoryChart>*/}
-            <VictoryPie
-              theme={VictoryTheme.material}
-              colorScale={[
-                "#e3f2fd",
-                "#90caf9",
-                "#42a5f5",
-                "#1e88e5",
-                "#1565c0",
-                "#0d47a1",
-                "#448aff",
-                "#2962ff"
-              ]}
-              data={categoriesThisMonth}
-              y={d => spendingByCategory[d.label]}
-            />
-            {/*<VictoryLegend
-              theme={VictoryTheme.material}
-              orientation="horizontal"
-              itemsPerRow={4}
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
-              data={categoriesThisMonth}
-            />*/}
           </div>
         </div>
       </div>
