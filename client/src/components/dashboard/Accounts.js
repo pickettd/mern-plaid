@@ -136,7 +136,6 @@ class Accounts extends Component {
             // This is the case that the category hasn't been seen before
             categoriesThisMonth.push({
               x: categoryCount,
-              label: transaction.category[0],
               name: transaction.category[0]
             });
             categoryCount++;
@@ -255,17 +254,18 @@ class Accounts extends Component {
                 <h5 className="small">
                   <b>Category</b>
                 </h5>
-
                 <VictoryPie
                   theme={VictoryTheme.material}
                   labelRadius={({ radius }) => radius + 15}
                   colorScale={pieChartColorScale}
                   style={{ labels: { fontSize: 8 } }}
                   data={categoriesThisMonth}
-                  y={d => spendingByCategory[d.label]}
+                  labels={({ datum }) => datum.name}
+                  y={datum => spendingByCategory[datum.name]}
                 />
                 <VictoryLegend
                   theme={VictoryTheme.material}
+                  height={100}
                   colorScale={pieChartColorScale}
                   orientation="horizontal"
                   itemsPerRow={4}
