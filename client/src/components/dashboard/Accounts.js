@@ -108,16 +108,6 @@ class Accounts extends Component {
     const datesLastThirty = [];
     const dateNow = new Date();
 
-    for (let a = 30; a > 0; a--) {
-      let insertDate = new Date(Number(dateNow));
-      insertDate.setDate(insertDate.getDate() - a);
-      //datesLastThirty.push(insertDate);
-      datesLastThirty.push({
-        x: moment(insertDate).format("MM-DD"),
-        y: Math.floor(Math.random() * Math.floor(100))
-      });
-    }
-
     let transactionsData = [];
     transactions.forEach(function(account) {
       account.transactions.forEach(function(transaction) {
@@ -128,16 +118,28 @@ class Accounts extends Component {
         if (transaction.amount < 0) {
           spending += -1 * transaction.amount;
 
+          // This if/else sets up the spending category object with category as key and amount total as value
           if (spendingByCategory[transaction.category[0]]) {
             spendingByCategory[transaction.category[0]] +=
               -1 * transaction.amount;
           } else {
+            // This is the case that the category hasn't been seen before
             categoriesThisMonth.push({
               x: categoryCount,
               label: transaction.category[0]
             });
             categoryCount++;
             spendingByCategory[transaction.category[0]] =
+              -1 * transaction.amount;
+          }
+
+          // This if/else sets up the spending date object with date as key and amount total as value
+          if (spendingByDate[transaction.date]) {
+            spendingByDate[transaction.date] +=
+              -1 * transaction.amount;
+          } else {
+            // This is the case that the date hasn't been seen before
+            spendingByDate[transaction.date] =
               -1 * transaction.amount;
           }
         } else {
@@ -153,6 +155,20 @@ class Accounts extends Component {
         });
       });
     });
+
+    for (let a = 30; a > 0; a--) {
+      let insertDate = new Date(Number(dateNow));
+      insertDate.setDate(insertDate.getDate() - a);
+      let momentDate = moment(insertDate);
+      let setDateSpend = 0;
+      if (spendingByDate[momentDate.format("YYYY-MM-DD")]) {
+        setDateSpend = spendingByDate[momentDate.format("YYYY-MM-DD")];
+      }
+      datesLastThirty.push({
+        x: momentDate.format("MM-DD"),
+        y: setDateSpend
+      });
+    }
 
     return (
       <div>
@@ -267,6 +283,7 @@ class Accounts extends Component {
               />*/}
               <VictoryAxis
                 style={{ tickLabels: { angle: -60 } }}
+                fixLabelOverlap={true}
               />
               <VictoryAxis dependentAxis tickFormat={(tick) => `$${Math.round(tick)}`}/>
               <VictoryArea
