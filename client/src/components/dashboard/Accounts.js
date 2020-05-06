@@ -107,6 +107,16 @@ class Accounts extends Component {
     const spendingByDate = {};
     const datesLastThirty = [];
     const dateNow = new Date();
+    const pieChartColorScale = [
+      "#e3f2fd",
+      "#90caf9",
+      "#42a5f5",
+      "#1e88e5",
+      "#1565c0",
+      "#0d47a1",
+      "#448aff",
+      "#2962ff"
+    ];
 
     let transactionsData = [];
     transactions.forEach(function(account) {
@@ -126,7 +136,8 @@ class Accounts extends Component {
             // This is the case that the category hasn't been seen before
             categoriesThisMonth.push({
               x: categoryCount,
-              label: transaction.category[0]
+              label: transaction.category[0],
+              name: transaction.category[0]
             });
             categoryCount++;
             spendingByCategory[transaction.category[0]] =
@@ -135,12 +146,10 @@ class Accounts extends Component {
 
           // This if/else sets up the spending date object with date as key and amount total as value
           if (spendingByDate[transaction.date]) {
-            spendingByDate[transaction.date] +=
-              -1 * transaction.amount;
+            spendingByDate[transaction.date] += -1 * transaction.amount;
           } else {
             // This is the case that the date hasn't been seen before
-            spendingByDate[transaction.date] =
-              -1 * transaction.amount;
+            spendingByDate[transaction.date] = -1 * transaction.amount;
           }
         } else {
           income += transaction.amount;
@@ -245,37 +254,30 @@ class Accounts extends Component {
 
             <VictoryPie
               theme={VictoryTheme.material}
-              colorScale={[
-                "#e3f2fd",
-                "#90caf9",
-                "#42a5f5",
-                "#1e88e5",
-                "#1565c0",
-                "#0d47a1",
-                "#448aff",
-                "#2962ff"
-              ]}
+              labelRadius={({ radius }) => radius + 15}
+              colorScale={pieChartColorScale}
               style={{ labels: { fontSize: 8 } }}
               data={categoriesThisMonth}
               y={d => spendingByCategory[d.label]}
             />
-            {/*<VictoryLegend
+            <VictoryLegend
               theme={VictoryTheme.material}
+              colorScale={pieChartColorScale}
               orientation="horizontal"
               itemsPerRow={4}
               gutter={20}
-              style={{ border: { stroke: "black" }, title: {fontSize: 20 } }}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
               data={categoriesThisMonth}
-            />*/}
+            />
           </div>
           <div className="col s6">
             <h5 className="small">
               <b>Day</b>
             </h5>
             <VictoryChart
-            domainPadding={20}
-            theme={VictoryTheme.material}
-            padding={{ left: 50, top: 50, right: 10, bottom: 50 }}
+              domainPadding={20}
+              theme={VictoryTheme.material}
+              padding={{ left: 50, top: 50, right: 10, bottom: 50 }}
             >
               {/*<VictoryBar
                 data={datesLastThirty}
@@ -285,7 +287,10 @@ class Accounts extends Component {
                 style={{ tickLabels: { angle: -60 } }}
                 fixLabelOverlap={true}
               />
-              <VictoryAxis dependentAxis tickFormat={(tick) => `$${Math.round(tick)}`}/>
+              <VictoryAxis
+                dependentAxis
+                tickFormat={tick => `$${Math.round(tick)}`}
+              />
               <VictoryArea
                 style={{ data: { fill: "#2962ff" } }}
                 data={datesLastThirty}
