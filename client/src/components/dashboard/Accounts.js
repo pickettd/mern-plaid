@@ -247,63 +247,70 @@ class Accounts extends Component {
           </div>
         </div>
         <div className="row">
-          <div className="col s6">
-            <h5 className="small">
-              <b>Category</b>
-            </h5>
+          {transactionsLoading ? (
+            <p className="grey-text text-darken-1">Fetching transactions...</p>
+          ) : (
+            <>
+              <div className="col s6">
+                <h5 className="small">
+                  <b>Category</b>
+                </h5>
 
-            <VictoryPie
-              theme={VictoryTheme.material}
-              labelRadius={({ radius }) => radius + 15}
-              colorScale={pieChartColorScale}
-              style={{ labels: { fontSize: 8 } }}
-              data={categoriesThisMonth}
-              y={d => spendingByCategory[d.label]}
-            />
-            <VictoryLegend
-              theme={VictoryTheme.material}
-              colorScale={pieChartColorScale}
-              orientation="horizontal"
-              itemsPerRow={4}
-              gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
-              data={categoriesThisMonth}
-            />
-          </div>
-          <div className="col s6">
-            <h5 className="small">
-              <b>Day</b>
-            </h5>
-            <VictoryChart
-              domainPadding={20}
-              theme={VictoryTheme.material}
-              padding={{ left: 50, top: 50, right: 10, bottom: 50 }}
-            >
-              {/*<VictoryBar
-                data={datesLastThirty}
-                horizontal={true}
-              />*/}
-              <VictoryAxis
-                style={{ tickLabels: { angle: -60 } }}
-                fixLabelOverlap={true}
-              />
-              <VictoryAxis
-                dependentAxis
-                tickFormat={tick => `$${Math.round(tick)}`}
-              />
-              <VictoryArea
-                style={{ data: { fill: "#2962ff" } }}
-                data={datesLastThirty}
-              />
-            </VictoryChart>
-          </div>
+                <VictoryPie
+                  theme={VictoryTheme.material}
+                  labelRadius={({ radius }) => radius + 15}
+                  colorScale={pieChartColorScale}
+                  style={{ labels: { fontSize: 8 } }}
+                  data={categoriesThisMonth}
+                  y={d => spendingByCategory[d.label]}
+                />
+                <VictoryLegend
+                  theme={VictoryTheme.material}
+                  colorScale={pieChartColorScale}
+                  orientation="horizontal"
+                  itemsPerRow={4}
+                  gutter={20}
+                  style={{
+                    border: { stroke: "black" },
+                    title: { fontSize: 20 }
+                  }}
+                  data={categoriesThisMonth}
+                />
+              </div>
+              <div className="col s6">
+                <h5 className="small">
+                  <b>Day</b>
+                </h5>
+                <VictoryChart
+                  domainPadding={20}
+                  theme={VictoryTheme.material}
+                  padding={{ left: 50, top: 50, right: 10, bottom: 50 }}
+                >
+                  {/*<VictoryBar
+                  data={datesLastThirty}
+                  horizontal={true}
+                />*/}
+                  <VictoryAxis
+                    style={{ tickLabels: { angle: -60 } }}
+                    fixLabelOverlap={true}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    tickFormat={tick => `$${Math.round(tick)}`}
+                  />
+                  <VictoryArea
+                    style={{ data: { fill: "#2962ff" } }}
+                    data={datesLastThirty}
+                  />
+                </VictoryChart>
+              </div>
+            </>
+          )}
         </div>
         <div className="row">
           <div className="col s12">
             {transactionsLoading ? (
-              <p className="grey-text text-darken-1">
-                Fetching transactions...
-              </p>
+              <p className="grey-text text-darken-1"></p>
             ) : (
               <>
                 <p className="grey-text text-darken-1 helper">
