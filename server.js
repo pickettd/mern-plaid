@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const path = require('path');
 
 const users = require("./routes/api/users");
 const plaid = require("./routes/api/plaid");
@@ -40,6 +41,11 @@ app.use("/api/users", users);
 app.use("/api/plaid", plaid);
 
 app.use(express.static('client/build'));
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 const port = process.env.PORT || 5000;
 
