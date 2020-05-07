@@ -196,23 +196,35 @@ class Accounts extends Component {
             <b>Transactions</b>
           </h2>
           <div className="col s7">
-            {/*<h5 className="numbers">$1,800</h5>*/}
-            <h5 className="numbers">{currencyFormatter.format(profit)}</h5>
-            <p className="grey-text text-darken-1 helper">Profit this month</p>
-            <div className="row">
-              <div className="col s6 income">
-                {/*<h5 className="numbers">$2,350</h5>*/}
-                <h5 className="numbers">{currencyFormatter.format(income)}</h5>
-                <p className="grey-text text-darken-1 helper">Income</p>
-              </div>
-              <div className="col s6 spending">
-                {/*<h5 className="numbers">$550</h5>*/}
-                <h5 className="numbers">
-                  {currencyFormatter.format(spending)}
-                </h5>
-                <p className="grey-text text-darken-1 helper">Spending</p>
-              </div>
-            </div>
+            {transactionsLoading ? (
+              <p className="grey-text text-darken-1">
+                Fetching transactions...
+              </p>
+            ) : (
+              <>
+                {/*<h5 className="numbers">$1,800</h5>*/}
+                <h5 className="numbers">{currencyFormatter.format(profit)}</h5>
+                <p className="grey-text text-darken-1 helper">
+                  Profit this month
+                </p>
+                <div className="row">
+                  <div className="col s6 income">
+                    {/*<h5 className="numbers">$2,350</h5>*/}
+                    <h5 className="numbers">
+                      {currencyFormatter.format(income)}
+                    </h5>
+                    <p className="grey-text text-darken-1 helper">Income</p>
+                  </div>
+                  <div className="col s6 spending">
+                    {/*<h5 className="numbers">$550</h5>*/}
+                    <h5 className="numbers">
+                      {currencyFormatter.format(spending)}
+                    </h5>
+                    <p className="grey-text text-darken-1 helper">Spending</p>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           <div className="col s5">
@@ -247,7 +259,7 @@ class Accounts extends Component {
         </div>
         <div className="row">
           {transactionsLoading ? (
-            <p className="grey-text text-darken-1">Fetching transactions...</p>
+            <></>
           ) : (
             <>
               <div className="col s6">
@@ -310,7 +322,7 @@ class Accounts extends Component {
         <div className="row">
           <div className="col s12">
             {transactionsLoading ? (
-              <p className="grey-text text-darken-1"></p>
+              <></>
             ) : (
               <>
                 <p className="grey-text text-darken-1 helper">
