@@ -4,7 +4,7 @@
                         "FROM node:10-alpine",
                         "RUN mkdir -p /usr/src/app",
                         "WORKDIR /usr/src/app",
-                        "RUN apk update && apk add yarn python g++ make && rm -rf /var/cache/apk/*",
+                        "RUN apk update && apk add yarn python g++ make build-base && rm -rf /var/cache/apk/*",
                         "COPY ./package.json /usr/src/app/",
                         "COPY ./client/package.json /usr/src/app/client/",
                         "RUN npm run build && npm cache clean --force",
