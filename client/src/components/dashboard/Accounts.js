@@ -119,63 +119,65 @@ class Accounts extends Component {
     ];
 
     let transactionsData = [];
-    transactions.forEach(function(account) {
-      account.transactions.forEach(function(transaction) {
-        // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
-        transaction.amount *= -1;
+    if (transactions) {
+      transactions.forEach(function(account) {
+        account.transactions.forEach(function(transaction) {
+          // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
+          transaction.amount *= -1;
 
-        profit += transaction.amount;
-        if (transaction.amount < 0) {
-          spending += -1 * transaction.amount;
+          profit += transaction.amount;
+          if (transaction.amount < 0) {
+            spending += -1 * transaction.amount;
 
-          // This if/else sets up the spending category object with category as key and amount total as value
-          if (spendingByCategory[transaction.category[0]]) {
-            spendingByCategory[transaction.category[0]] +=
-              -1 * transaction.amount;
+            // This if/else sets up the spending category object with category as key and amount total as value
+            if (spendingByCategory[transaction.category[0]]) {
+              spendingByCategory[transaction.category[0]] +=
+                -1 * transaction.amount;
+            } else {
+              // This is the case that the category hasn't been seen before
+              categoriesThisMonth.push({
+                x: categoryCount,
+                name: transaction.category[0]
+              });
+              categoryCount++;
+              spendingByCategory[transaction.category[0]] =
+                -1 * transaction.amount;
+            }
+
+            // This if/else sets up the spending date object with date as key and amount total as value
+            if (spendingByDate[transaction.date]) {
+              spendingByDate[transaction.date] += -1 * transaction.amount;
+            } else {
+              // This is the case that the date hasn't been seen before
+              spendingByDate[transaction.date] = -1 * transaction.amount;
+            }
           } else {
-            // This is the case that the category hasn't been seen before
-            categoriesThisMonth.push({
-              x: categoryCount,
-              name: transaction.category[0]
-            });
-            categoryCount++;
-            spendingByCategory[transaction.category[0]] =
-              -1 * transaction.amount;
+            income += transaction.amount;
           }
 
-          // This if/else sets up the spending date object with date as key and amount total as value
-          if (spendingByDate[transaction.date]) {
-            spendingByDate[transaction.date] += -1 * transaction.amount;
-          } else {
-            // This is the case that the date hasn't been seen before
-            spendingByDate[transaction.date] = -1 * transaction.amount;
-          }
-        } else {
-          income += transaction.amount;
-        }
-
-        transactionsData.push({
-          account: account.accountName,
-          date: transaction.date,
-          category: transaction.category[0],
-          name: transaction.name,
-          amount: currencyFormatter.format(transaction.amount)
+          transactionsData.push({
+            account: account.accountName,
+            date: transaction.date,
+            category: transaction.category[0],
+            name: transaction.name,
+            amount: currencyFormatter.format(transaction.amount)
+          });
         });
       });
-    });
 
-    for (let a = 30; a > 0; a--) {
-      let insertDate = new Date(Number(dateNow));
-      insertDate.setDate(insertDate.getDate() - a);
-      let momentDate = moment(insertDate);
-      let setDateSpend = 0;
-      if (spendingByDate[momentDate.format("YYYY-MM-DD")]) {
-        setDateSpend = spendingByDate[momentDate.format("YYYY-MM-DD")];
+      for (let a = 30; a > 0; a--) {
+        let insertDate = new Date(Number(dateNow));
+        insertDate.setDate(insertDate.getDate() - a);
+        let momentDate = moment(insertDate);
+        let setDateSpend = 0;
+        if (spendingByDate[momentDate.format("YYYY-MM-DD")]) {
+          setDateSpend = spendingByDate[momentDate.format("YYYY-MM-DD")];
+        }
+        datesLastThirty.push({
+          x: momentDate.format("MM-DD"),
+          y: setDateSpend
+        });
       }
-      datesLastThirty.push({
-        x: momentDate.format("MM-DD"),
-        y: setDateSpend
-      });
     }
 
     return (
@@ -190,6 +192,43 @@ class Accounts extends Component {
           >
             Sign Out
           </button>
+        </div>
+        <div className="row">
+          <h2>
+            <b>Budgets</b>
+          </h2>
+          <div className="col s12">
+            {transactionsLoading ? (
+              <p className="grey-text text-darken-1">
+                Fetching transactions...
+              </p>
+            ) : (
+              <>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Bank category name</th>
+                      <th>My category name</th>
+                      <th>Budget for last 30 days</th>
+                      <th>Spent last 30 days</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {categoriesThisMonth.map((category, i) => {
+                      return (
+                        <tr key={i}>
+                          <td>{category.name}</td>
+                          <td><input defaultValue={category.name}></input></td>
+                          <td><input defaultValue={currencyFormatter.format(spendingByCategory[category.name])}></input></td>
+                          <td>{currencyFormatter.format(spendingByCategory[category.name])}</td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </div>
         </div>
         <div className="row">
           <h2>
