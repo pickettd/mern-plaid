@@ -215,14 +215,21 @@ class Accounts extends Component {
                   </thead>
                   <tbody>
                       {categoriesThisMonth.map((category, i) => {
-                      return (
-                        <tr key={i}>
-                          <td>{category.name}</td>
-                          <td><input defaultValue={category.name}></input></td>
-                          <td><input defaultValue={currencyFormatter.format(spendingByCategory[category.name])}></input></td>
-                          <td>{currencyFormatter.format(spendingByCategory[category.name])}</td>
-                        </tr>
-                      )
+                        if ((category.name !== 'Transfer')&&(category.name !== 'Payment')) {
+                          return (
+                            <tr key={i}>
+                              <td>{category.name}</td>
+                              <td><input defaultValue={category.name}></input></td>
+                              <td>
+                                {user.budgets[category.name] ? (
+                                  <input defaultValue={currencyFormatter.format(user.budgets[category.name])}></input>
+                                ) : (
+                                  <input defaultValue={currencyFormatter.format(spendingByCategory[category.name])}></input>
+                                )}
+                              </td>
+                              <td>{currencyFormatter.format(spendingByCategory[category.name])}</td>
+                            </tr>
+                          )}
                     })}
                   </tbody>
                 </table>
