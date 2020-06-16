@@ -18,6 +18,16 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  categoryOverrides: [{
+    pattern: String,
+    flags: String,
+    mainCategory: String,
+    subCategory: String
+  }],
+  budgets: {
+    type: Map,
+    of: Number
   }
 });
 
