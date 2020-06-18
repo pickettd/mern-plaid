@@ -209,7 +209,7 @@ class Accounts extends Component {
                     <tr>
                       <th>Bank category name</th>
                       <th>My category name</th>
-                      <th>Budget for last 30 days</th>
+                      <th>Budget for 30 days</th>
                       <th>Spent last 30 days</th>
                     </tr>
                   </thead>
@@ -219,13 +219,21 @@ class Accounts extends Component {
                           return (
                             <tr key={i}>
                               <td>{category.name}</td>
-                              <td><input defaultValue={category.name}></input></td>
                               <td>
-                                {user.budgets[category.name] ? (
+                                {(user.categoryMap) && (user.categoryMap[category.name]) ? (
+                                  <input defaultValue={user.categoryMap[category.name]}></input>
+                                ): (
+                                  <input defaultValue={category.name}></input>
+                                )}
+                                <button>Save</button>
+                              </td>
+                              <td>
+                                {(user.budgets) && (user.budgets[category.name]) ? (
                                   <input defaultValue={currencyFormatter.format(user.budgets[category.name])}></input>
                                 ) : (
                                   <input defaultValue={currencyFormatter.format(spendingByCategory[category.name])}></input>
                                 )}
+                                <button>Save</button>
                               </td>
                               <td>{currencyFormatter.format(spendingByCategory[category.name])}</td>
                             </tr>
