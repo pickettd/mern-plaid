@@ -19,12 +19,16 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  categoryOverrides: [{
+  categoryOverridePatterns: [{
     pattern: String,
     flags: String,
     mainCategory: String,
     subCategory: String
   }],
+  categoryMap: {
+    type: Map,
+    of: String
+  },
   budgets: {
     type: Map,
     of: Number

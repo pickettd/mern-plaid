@@ -81,8 +81,9 @@ router.post("/login", (req, res) => {
         const payload = {
           id: user.id,
           name: user.name,
+          categoryMap: user.categoryMap,
           budgets: user.budgets,
-          categoryOverrides: user.categoryOverrides
+          categoryOverridePatterns: user.categoryOverridePatterns
         };
         // Sign token
         jwt.sign(
