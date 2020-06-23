@@ -23,8 +23,6 @@ export default function(state = initialState, action) {
         loading: true
       };
     case SET_BUDGETS:
-      console.log("in the set-budgets reducer, payload is")
-      console.log(action.payload);
       return {
         ...state,
         budgets: action.payload
