@@ -27,9 +27,9 @@ export const saveUserBudget = budgetData => dispatch => {
       if (localStorage.allBudgets) {
         allBudgets = JSON.parse(localStorage.allBudgets);
       }
-      allBudgets[userid] = res.data;
+      allBudgets[res.data.userId] = res.data.budgets;
       localStorage.allBudgets = JSON.stringify(allBudgets);
-      dispatch(setCurrentBudgets(res.data));
+      dispatch(setCurrentBudgets(allBudgets[userid]));
     })
     .catch(err => {
       let toSend = err;

@@ -132,7 +132,7 @@ router.post("/budgets",
     User.findById(userId).then(user => {
       user.budgets.set(budgetName,budgetAmount);
       user.save().then(user => {
-        res.json(user.budgets);
+        res.json({userId: userId, budgets: user.budgets});
       }).catch(err => {console.log(err);});
     })
 });
