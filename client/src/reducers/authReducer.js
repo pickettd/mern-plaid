@@ -1,11 +1,12 @@
-import { SET_CURRENT_USER, USER_LOADING } from "../actions/types";
+import { SET_CURRENT_USER, USER_LOADING, GET_BUDGETS, SET_BUDGETS } from "../actions/types";
 
 const isEmpty = require("is-empty");
 
 const initialState = {
   isAuthenticated: false,
   user: {},
-  loading: false
+  loading: false,
+  budgets: {}
 };
 
 export default function(state = initialState, action) {
@@ -20,6 +21,13 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: true
+      };
+    case SET_BUDGETS:
+      console.log("in the set-budgets reducer, payload is")
+      console.log(action.payload);
+      return {
+        ...state,
+        budgets: action.payload
       };
     default:
       return state;
