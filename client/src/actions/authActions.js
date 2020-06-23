@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, SET_BUDGETS } from "./types";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -16,6 +16,32 @@ export const registerUser = (userData, history) => dispatch => {
       })
     );
 };
+
+export const saveUserBudget = budgetData => dispatch => {
+  console.log(budgetData);
+  const userid = budgetData.userid;
+  axios
+    .post(`/api/users/budgets`, budgetData)
+    .then(res => {
+      let allBudgets = {};
+      if (localStorage.allBudgets) {
+        allBudgets = JSON.parse(localStorage.allBudgets);
+      }
+      allBudgets[userid] = res.data;
+      localStorage.allBudgets = JSON.stringify(allBudgets);
+      dispatch(setCurrentBudgets(res.data));
+    })
+    .catch(err => {
+      let toSend = err;
+      if (err.response) {
+         toSend = err.response.data;
+      }
+      dispatch({
+        type: GET_ERRORS,
+        payload: toSend
+      })}
+    );
+}
 
 // Login - get user token
 export const loginUser = userData => dispatch => {
@@ -31,8 +57,15 @@ export const loginUser = userData => dispatch => {
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
+      let allBudgets = {};
+      if (localStorage.allBudgets) {
+        allBudgets = JSON.parse(localStorage.allBudgets);
+      }
+      allBudgets[decoded.id] = decoded.budgets;
+      localStorage.allBudgets = JSON.stringify(allBudgets);
       // Set current user
       dispatch(setCurrentUser(decoded));
+      dispatch(setCurrentBudgets(decoded.budgets));
     })
     .catch(err => {
       let toSend = err;
@@ -51,6 +84,14 @@ export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
     payload: decoded
+  };
+};
+
+// Set logged in user budgets
+export const setCurrentBudgets = budgets => {
+  return {
+    type: SET_BUDGETS,
+    payload: budgets
   };
 };
 
