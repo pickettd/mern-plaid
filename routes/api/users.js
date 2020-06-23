@@ -8,6 +8,7 @@ const passport = require("passport");
 // Load input validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
+const validateBudgetInput = require("../../validation/budget");
 
 // Load User model
 const User = require("../../models/User");
@@ -106,6 +107,34 @@ router.post("/login", (req, res) => {
       }
     });
   });
+});
+
+// @route POST api/users/budget
+// @desc Set budget object
+// @access Public
+router.post("/budgets",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userId = req.user.id;
+    // Form validation
+
+    const { errors, isValid } = validateBudgetInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      console.log('budget request not valid');
+      return res.status(400).json(errors);
+    }
+
+    const budgetName = req.body.budgetName;
+    const budgetAmount = req.body.budgetAmount;
+
+    User.findById(userId).then(user => {
+      user.budgets.set(budgetName,budgetAmount);
+      user.save().then(user => {
+        res.json(user.budgets);
+      }).catch(err => {console.log(err);});
+    })
 });
 
 module.exports = router;
