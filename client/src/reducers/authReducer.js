@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, USER_LOADING, GET_BUDGETS, SET_BUDGETS } from "../actions/types";
+import { SET_CURRENT_USER, USER_LOADING, SET_BUDGETS } from "../actions/types";
 
 const isEmpty = require("is-empty");
 
