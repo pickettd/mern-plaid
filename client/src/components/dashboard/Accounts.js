@@ -20,6 +20,7 @@ import {
   VictoryArea
 } from "victory"; // https://formidable.com/open-source/victory/docs/
 import moment from "moment";
+import CategoryRow from "./CategoryRow"
 
 class Accounts extends Component {
   componentDidMount() {
@@ -214,31 +215,9 @@ class Accounts extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                      {categoriesThisMonth.map((category, i) => {
-                        if ((category.name !== 'Transfer')&&(category.name !== 'Payment')) {
-                          return (
-                            <tr key={i}>
-                              <td>{category.name}</td>
-                              <td>
-                                {(user.categoryMap) && (user.categoryMap[category.name]) ? (
-                                  <input defaultValue={user.categoryMap[category.name]}></input>
-                                ): (
-                                  <input defaultValue={category.name}></input>
-                                )}
-                                <button>Save</button>
-                              </td>
-                              <td>
-                                {(user.budgets) && (user.budgets[category.name]) ? (
-                                  <input defaultValue={currencyFormatter.format(user.budgets[category.name])}></input>
-                                ) : (
-                                  <input defaultValue={currencyFormatter.format(spendingByCategory[category.name])}></input>
-                                )}
-                                <button>Save</button>
-                              </td>
-                              <td>{currencyFormatter.format(spendingByCategory[category.name])}</td>
-                            </tr>
-                          )}
-                    })}
+                    {categoriesThisMonth.map((category, i) => {return (
+                      <CategoryRow key={i} category={category} categoryMap={user.categoryMap} spendingByCategory={spendingByCategory}></CategoryRow>
+                    )})}
                   </tbody>
                 </table>
               </>
