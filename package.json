@@ -7,8 +7,8 @@
     "build": "npm run client-install && npm run build --prefix client",
     "client-install": "npm install && npm install --prefix client",
     "start": "node server.js",
-    "server": "nodemon --ignore 'client/' server.js",
-    "client": "npm start --prefix client",
+    "server": "HOST=0.0.0.0 nodemon --ignore 'client/' server.js",
+    "client": "HOST=0.0.0.0 npm start --prefix client",
     "dev": "concurrently \"PORT=5000 npm run server\" \"npm run client\""
   },
   "author": "",
