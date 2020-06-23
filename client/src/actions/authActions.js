@@ -18,8 +18,6 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 export const saveUserBudget = budgetData => dispatch => {
-  console.log(budgetData);
-  const userid = budgetData.userid;
   axios
     .post(`/api/users/budgets`, budgetData)
     .then(res => {
