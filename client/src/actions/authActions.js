@@ -2,7 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, SET_BUDGETS } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, USER_LOADING, SET_BUDGETS, SET_CATEGORY_MAP } from "./types";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -40,6 +40,46 @@ export const saveUserBudget = budgetData => dispatch => {
         payload: toSend
       })}
     );
+}
+
+export const saveUserCategoryMap = catMapData => dispatch => {
+  let allCatMaps = {};
+  if (localStorage.allCatMaps) {
+    allCatMaps = JSON.parse(localStorage.allCatMaps);
+  }
+  const userId = catMapData.userId
+  if (!allCatMaps[userId]) {
+    allCatMaps[userId] = {};
+  }
+  allCatMaps[userId][catMapData.bankCategoryName] = catMapData.newCategoryName;
+
+  localStorage.allCatMaps = JSON.stringify(allCatMaps);
+  dispatch(setCurrentCategoryMap(allCatMaps[userId]));
+  //Communication with server disabled for the moment
+  /*
+  axios
+    .post(`/api/users/categories`, catMapData)
+    .then(res => {
+      let allCatMaps = {};
+      if (localStorage.allCatMaps) {
+        allCatMaps = JSON.parse(localStorage.allCatMaps);
+      }
+      const userId = res.data.userId
+      allCatMaps[userId] = res.data.categoryMap;
+      localStorage.allCatMaps = JSON.stringify(allCatMaps);
+      dispatch(setCurrentCategoryMap(allCatMaps[userId]));
+    })
+    .catch(err => {
+      let toSend = err;
+      if (err.response) {
+         toSend = err.response.data;
+      }
+      dispatch({
+        type: GET_ERRORS,
+        payload: toSend
+      })}
+    );
+    */
 }
 
 // Login - get user token
@@ -91,6 +131,14 @@ export const setCurrentBudgets = budgets => {
   return {
     type: SET_BUDGETS,
     payload: budgets
+  };
+};
+
+// Set logged in user category map
+export const setCurrentCategoryMap = categoryMap => {
+  return {
+    type: SET_CATEGORY_MAP,
+    payload: categoryMap
   };
 };
 
