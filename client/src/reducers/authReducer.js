@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER, USER_LOADING, SET_BUDGETS } from "../actions/types";
+import { SET_CURRENT_USER, USER_LOADING, SET_BUDGETS, SET_CATEGORY_MAP } from "../actions/types";
 
 const isEmpty = require("is-empty");
 
@@ -6,7 +6,8 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   loading: false,
-  budgets: {}
+  budgets: {},
+  categoryMap: {}
 };
 
 export default function(state = initialState, action) {
@@ -26,6 +27,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         budgets: action.payload
+      };
+    case SET_CATEGORY_MAP:
+      return {
+        ...state,
+        categoryMap: action.payload
       };
     default:
       return state;
