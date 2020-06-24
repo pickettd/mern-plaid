@@ -216,7 +216,7 @@ class Accounts extends Component {
                   </thead>
                   <tbody>
                     {categoriesThisMonth.map((category, i) => {return (
-                      <CategoryRow key={i} category={category} categoryMap={user.categoryMap} spendingByCategory={spendingByCategory}></CategoryRow>
+                      <CategoryRow key={i} category={category} user={user} spendingByCategory={spendingByCategory}></CategoryRow>
                     )})}
                   </tbody>
                 </table>

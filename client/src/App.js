@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-import { setCurrentUser, logoutUser, setCurrentBudgets } from "./actions/authActions";
+import { setCurrentUser, logoutUser, setCurrentBudgets, setCurrentCategoryMap } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -23,11 +23,20 @@ if (localStorage.jwtToken) {
   setAuthToken(token);
   // Decode token and get user info and exp
   const decoded = jwt_decode(token);
-  if (decoded && decoded.id && localStorage.allBudgets) {
-    const allBudgets = JSON.parse(localStorage.allBudgets);
-    if (allBudgets && allBudgets[decoded.id]) {
-      decoded.budgets = allBudgets[decoded.id];
-      store.dispatch(setCurrentBudgets(decoded.budgets));
+  if (decoded && decoded.id) {
+    if (localStorage.allBudgets) {
+      const allBudgets = JSON.parse(localStorage.allBudgets);
+      if (allBudgets && allBudgets[decoded.id]) {
+        decoded.budgets = allBudgets[decoded.id];
+        store.dispatch(setCurrentBudgets(allBudgets[decoded.id]));
+      }
+    }
+    if (localStorage.allCatMaps) {
+      const allCatMaps = JSON.parse(localStorage.allCatMaps);
+      if (allCatMaps && allCatMaps[decoded.id]) {
+        decoded.categoryMap = allCatMaps[decoded.id];
+        store.dispatch(setCurrentCategoryMap(allCatMaps[decoded.id]));
+      }
     }
   }
   // Set user and isAuthenticated
