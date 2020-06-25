@@ -201,7 +201,7 @@ class Accounts extends Component {
           <div className="col s12">
             {transactionsLoading ? (
               <p className="grey-text text-darken-1">
-                Fetching transactions...
+                Fetching budgets...
               </p>
             ) : (
               <>
