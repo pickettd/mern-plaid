@@ -123,43 +123,49 @@ class Accounts extends Component {
     if (transactions) {
       transactions.forEach(function(account) {
         account.transactions.forEach(function(transaction) {
+          let displayCategory = transaction.category[0];
+          if (user.categoryMap && user.categoryMap[transaction.category[0]]) {
+            displayCategory = user.categoryMap[transaction.category[0]];
+          }
           // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
           transaction.amount *= -1;
+          if ((transaction.category[0] !== 'Transfer')&&(transaction.category[0] !== 'Payment')) {
+            profit += transaction.amount;
+            if (transaction.amount < 0) {
+              spending += -1 * transaction.amount;
 
-          profit += transaction.amount;
-          if (transaction.amount < 0) {
-            spending += -1 * transaction.amount;
+              // This if/else sets up the spending category object with category as key and amount total as value
+              if (spendingByCategory[transaction.category[0]]) {
+                spendingByCategory[transaction.category[0]] +=
+                  -1 * transaction.amount;
+              } else {
+                // This is the case that the category hasn't been seen before
+                categoriesThisMonth.push({
+                  x: categoryCount,
+                  bankName: transaction.category[0],
+                  name: displayCategory
+                });
+                categoryCount++;
+                spendingByCategory[transaction.category[0]] =
+                  -1 * transaction.amount;
+              }
 
-            // This if/else sets up the spending category object with category as key and amount total as value
-            if (spendingByCategory[transaction.category[0]]) {
-              spendingByCategory[transaction.category[0]] +=
-                -1 * transaction.amount;
+              // This if/else sets up the spending date object with date as key and amount total as value
+              if (spendingByDate[transaction.date]) {
+                spendingByDate[transaction.date] += -1 * transaction.amount;
+              } else {
+                // This is the case that the date hasn't been seen before
+                spendingByDate[transaction.date] = -1 * transaction.amount;
+              }
             } else {
-              // This is the case that the category hasn't been seen before
-              categoriesThisMonth.push({
-                x: categoryCount,
-                name: transaction.category[0]
-              });
-              categoryCount++;
-              spendingByCategory[transaction.category[0]] =
-                -1 * transaction.amount;
+              income += transaction.amount;
             }
-
-            // This if/else sets up the spending date object with date as key and amount total as value
-            if (spendingByDate[transaction.date]) {
-              spendingByDate[transaction.date] += -1 * transaction.amount;
-            } else {
-              // This is the case that the date hasn't been seen before
-              spendingByDate[transaction.date] = -1 * transaction.amount;
-            }
-          } else {
-            income += transaction.amount;
           }
 
           transactionsData.push({
             account: account.accountName,
             date: transaction.date,
-            category: transaction.category[0],
+            category: displayCategory,
             name: transaction.name,
             amount: currencyFormatter.format(transaction.amount)
           });
@@ -306,7 +312,7 @@ class Accounts extends Component {
                   style={{ labels: { fontSize: 8 } }}
                   data={categoriesThisMonth}
                   labels={({ datum }) => datum.name}
-                  y={datum => spendingByCategory[datum.name]}
+                  y={datum => spendingByCategory[datum.bankName]}
                 />
                 <VictoryLegend
                   theme={VictoryTheme.material}

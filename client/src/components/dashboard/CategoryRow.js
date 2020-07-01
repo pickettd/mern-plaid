@@ -29,7 +29,7 @@ class CategoryRow extends Component {
       newCategoryName: this.state.localCategoryMap[categoryName]
     };
     if (catMapData.newCategoryName === undefined) {
-      catMapData.newCategoryName = this.props.categoryMap[this.props.category.name];
+      catMapData.newCategoryName = this.props.categoryMap[this.props.category.bankName];
     }
     this.props.saveUserCategoryMap(catMapData);
   };
@@ -66,37 +66,37 @@ class CategoryRow extends Component {
       minimumFractionDigits: 2
     });
 
-    if ((category.name !== 'Transfer')&&(category.name !== 'Payment')) {
+    if ((category.bankName !== 'Transfer')&&(category.bankName !== 'Payment')) {
       return (
-      <tr key={category.name}>
-        <td>{category.name}</td>
+      <tr key={category.bankName}>
+        <td>{category.bankName}</td>
         <td>
-        {(categoryMap) && (categoryMap[category.name]) ? (
-            <input onChange={this.onCategoryMapChange.bind(this,category.name)} defaultValue={categoryMap[category.name]}></input>
+        {(categoryMap) && (categoryMap[category.bankName]) ? (
+            <input onChange={this.onCategoryMapChange.bind(this,category.bankName)} defaultValue={categoryMap[category.bankName]}></input>
           ) : (
-            <input onChange={this.onCategoryMapChange.bind(this,category.name)} defaultValue={defaultCategory}></input>
+            <input onChange={this.onCategoryMapChange.bind(this,category.bankName)} defaultValue={defaultCategory}></input>
           )}
         <button
-          onClick={this.onCategoryMapSaveClick.bind(this,category.name)}
+          onClick={this.onCategoryMapSaveClick.bind(this,category.bankName)}
           className="btn-flat blue lighten-2 waves-effect"
         >
           Save
         </button>
         </td>
         <td>
-          {(budgets) && (budgets[category.name]) ? (
-            <input onChange={this.onBudgetChange.bind(this,category.name)} defaultValue={currencyFormatter.format(budgets[category.name])}></input>
+          {(budgets) && (budgets[category.bankName]) ? (
+            <input onChange={this.onBudgetChange.bind(this,category.bankName)} defaultValue={currencyFormatter.format(budgets[category.bankName])}></input>
           ) : (
-            <input onChange={this.onBudgetChange.bind(this,category.name)} defaultValue={currencyFormatter.format(defaultBudget)}></input>
+            <input onChange={this.onBudgetChange.bind(this,category.bankName)} defaultValue={currencyFormatter.format(defaultBudget)}></input>
           )}
         <button
-          onClick={this.onBudgetSaveClick.bind(this,category.name)}
+          onClick={this.onBudgetSaveClick.bind(this,category.bankName)}
           className="btn-flat blue lighten-2 waves-effect"
         >
           Save
         </button>
         </td>
-        <td>{currencyFormatter.format(spendingByCategory[category.name])}</td>
+        <td>{currencyFormatter.format(spendingByCategory[category.bankName])}</td>
       </tr>
       )
     }
