@@ -28,6 +28,9 @@ class CategoryRow extends Component {
       bankCategoryName: categoryName,
       newCategoryName: this.state.localCategoryMap[categoryName]
     };
+    if (catMapData.newCategoryName === undefined) {
+      catMapData.newCategoryName = this.props.categoryMap[this.props.category.name];
+    }
     this.props.saveUserCategoryMap(catMapData);
   };
 
@@ -47,6 +50,9 @@ class CategoryRow extends Component {
       budgetName: categoryName,
       budgetAmount: this.state.localBudgets[categoryName]
     };
+    if (budgetData.budgetAmount === undefined) {
+      budgetData.budgetAmount = this.props.budgets[this.props.category.name];
+    }
     this.props.saveUserBudget(budgetData);
   };
 

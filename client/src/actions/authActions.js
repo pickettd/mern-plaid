@@ -36,22 +36,8 @@ export const saveUserBudget = budgetData => dispatch => {
 }
 
 export const saveUserCategoryMap = catMapData => dispatch => {
-  let allCatMaps = {};
-  if (localStorage.allCatMaps) {
-    allCatMaps = JSON.parse(localStorage.allCatMaps);
-  }
-  const userId = catMapData.userId
-  if (!allCatMaps[userId]) {
-    allCatMaps[userId] = {};
-  }
-  allCatMaps[userId][catMapData.bankCategoryName] = catMapData.newCategoryName;
-
-  localStorage.allCatMaps = JSON.stringify(allCatMaps);
-  setCookiesAndCategoryMap(catMapData.userId, allCatMaps[userId], dispatch);
-  //Communication with server disabled for the moment
-  /*
   axios
-    .post(`/api/users/categories`, catMapData)
+    .post(`/api/users/category-map`, catMapData)
     .then(res => {
       setCookiesAndCategoryMap(res.data.userId, res.data.categoryMap, dispatch);
     })
@@ -65,7 +51,6 @@ export const saveUserCategoryMap = catMapData => dispatch => {
         payload: toSend
       })}
     );
-    */
 }
 
 // Login - get user token
