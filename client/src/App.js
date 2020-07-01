@@ -28,7 +28,7 @@ if (localStorage.jwtToken) {
       const allBudgets = JSON.parse(localStorage.allBudgets);
       if (allBudgets && allBudgets[decoded.id]) {
         decoded.budgets = allBudgets[decoded.id];
-        store.dispatch(setCurrentBudgets(allBudgets[decoded.id]));
+        setCurrentBudgets(allBudgets[decoded.id], store.dispatch);
       }
     }
     if (localStorage.allCatMaps) {

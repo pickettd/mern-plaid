@@ -21,14 +21,7 @@ export const saveUserBudget = budgetData => dispatch => {
   axios
     .post(`/api/users/budgets`, budgetData)
     .then(res => {
-      let allBudgets = {};
-      if (localStorage.allBudgets) {
-        allBudgets = JSON.parse(localStorage.allBudgets);
-      }
-      const userId = res.data.userId
-      allBudgets[userId] = res.data.budgets;
-      localStorage.allBudgets = JSON.stringify(allBudgets);
-      dispatch(setCurrentBudgets(allBudgets[userId]));
+      setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets, dispatch);
     })
     .catch(err => {
       let toSend = err;
@@ -96,15 +89,9 @@ export const loginUser = userData => dispatch => {
       setAuthToken(token);
       // Decode token to get user data
       const decoded = jwt_decode(token);
-      let allBudgets = {};
-      if (localStorage.allBudgets) {
-        allBudgets = JSON.parse(localStorage.allBudgets);
-      }
-      allBudgets[decoded.id] = decoded.budgets;
-      localStorage.allBudgets = JSON.stringify(allBudgets);
       // Set current user
       dispatch(setCurrentUser(decoded));
-      dispatch(setCurrentBudgets(decoded.budgets));
+      setCookiesAndCurrentBudgets(decoded.id, decoded.budgets, dispatch);
     })
     .catch(err => {
       let toSend = err;
@@ -126,12 +113,22 @@ export const setCurrentUser = decoded => {
   };
 };
 
+const setCookiesAndCurrentBudgets = (userId, budgets, dispatch) => {
+  let allBudgets = {};
+  if (localStorage.allBudgets) {
+    allBudgets = JSON.parse(localStorage.allBudgets);
+  }
+  allBudgets[userId] = budgets;
+  localStorage.allBudgets = JSON.stringify(allBudgets);
+  setCurrentBudgets(budgets, dispatch);
+};
+
 // Set logged in user budgets
-export const setCurrentBudgets = budgets => {
-  return {
+export const setCurrentBudgets = (budgets, dispatch) => {
+  dispatch({
     type: SET_BUDGETS,
     payload: budgets
-  };
+  });
 };
 
 // Set logged in user category map
