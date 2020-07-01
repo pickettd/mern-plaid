@@ -47,20 +47,13 @@ export const saveUserCategoryMap = catMapData => dispatch => {
   allCatMaps[userId][catMapData.bankCategoryName] = catMapData.newCategoryName;
 
   localStorage.allCatMaps = JSON.stringify(allCatMaps);
-  dispatch(setCurrentCategoryMap(allCatMaps[userId]));
+  setCookiesAndCategoryMap(catMapData.userId, allCatMaps[userId], dispatch);
   //Communication with server disabled for the moment
   /*
   axios
     .post(`/api/users/categories`, catMapData)
     .then(res => {
-      let allCatMaps = {};
-      if (localStorage.allCatMaps) {
-        allCatMaps = JSON.parse(localStorage.allCatMaps);
-      }
-      const userId = res.data.userId
-      allCatMaps[userId] = res.data.categoryMap;
-      localStorage.allCatMaps = JSON.stringify(allCatMaps);
-      dispatch(setCurrentCategoryMap(allCatMaps[userId]));
+      setCookiesAndCategoryMap(res.data.userId, res.data.categoryMap, dispatch);
     })
     .catch(err => {
       let toSend = err;
@@ -92,6 +85,7 @@ export const loginUser = userData => dispatch => {
       // Set current user
       dispatch(setCurrentUser(decoded));
       setCookiesAndCurrentBudgets(decoded.id, decoded.budgets, dispatch);
+      setCookiesAndCategoryMap(decoded.id, decoded.categoryMap, dispatch);
     })
     .catch(err => {
       let toSend = err;
@@ -131,12 +125,22 @@ export const setCurrentBudgets = (budgets, dispatch) => {
   });
 };
 
+const setCookiesAndCategoryMap = (userId, categoryMap, dispatch) => {
+  let allCatMaps = {};
+  if (localStorage.allCatMaps) {
+    allCatMaps = JSON.parse(localStorage.allCatMaps);
+  }
+  allCatMaps[userId] = categoryMap;
+  localStorage.allCatMaps = JSON.stringify(allCatMaps);
+  setCurrentCategoryMap(categoryMap, dispatch);
+};
+
 // Set logged in user category map
-export const setCurrentCategoryMap = categoryMap => {
-  return {
+export const setCurrentCategoryMap = (categoryMap, dispatch) => {
+  dispatch ({
     type: SET_CATEGORY_MAP,
     payload: categoryMap
-  };
+  });
 };
 
 // User loading

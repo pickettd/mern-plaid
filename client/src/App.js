@@ -35,7 +35,7 @@ if (localStorage.jwtToken) {
       const allCatMaps = JSON.parse(localStorage.allCatMaps);
       if (allCatMaps && allCatMaps[decoded.id]) {
         decoded.categoryMap = allCatMaps[decoded.id];
-        store.dispatch(setCurrentCategoryMap(allCatMaps[decoded.id]));
+        setCurrentCategoryMap(allCatMaps[decoded.id], store.dispatch);
       }
     }
   }
