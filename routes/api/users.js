@@ -9,6 +9,7 @@ const passport = require("passport");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validateBudgetInput = require("../../validation/budget");
+const validateCategoryMapInput = require("../../validation/categoryMap");
 
 // Load User model
 const User = require("../../models/User");
@@ -111,7 +112,7 @@ router.post("/login", (req, res) => {
 
 // @route POST api/users/budget
 // @desc Set budget object
-// @access Public
+// @access Private
 router.post("/budgets",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -133,6 +134,34 @@ router.post("/budgets",
       user.budgets.set(budgetName,budgetAmount);
       user.save().then(user => {
         res.json({userId: userId, budgets: user.budgets});
+      }).catch(err => {console.log(err);});
+    })
+});
+
+// @route POST api/users/category-map
+// @desc Set categoryMap object
+// @access Private
+router.post("/category-map",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userId = req.user.id;
+    // Form validation
+
+    const { errors, isValid } = validateCategoryMapInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      console.log('categoryMap request not valid');
+      return res.status(400).json(errors);
+    }
+
+    const bankCategoryName = req.body.bankCategoryName;
+    const newCategoryName = req.body.newCategoryName;
+
+    User.findById(userId).then(user => {
+      user.categoryMap.set(bankCategoryName,newCategoryName);
+      user.save().then(user => {
+        res.json({userId: userId, categoryMap: user.categoryMap});
       }).catch(err => {console.log(err);});
     })
 });
