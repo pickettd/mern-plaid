@@ -21,7 +21,7 @@ export const saveUserBudget = budgetData => dispatch => {
   axios
     .post(`/api/users/budgets`, budgetData)
     .then(res => {
-      setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets, dispatch);
+      dispatch(setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets));
     })
     .catch(err => {
       let toSend = err;
@@ -39,7 +39,7 @@ export const saveUserCategoryMap = catMapData => dispatch => {
   axios
     .post(`/api/users/category-map`, catMapData)
     .then(res => {
-      setCookiesAndCategoryMap(res.data.userId, res.data.categoryMap, dispatch);
+      dispatch(setCookiesAndCategoryMap(res.data.userId, res.data.categoryMap));
     })
     .catch(err => {
       let toSend = err;
@@ -69,8 +69,30 @@ export const loginUser = userData => dispatch => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
-      setCookiesAndCurrentBudgets(decoded.id, decoded.budgets, dispatch);
-      setCookiesAndCategoryMap(decoded.id, decoded.categoryMap, dispatch);
+      dispatch(setCookiesAndCurrentBudgets(decoded.id, decoded.budgets));
+      dispatch(setCookiesAndCategoryMap(decoded.id, decoded.categoryMap));
+    })
+    .catch(err => {
+      let toSend = err;
+      if (err.response) {
+         toSend = err.response.data;
+      }
+      dispatch({
+        type: GET_ERRORS,
+        payload: toSend
+      })}
+    );
+};
+
+// userInfo - get user info for logged in user
+export const getUserInfo = () => dispatch => {
+  axios
+    .get("/api/users/user-info")
+    .then(res => {
+      const returnedUser = res.data;
+
+      dispatch(setCookiesAndCurrentBudgets(returnedUser.id, returnedUser.budgets));
+      dispatch(setCookiesAndCategoryMap(returnedUser.id, returnedUser.categoryMap));
     })
     .catch(err => {
       let toSend = err;
@@ -92,40 +114,40 @@ export const setCurrentUser = decoded => {
   };
 };
 
-const setCookiesAndCurrentBudgets = (userId, budgets, dispatch) => {
+export const setCookiesAndCurrentBudgets = (userId, budgets) => dispatch => {
   let allBudgets = {};
   if (localStorage.allBudgets) {
     allBudgets = JSON.parse(localStorage.allBudgets);
   }
   allBudgets[userId] = budgets;
   localStorage.allBudgets = JSON.stringify(allBudgets);
-  setCurrentBudgets(budgets, dispatch);
+  dispatch(setCurrentBudgets(budgets));
 };
 
 // Set logged in user budgets
-export const setCurrentBudgets = (budgets, dispatch) => {
-  dispatch({
+export const setCurrentBudgets = (budgets) => {
+  return {
     type: SET_BUDGETS,
     payload: budgets
-  });
+  };
 };
 
-const setCookiesAndCategoryMap = (userId, categoryMap, dispatch) => {
+const setCookiesAndCategoryMap = (userId, categoryMap) => dispatch => {
   let allCatMaps = {};
   if (localStorage.allCatMaps) {
     allCatMaps = JSON.parse(localStorage.allCatMaps);
   }
   allCatMaps[userId] = categoryMap;
   localStorage.allCatMaps = JSON.stringify(allCatMaps);
-  setCurrentCategoryMap(categoryMap, dispatch);
+  dispatch(setCurrentCategoryMap(categoryMap, dispatch));
 };
 
 // Set logged in user category map
-export const setCurrentCategoryMap = (categoryMap, dispatch) => {
-  dispatch ({
+export const setCurrentCategoryMap = (categoryMap) => {
+  return {
     type: SET_CATEGORY_MAP,
     payload: categoryMap
-  });
+  };
 };
 
 // User loading

@@ -3,7 +3,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 
-import { setCurrentUser, logoutUser, setCurrentBudgets, setCurrentCategoryMap } from "./actions/authActions";
+import {
+  setCurrentUser,
+  logoutUser,
+  setCurrentBudgets,
+  setCurrentCategoryMap,
+  getUserInfo } from "./actions/authActions";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -28,14 +33,14 @@ if (localStorage.jwtToken) {
       const allBudgets = JSON.parse(localStorage.allBudgets);
       if (allBudgets && allBudgets[decoded.id]) {
         decoded.budgets = allBudgets[decoded.id];
-        setCurrentBudgets(allBudgets[decoded.id], store.dispatch);
+        store.dispatch(setCurrentBudgets(allBudgets[decoded.id]));
       }
     }
     if (localStorage.allCatMaps) {
       const allCatMaps = JSON.parse(localStorage.allCatMaps);
       if (allCatMaps && allCatMaps[decoded.id]) {
         decoded.categoryMap = allCatMaps[decoded.id];
-        setCurrentCategoryMap(allCatMaps[decoded.id], store.dispatch);
+        store.dispatch(setCurrentCategoryMap(allCatMaps[decoded.id]));
       }
     }
   }
@@ -49,6 +54,10 @@ if (localStorage.jwtToken) {
 
     // Redirect to login
     window.location.href = "./login";
+  }
+  else {
+    // Check server for updated user-info (budgets and categories) beyond what is cached
+    store.dispatch(getUserInfo());
   }
 }
 class App extends Component {
