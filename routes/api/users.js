@@ -166,4 +166,23 @@ router.post("/category-map",
     })
 });
 
+// @route GET api/users/user-info
+// @desc Return the user object (eg budgets and categoryMap data)
+// @access Private
+router.get("/user-info",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("request for user info");
+    const userId = req.user.id;
+
+    User.findById(userId).then(user => {
+      const returnUser = {
+        id: user.id,
+        budgets: user.budgets,
+        categoryMap: user.categoryMap
+      };
+      res.json(returnUser);
+    }).catch(err => {console.log(err);});
+});
+
 module.exports = router;
