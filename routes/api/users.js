@@ -172,7 +172,6 @@ router.post("/category-map",
 router.get("/user-info",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("request for user info");
     const userId = req.user.id;
 
     User.findById(userId).then(user => {
