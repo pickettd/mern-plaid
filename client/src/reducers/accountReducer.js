@@ -1,5 +1,6 @@
 import {
   ADD_ACCOUNT,
+  REFRESH_ACCOUNT,
   DELETE_ACCOUNT,
   GET_ACCOUNTS,
   ACCOUNTS_LOADING,
@@ -25,6 +26,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         accounts: [action.payload, ...state.accounts]
+      };
+    case REFRESH_ACCOUNT:
+      return {
+        ...state,
+        // Note - currently this reducer does nothing
+        //accounts: state.accounts.filter(
+        //  account => account._id !== action.payload
+        //)
       };
     case DELETE_ACCOUNT:
       return {
