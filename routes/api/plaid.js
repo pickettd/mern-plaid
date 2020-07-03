@@ -98,6 +98,30 @@ router.post(
   }
 );
 
+// @route POST api/plaid/accounts/:id
+// @desc Refresh the token
+// @access Private
+router.post(
+  "/accounts/refresh/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Account.findOne({
+      userId: req.user.id,
+      institutionId: institution_id
+    })
+    .then(account => {
+      if (account) {
+        console.log("Found account to refresh");
+        account.toRefresh = false;
+      } else {
+        console.log("could not find account to refresh");
+      }
+      res.json(account);
+    })
+    .catch(err => console.log(err)); // Mongo Error
+  }
+);
+
 // @route DELETE api/plaid/accounts/:id
 // @desc Delete account with given id
 // @access Private
