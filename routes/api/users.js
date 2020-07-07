@@ -131,6 +131,9 @@ router.post("/budgets",
     const budgetAmount = req.body.budgetAmount;
 
     User.findById(userId).then(user => {
+      if (!user.budgets) {
+        user.budgets = new Map();
+      }
       user.budgets.set(budgetName,budgetAmount);
       user.save().then(user => {
         res.json({userId: userId, budgets: user.budgets});
@@ -159,6 +162,9 @@ router.post("/category-map",
     const newCategoryName = req.body.newCategoryName;
 
     User.findById(userId).then(user => {
+      if (!user.categoryMap) {
+        user.categoryMap = new Map();
+      }
       user.categoryMap.set(bankCategoryName,newCategoryName);
       user.save().then(user => {
         res.json({userId: userId, categoryMap: user.categoryMap});
@@ -175,6 +181,12 @@ router.get("/user-info",
     const userId = req.user.id;
 
     User.findById(userId).then(user => {
+      if (!user.budgets) {
+        user.budgets = {};
+      }
+      if (!user.categoryMap) {
+        user.categoryMap = {};
+      }
       const returnUser = {
         id: user.id,
         budgets: user.budgets,
