@@ -29,6 +29,12 @@ const AccountSchema = new Schema({
   },
   accountSubtype: {
     type: String
+  },
+  toRefresh: {
+    type: Boolean
+  },
+  publicToken: {
+    type: String
   }
 });
 

@@ -2,6 +2,8 @@ import axios from "axios";
 
 import {
   ADD_ACCOUNT,
+  UPDATE_ACCOUNT,
+  REFRESH_ACCOUNT,
   DELETE_ACCOUNT,
   GET_ACCOUNTS,
   ACCOUNTS_LOADING,
@@ -22,6 +24,24 @@ export const addAccount = plaidData => dispatch => {
     )
     .then(data =>
       accounts ? dispatch(getTransactions(accounts.concat(data.payload))) : null
+    )
+    .catch(err => console.log(err));
+};
+
+// Refresh account
+export const refreshAccount = plaidData => dispatch => {
+  const id = plaidData.metadata.institution.institution_id;
+  const accounts = plaidData.accounts;
+  axios
+    .post(`/api/plaid/accounts/refresh/${id}`, plaidData)
+    .then(res =>
+      dispatch({
+        type: REFRESH_ACCOUNT,
+        payload: id
+      })
+    )
+    .then(data =>
+      accounts ? dispatch(getTransactions(accounts)) : null
     )
     .catch(err => console.log(err));
 };
@@ -77,18 +97,32 @@ export const getTransactions = plaidData => dispatch => {
   dispatch(setTransactionsLoading());
   axios
     .post("/api/plaid/accounts/transactions", plaidData)
-    .then(res =>
-      dispatch({
-        type: GET_TRANSACTIONS,
-        payload: res.data
-      })
-    )
-    .catch(err =>
+    .then(res => {
+      // Need to check if there are transactions?
+      if (res.data.transactions) {
+        dispatch({
+          type: GET_TRANSACTIONS,
+          payload: res.data.transactions
+        })
+      }
+      else {
+        // Should throw no a tranasactions error here
+      }
+      if (res.data.needUpdate && res.data.needUpdate.length) {
+        res.data.needUpdate.forEach(function(account) {
+          dispatch({
+            type: UPDATE_ACCOUNT,
+            payload: account
+          })
+        })
+      }
+    })
+    .catch(err =>{
       dispatch({
         type: GET_TRANSACTIONS,
         payload: null
       })
-    );
+    });
 };
 
 // Transactions loading

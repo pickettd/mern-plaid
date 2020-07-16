@@ -1,6 +1,7 @@
 import {
   ADD_ACCOUNT,
   REFRESH_ACCOUNT,
+  UPDATE_ACCOUNT,
   DELETE_ACCOUNT,
   GET_ACCOUNTS,
   ACCOUNTS_LOADING,
@@ -27,14 +28,37 @@ export default function(state = initialState, action) {
         ...state,
         accounts: [action.payload, ...state.accounts]
       };
+    // The payload to refresh an account is the same account (or new account)
     case REFRESH_ACCOUNT:
       return {
         ...state,
-        // Note - currently this reducer does nothing
-        //accounts: state.accounts.filter(
-        //  account => account._id !== action.payload
-        //)
+        accounts: state.accounts.map( account => {
+          if (account.institutionId !== action.payload) {
+            return account;
+          }
+          else {
+            return {
+              ...account,
+              toRefresh: false
+            }
+          }
+        })
       };
+      // The payload to update an account is the newly edited account
+      case UPDATE_ACCOUNT:
+        return {
+          ...state,
+          accounts: state.accounts.map( account => {
+            if (account._id !== action.payload._id) {
+              return account;
+            }
+            else {
+              return {
+                ...action.payload
+              }
+            }
+          })
+        };
     case DELETE_ACCOUNT:
       return {
         ...state,

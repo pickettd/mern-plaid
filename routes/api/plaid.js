@@ -105,14 +105,16 @@ router.post(
   "/accounts/refresh/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    const institution = req.body.metadata.institution;
+    const { name, institution_id } = institution;
     Account.findOne({
       userId: req.user.id,
       institutionId: institution_id
     })
     .then(account => {
       if (account) {
-        console.log("Found account to refresh");
         account.toRefresh = false;
+        account.save();
       } else {
         console.log("could not find account to refresh");
       }
@@ -148,6 +150,8 @@ router.post(
     const thirtyDaysAgo = now.subtract(30, "days").format("YYYY-MM-DD");
 
     let transactions = [];
+    let needUpdate = [];
+    let accountPromises = [];
 
     const accounts = req.body;
 
@@ -155,21 +159,49 @@ router.post(
       accounts.forEach(function(account) {
         ACCESS_TOKEN = account.accessToken;
         const institutionName = account.institutionName;
-
-        client
-          .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
-          .then(response => {
-            transactions.push({
-              accountName: institutionName,
-              transactions: response.transactions
-            });
-
-            if (transactions.length === accounts.length) {
-              res.json(transactions);
-            }
-          })
-          .catch(err => console.log(err));
+        accountPromises.push(
+          client
+            .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
+            .then(response => {
+              transactions.push({
+                accountName: institutionName,
+                transactions: response.transactions
+              });
+            // We want to handle the case of item_login_required here
+            }, reject => {
+              if (reject && (reject.error_code === "ITEM_LOGIN_REQUIRED")) {
+                return client.createPublicToken(ACCESS_TOKEN)
+                  .then(tokenResponse => {
+                    return Account.findOne({"itemId": account.itemId}).then(account => {
+                      account.toRefresh = true;
+                      account.publicToken = tokenResponse.public_token;
+                      needUpdate.push(account);
+                      return account.save()
+                      .then(() => {
+                        return account;
+                      })
+                    });
+                });
+              }
+              else {
+                // If it is not the error above, then reject
+                return new Error(reject);
+              }
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        );
       });
+      Promise.allSettled(accountPromises).then( () => {
+        // If there are any transactions or accounts, respond with them, otherwise error
+        if (transactions.length || needUpdate.length) {
+          res.json({transactions: transactions, needUpdate: needUpdate});
+        }
+        else {
+          res.status(400).send({ message: 'This is an error!' });
+        }
+      } );
     }
   }
 );

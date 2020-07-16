@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import {
   getTransactions,
   addAccount,
+  refreshAccount,
   deleteAccount
 } from "../../actions/accountActions";
 import { logoutUser } from "../../actions/authActions";
@@ -39,6 +40,18 @@ class Accounts extends Component {
 
     this.props.addAccount(plaidData);
   };
+  // Refresh account
+  // Note that the metadata field has the instituion id inside of it for server to use
+  handleRefreshSuccess = (token, metadata) => {
+    const { accounts } = this.props;
+    const plaidData = {
+      public_token: token,
+      metadata: metadata,
+      accounts: accounts
+    };
+
+    this.props.refreshAccount(plaidData);
+  };
 
   // Delete account
   onDeleteClick = id => {
@@ -63,12 +76,43 @@ class Accounts extends Component {
     let accountItems = accounts.map(account => (
       <li key={account._id} style={{ marginTop: "1rem" }}>
         <button
-          style={{ marginRight: "1rem" }}
+          style={{ marginRight: "0.25rem" }}
           onClick={this.onDeleteClick.bind(this, account._id)}
           className="btn btn-flat btn-floating waves-effect waves-light blue lighten-2 hoverable"
         >
           <i className="material-icons">delete</i>
         </button>
+        {account.toRefresh ? (
+          <PlaidLinkButton
+            buttonProps={{
+              className:
+                `btn btn-flat btn-floating waves-effect
+                  waves-light lighten-2 blue`,
+              style: { marginRight: "0.25rem" }
+            }}
+            plaidLinkProps={{
+              clientName: process.env.REACT_APP_NAME,
+              key: process.env.REACT_APP_PLAID_PUBLIC_KEY,
+              env: process.env.REACT_APP_PLAID_ENV_STRING,
+              product: ["transactions"],
+              token: account.publicToken,
+              onSuccess: this.handleRefreshSuccess
+            }}
+          >
+            {<i className="material-icons">refresh</i>
+            }
+          </PlaidLinkButton>
+        ) : (
+          <button
+          style={{ marginRight: "0.25rem", cursor: "default"}}
+          className={`
+            btn btn-flat btn-floating waves-effect
+            waves-light lighten-2 grey
+          `}
+        >
+          <i className="material-icons">refresh</i>
+        </button>
+        )}
         <b>{account.institutionName}</b>
       </li>
     ));
@@ -186,7 +230,6 @@ class Accounts extends Component {
         });
       }
     }
-
     return (
       <div>
         <div className="container header-elements">
@@ -400,6 +443,7 @@ Accounts.propTypes = {
   getTransactions: PropTypes.func.isRequired,
   addAccount: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
+  refreshAccount: PropTypes.func.isRequired,
   accounts: PropTypes.array.isRequired,
   plaid: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
@@ -411,5 +455,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, getTransactions, addAccount, deleteAccount }
+  { logoutUser, getTransactions, addAccount, deleteAccount, refreshAccount }
 )(Accounts);
