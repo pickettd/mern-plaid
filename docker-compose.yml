@@ -1,15 +1,15 @@
 version: "2"
 services:
   node:
-    image: "node:10"
+    image: "node:12"
     user: "node"
     working_dir: /home/node/app
     environment:
       - NODE_ENV=development
-      - PORT=3000
+      - PORT=3001
       - HOST=0.0.0.0
     volumes:
       - ./:/home/node/app
     ports:
-      - "3000:3000"
+      - "3001:3001"
     command: "npm run dev"
