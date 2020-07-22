@@ -172,13 +172,15 @@ router.post(
               if (reject && (reject.error_code === "ITEM_LOGIN_REQUIRED")) {
                 return client.createPublicToken(ACCESS_TOKEN)
                   .then(tokenResponse => {
-                    return Account.findOne({"itemId": account.itemId}).then(account => {
-                      account.toRefresh = true;
-                      account.publicToken = tokenResponse.public_token;
-                      needUpdate.push(account);
-                      return account.save()
+                    return Account.findOne({"itemId": account.itemId}).then(foundAccount => {
+                      foundAccount.toRefresh = true;
+                      foundAccount.publicToken = tokenResponse.public_token;
+                      needUpdate.push(foundAccount);
+                      console.log("found an account that needs refresh and got the token for it");
+                      console.log(foundAccount);
+                      return foundAccount.save()
                       .then(() => {
-                        return account;
+                        return foundAccount;
                       })
                     });
                 });
