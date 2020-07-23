@@ -7,7 +7,6 @@ import Footer from './components/layout/Footer.js'
 import SpendStory from './components/spend/SpendStory.js'
 import SpendPlan from './components/spend/SpendPlan.js'
 import ManageTransactions from './components/spend/ManageTransactions.js'
-
 function App() {
   return (<>
     <Router>

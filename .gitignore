@@ -3,3 +3,6 @@ package-lock.json
 .vagrant
 client/build
 client/node_modules
+routes/api/plaid.js
+*.lock
+*.lock
