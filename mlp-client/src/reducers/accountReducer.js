@@ -9,8 +9,9 @@ import {
   TRANSACTIONS_LOADING,
 } from "../actions/types";
 
+// Try loading some demo/example data
 const initialState = {
-  accounts: [],
+  accounts: [{ _id: "blah123", institutionName: "Blah" }],
   transactions: [],
   accountsLoading: false,
   transactionsLoading: false,
