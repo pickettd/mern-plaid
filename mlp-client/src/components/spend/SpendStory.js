@@ -9,17 +9,21 @@ import {
 } from "../../actions/accountActions";
 import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
+import UserProfile from "../profile/UserProfile";
 
 class SpendStory extends Component {
   render() {
-    const accountItems = this.props.plaid.accounts.map((account) => (
+    const connectedBankAccounts = this.props.plaid.accounts.map((account) => (
       <div key={account._id}>Account Name here: {account.institutionName}</div>
     ));
     return (
       <>
         <div>
-          <span>This is the Spend Story</span>
-          {accountItems}
+          <UserProfile />
+          <div>-----------------------</div>
+          <div>This is the Spend Story</div>
+          <div>Here's a list of our connected bank accounts</div>
+          {connectedBankAccounts}
           <ul>
             <li>
               <Link to="/manage-transactions">Manage Transactions</Link>
