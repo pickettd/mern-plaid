@@ -10,10 +10,12 @@ import {
 import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import UserProfile from "../profile/UserProfile";
+import currencyFormatter from "../../utils/currencyFormatter";
 
 class SpendStory extends Component {
   render() {
-    const connectedBankAccounts = this.props.plaid.accounts.map((account) => (
+    const { plaid } = this.props;
+    const connectedBankAccounts = plaid.accounts.map((account) => (
       <div key={account._id}>Account Name here: {account.institutionName}</div>
     ));
     return (
@@ -24,6 +26,17 @@ class SpendStory extends Component {
           <div>This is the Spend Story</div>
           <div>Here's a list of our connected bank accounts</div>
           {connectedBankAccounts}
+          <div>-----------------------</div>
+          <div>
+            Your income total is {currencyFormatter.format(plaid.incomeSum)}
+          </div>
+          <div>
+            Your spending total is {currencyFormatter.format(plaid.spendingSum)}
+          </div>
+          <div>
+            So your profit for this period is{" "}
+            {currencyFormatter.format(plaid.incomeSum - plaid.spendingSum)}
+          </div>
           <ul>
             <li>
               <Link to="/manage-transactions">Manage Transactions</Link>
