@@ -4,16 +4,19 @@ import {
   SET_BUDGETS,
   SET_CATEGORY_MAP,
 } from "../actions/types";
+import { AUTH_MOCK_DATA } from "./reduxMockData";
 
 const isEmpty = require("is-empty");
-
-const initialState = {
+// Try loading some demo/example data
+const initialState = AUTH_MOCK_DATA;
+// Below here is the normal initial state
+/*const initialState = {
   isAuthenticated: false,
   user: {},
   loading: false,
   budgets: {},
   categoryMap: {},
-};
+};*/
 
 export default function (state = initialState, action) {
   switch (action.type) {

@@ -9,13 +9,17 @@ import {
   TRANSACTIONS_LOADING,
 } from "../actions/types";
 
+import { PLAID_MOCK_DATA } from "./reduxMockData";
+
 // Try loading some demo/example data
-const initialState = {
-  accounts: [{ _id: "blah123", institutionName: "Blah" }],
+const initialState = PLAID_MOCK_DATA;
+// Below here is the normal initial state
+/*const initialState = {
+  accounts: [],
   transactions: [],
   accountsLoading: false,
   transactionsLoading: false,
-};
+};*/
 
 export default function (state = initialState, action) {
   switch (action.type) {
