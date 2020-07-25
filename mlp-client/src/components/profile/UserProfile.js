@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 const UserProfile = (props) => {
   return (
@@ -9,4 +10,9 @@ const UserProfile = (props) => {
   );
 };
 
-export default UserProfile;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+// Note that there is probably a better way to do this with React hooks now
+export default connect(mapStateToProps, {})(UserProfile);
