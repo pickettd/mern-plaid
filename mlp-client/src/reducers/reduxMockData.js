@@ -24,6 +24,8 @@ export const AUTH_MOCK_DATA = {
 };
 // NOTE THAT I'VE ADDED EXTRA MOCK DATA FOR
 // categoriesThisMonth and spendingByCategory
+// ALSO NOTE - SHOULD PROBABLY RENAME categoriesThisMonth
+// (because it could be a different time period)
 export const PLAID_MOCK_DATA = {
   accounts: [
     {
