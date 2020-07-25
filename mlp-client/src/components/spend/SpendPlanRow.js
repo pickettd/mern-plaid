@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 const SpendPlanRow = (props) => {
   const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -46,5 +47,11 @@ const SpendPlanRow = (props) => {
     return <></>;
   }
 };
+const mapStateToProps = (state) => ({
+  budgets: state.auth.budgets,
+  categoryMap: state.auth.categoryMap,
+  spendingByCategory: state.plaid.spendingByCategory,
+});
 
-export default SpendPlanRow;
+// Note that there is probably a better way to do this with React hooks now
+export default connect(mapStateToProps, {})(SpendPlanRow);
