@@ -1,12 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import currencyFormatter from "../../utils/currencyFormatter";
 
 const SpendPlanRow = (props) => {
-  const currencyFormatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  });
   if (
     props.category.bankName !== "Transfer" &&
     props.category.bankName !== "Payment"
