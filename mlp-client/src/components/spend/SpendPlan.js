@@ -61,22 +61,27 @@ const SpendPlan = (props) => {
           </div>
         </div>
       </div>
-      <div>This is the Spend Plan</div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Bank category name</th>
-            <th>My category name</th>
-            <th>Budget for 30 days</th>
-            <th>Spent last 30 days</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.categoriesThisMonth.map((category, i) => {
-            return <SpendPlanRow key={i} category={category}></SpendPlanRow>;
-          })}
-        </tbody>
-      </Table>
+      <div className="section table-section">
+        <div className="container">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Bank category name</th>
+                <th>My category name</th>
+                <th>Budget for 30 days</th>
+                <th>Spent last 30 days</th>
+              </tr>
+            </thead>
+            <tbody>
+              {props.categoriesThisMonth.map((category, i) => {
+                return (
+                  <SpendPlanRow key={i} category={category}></SpendPlanRow>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      </div>
     </>
   );
 };
