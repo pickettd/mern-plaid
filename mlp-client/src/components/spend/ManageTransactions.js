@@ -2,45 +2,12 @@ import React from "react";
 import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
 import ManageTransactionRow from "./ManageTransactionRow";
+import SpendRangeHeader from "../layout/SpendRangeHeader";
 
 const ManageTransactions = (props) => {
   return (
     <>
-      <div className="section-space"></div>
-      <div className="section section-header-generic">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-6 col-sm-6">
-                    <div className="form-group">
-                      <select
-                        className="selectpicker"
-                        data-style="btn btn-default"
-                      >
-                        <option disabled selected>
-                          {" "}
-                          Choose date range
-                        </option>
-                        <option value="1">1 week </option>
-                        <option value="1">30 days</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <h1>
-                    Transaction
-                    <br />
-                    <span className="small bottom">History</span>
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <SpendRangeHeader mainHeaderText="Transaction" subHeaderText="History" />
       <div className="section section-header-generic">
         <div className="container">
           <div className="row align-items-center">
