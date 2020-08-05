@@ -19,6 +19,13 @@ const initialState = PLAID_MOCK_DATA;
   transactions: [],
   accountsLoading: false,
   transactionsLoading: false,
+  incomeSum: 0.00,
+  spendingSum: 0.00,
+  spendRangeDaysSelected: 30,
+  totalTransactionCount: 0,
+  reviewedTransactionCount: 0,
+  categoriesThisMonth: [],
+  spendingByCategory: {},
 };*/
 
 export default function (state = initialState, action) {

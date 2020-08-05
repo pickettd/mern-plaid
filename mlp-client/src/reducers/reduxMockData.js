@@ -1246,6 +1246,8 @@ export const PLAID_MOCK_DATA = {
   incomeSum: 1000,
   spendingSum: 4391.92,
   spendRangeDaysSelected: 30,
+  totalTransactionCount: 50,
+  reviewedTransactionCount: 45,
   categoriesThisMonth: [
     { bankName: "Food and Drink", x: 1, name: "" },
     { bankName: "Shops", x: 2, name: "" },
