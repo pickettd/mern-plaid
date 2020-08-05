@@ -19,7 +19,7 @@ const Header = () => {
                 height="30"
                 className="d-inline-block align-top"
               />{" "}
-              Waiwai
+             Waiwai
             </Navbar.Brand>
           </NavItem>
         </LinkContainer>
@@ -27,7 +27,7 @@ const Header = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <LinkContainer to="/">
-              <NavItem>Home</NavItem>
+              <Nav.Link href="#home">Home</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/spend-story">
               <Nav.Link href="#">spend</Nav.Link>
