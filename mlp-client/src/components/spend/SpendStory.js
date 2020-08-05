@@ -11,6 +11,7 @@ import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import UserProfile from "../profile/UserProfile";
 import currencyFormatter from "../../utils/currencyFormatter";
+import percentFormatter from "../../utils/percentFormatter";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
 
 class SpendStory extends Component {
@@ -59,12 +60,15 @@ class SpendStory extends Component {
                     <h3>
                       <span className="small top">Transactions</span>
                       <br />
-                      45
+                      {plaid.totalTransactionCount}
                     </h3>
                     <h3>
                       <span className="small top">Transactions reviewed</span>
                       <br />
-                      90%
+                      {percentFormatter.format(
+                        plaid.reviewedTransactionCount /
+                          plaid.totalTransactionCount
+                      )}
                     </h3>
                   </div>
                 </div>
