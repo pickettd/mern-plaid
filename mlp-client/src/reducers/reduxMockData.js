@@ -23,8 +23,7 @@ export const AUTH_MOCK_DATA = {
   },
 };
 // NOTE THAT I'VE ADDED EXTRA MOCK DATA FOR
-// categoriesThisMonth, spendingByCategory, incomeSum, and spendingSum
-// ALSO NOTE - SHOULD PROBABLY RENAME categoriesThisMonth
+// categoriesThisSpendRange, spendingByCategory, incomeSum, and spendingSum
 // (because it could be a different time period)
 export const PLAID_MOCK_DATA = {
   accounts: [
@@ -1248,7 +1247,7 @@ export const PLAID_MOCK_DATA = {
   spendRangeDaysSelected: 30,
   totalTransactionCount: 50,
   reviewedTransactionCount: 45,
-  categoriesThisMonth: [
+  categoriesThisSpendRange: [
     { bankName: "Food and Drink", x: 1, name: "" },
     { bankName: "Shops", x: 2, name: "" },
     { bankName: "Travel", x: 3, name: "" },

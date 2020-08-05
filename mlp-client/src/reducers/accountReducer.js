@@ -24,7 +24,7 @@ const initialState = PLAID_MOCK_DATA;
   spendRangeDaysSelected: 30,
   totalTransactionCount: 0,
   reviewedTransactionCount: 0,
-  categoriesThisMonth: [],
+  categoriesThisSpendRange: [],
   spendingByCategory: {},
 };*/
 

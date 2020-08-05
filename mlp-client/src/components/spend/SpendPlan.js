@@ -40,7 +40,7 @@ const SpendPlan = (props) => {
               </tr>
             </thead>
             <tbody>
-              {props.categoriesThisMonth.map((category, i) => {
+              {props.categoriesThisSpendRange.map((category, i) => {
                 return (
                   <SpendPlanRow key={i} category={category}></SpendPlanRow>
                 );
@@ -54,7 +54,7 @@ const SpendPlan = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-  categoriesThisMonth: state.plaid.categoriesThisMonth,
+  categoriesThisSpendRange: state.plaid.categoriesThisSpendRange,
 });
 
 // Note that there is probably a better way to do this with React hooks now
