@@ -35,8 +35,8 @@ const SpendPlan = (props) => {
               <tr>
                 <th>Bank category name</th>
                 <th>My category name</th>
-                <th>Budget for 30 days</th>
-                <th>Spent last 30 days</th>
+                <th>Budget for {props.spendRangeDaysSelected} days</th>
+                <th>Spent last {props.spendRangeDaysSelected} days</th>
               </tr>
             </thead>
             <tbody>
@@ -55,6 +55,7 @@ const SpendPlan = (props) => {
 
 const mapStateToProps = (state) => ({
   categoriesThisSpendRange: state.plaid.categoriesThisSpendRange,
+  spendRangeDaysSelected: state.plaid.spendRangeDaysSelected,
 });
 
 // Note that there is probably a better way to do this with React hooks now
