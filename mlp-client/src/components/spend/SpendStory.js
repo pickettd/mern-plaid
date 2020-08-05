@@ -11,6 +11,7 @@ import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import UserProfile from "../profile/UserProfile";
 import currencyFormatter from "../../utils/currencyFormatter";
+import SpendRangeHeader from "../layout/SpendRangeHeader";
 
 class SpendStory extends Component {
   render() {
@@ -21,38 +22,10 @@ class SpendStory extends Component {
     return (
       <>
         <div>
-          <div className="section-space"></div>
-          <div className="section section-header-spend">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-6">
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-md-6 col-sm-6">
-                        <div className="form-group">
-                          <select
-                            className="selectpicker"
-                            data-style="btn btn-default"
-                          >
-                            <option> Choose date range</option>
-                            <option value="1">1 week </option>
-                            <option value="1">30 days</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <h1>
-                        <UserProfile />
-                        <br />
-                        <span className="small bottom">Spend Story</span>
-                      </h1>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <SpendRangeHeader
+            mainHeaderText={this.props.userName + "'s"}
+            subHeaderText="Spend Story"
+          />
           <div className="section income-spend">
             <div className="container">
               <div className="row justify-content-center">
@@ -233,6 +206,7 @@ SpendStory.propTypes = {
 
 const mapStateToProps = (state) => ({
   plaid: state.plaid,
+  userName: state.auth.user.name,
 });
 
 export default connect(mapStateToProps, {
