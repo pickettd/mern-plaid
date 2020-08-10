@@ -10,10 +10,10 @@ const ManageTransactionsRow = (props) => {
       <td>{props.transaction.amount}</td>
       <td>{props.transaction.category[0]}</td>
       <td>
-        <button>Change Category</button>
+        <button class="btn secondary">Change Category</button>
       </td>
       <td>
-        <button>Mark Reviewed</button>
+        <button class="btn secondary">&#x2713;</button>
       </td>
     </tr>
   );

@@ -19,6 +19,15 @@ div.section-spending-plan {
   margin-top: 0;
   color: white;
 }
+div.section-spend-plan-footer {
+  background: url("../img/background-images/waiwai-savings-footer.svg");
+  padding: 15% 0 7%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  margin-top: 0;
+  color: white;
+}
 div.section-spend-categories {
   .card-image img.img {
     width: 100%;
@@ -33,7 +42,13 @@ div.section-spend-categories {
       margin-top: -0.5rem;
     }
   }
-  .small.bottom {
-    margin-top: -0.75rem;
+  div.card {
+    .small.bottom {
+      margin-top: -0.75rem;
+    }
+    .card-footer {
+      border-top: 0px solid transparent;
+      background-color: transparent;
+    }
   }
 }

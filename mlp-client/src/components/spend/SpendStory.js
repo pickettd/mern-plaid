@@ -155,7 +155,7 @@ class SpendStory extends Component {
                       </h4>
                       <div className="card-description">graph</div>
                       <div className="card-footer">
-                        <div className="row">
+                        <div className="row mt-3">
                           <div className="col">
                             <p className=" text-left">
                               $200
@@ -182,7 +182,7 @@ class SpendStory extends Component {
               </div>
             </div>
           </div>
-          <div className="section section-spend-categories">
+          <div className="section section-spend-plan-footer">
             <div className="container">
               <div className="row">
                 <div className="col-md-6">

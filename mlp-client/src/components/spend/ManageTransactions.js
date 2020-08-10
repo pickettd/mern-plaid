@@ -8,7 +8,7 @@ const ManageTransactions = (props) => {
   return (
     <>
       <SpendRangeHeader mainHeaderText="Transaction" subHeaderText="History" />
-      <div className="section section-header-generic">
+      <div className="section section-donuts">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-3 col-6">Donut Graph</div>
@@ -22,11 +22,11 @@ const ManageTransactions = (props) => {
       </div>
       <div className="section table-section">
         <div className="container">
-          <Table striped bordered hover>
+          <Table striped hover>
             <thead>
               <tr>
                 <th>Date</th>
-                <th>Bank Account</th>
+                <th>Account</th>
                 <th>Transaction</th>
                 <th>Amount</th>
                 <th>Category</th>
