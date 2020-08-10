@@ -6,39 +6,27 @@ const Footer = () => {
     <div className="main-footer">
       <div className="container">
         <div className="row">
-            {/*Column 1*/}
-            <div className="col">
-                <h4>Footer</h4>
-                <ul className="footer-list">
-                    <li>item 1</li>
-                    <li>item 2</li>
-                    <li>item 3</li>
-                </ul>
-            </div>
-            {/*Column 2*/}
-            {/*Column 3*/}
+          {/*Column 1*/}
+          <div className="col">
+            <h4>Footer</h4>
+            <ul className="footer-list">
+              <li>item 1</li>
+              <li>item 2</li>
+              <li>item 3</li>
+            </ul>
+          </div>
+          {/*Column 2*/}
+          {/*Column 3*/}
         </div>
-         <div className="row">
-        <p className="col-sm">
-            &copy;{new Date().getFullYear} WAIWAI | All rights reserved | Terms of service | Privacy
-        </p>
+        <div className="row">
+          <p className="col-sm">
+            &copy;{new Date().getFullYear()} WAIWAI | All rights reserved |
+            Terms of service | Privacy
+          </p>
         </div>
       </div>
     </div>
-
-  )
-}
-
-{/*const Footer = () => {
-  return (
-    <>
-      <div>
-        <Link to="/">(Icon)|</Link>
-        <Link to="/spend-story">spend|</Link>
-        save| borrow| plan
-      </div>
-    </>
   );
-};*/}
+};
 
 export default Footer;
