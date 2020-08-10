@@ -13,7 +13,7 @@ import UserProfile from "../profile/UserProfile";
 import currencyFormatter from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
-
+import foodLogo from "../../img/spend-plan/food-background.svg";
 class SpendStory extends Component {
   render() {
     const { plaid } = this.props;
@@ -140,12 +140,8 @@ class SpendStory extends Component {
                 <div className="col-md-4 col-sm-6">
                   <div className="card card-blog">
                     <div className="card-image">
-                      <img
-                        className="img"
-                        alt="Category Name"
-                        src="../background-images/spending-plan-background.svg"
-                      />
-                      <div class="card-img-overlay">
+                      <img className="img" alt="Category Name" src={foodLogo} />
+                      <div className="card-img-overlay">
                         <h5>Category Name</h5>
                       </div>
                     </div>
