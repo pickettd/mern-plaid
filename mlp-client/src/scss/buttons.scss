@@ -1,0 +1,13 @@
+.btn {
+  background-color: theme-color("dark-blue");
+  color: white;
+  padding: 1em 2em;
+  text-transform: lowercase;
+  font-family: "Montserrat";
+}
+
+.btn:focus,
+.btn:hover {
+  background-color: theme-color("green");
+  color: white;
+}

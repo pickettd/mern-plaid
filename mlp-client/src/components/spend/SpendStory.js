@@ -75,7 +75,7 @@ class SpendStory extends Component {
               </div>
               <div className="row justify-content-center">
                 <div className="col-sm-4 text-center">
-                  <Link to="/manage-transactions" className="btn btn-primary">
+                  <Link to="/manage-transactions" className="btn">
                     view transactions
                   </Link>
                 </div>
@@ -104,7 +104,7 @@ class SpendStory extends Component {
                       </h3>
                     </div>
                     <div className="row">
-                      <Link to="/spend-plan" className="btn btn-primary">
+                      <Link to="/spend-plan" className="btn">
                         manage spend plan
                       </Link>
                     </div>
