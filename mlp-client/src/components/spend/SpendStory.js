@@ -75,7 +75,7 @@ class SpendStory extends Component {
               </div>
               <div className="row justify-content-center">
                 <div className="col-sm-4 text-center">
-                  <Link to="/manage-transactions" className="btn">
+                  <Link to="/manage-transactions" className="btn mt-4">
                     view transactions
                   </Link>
                 </div>
@@ -128,7 +128,7 @@ class SpendStory extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-8">
+                <div className="col-8 pt-4 pb-4">
                   <h4>
                     On track
                     <br />
@@ -140,8 +140,14 @@ class SpendStory extends Component {
                 <div className="col-md-4 col-sm-6">
                   <div className="card card-blog">
                     <div className="card-image">
-                      <img className="img" alt="Category Name" />
-                      <h5>Category Name</h5>
+                      <img
+                        className="img"
+                        alt="Category Name"
+                        src="../background-images/spending-plan-background.svg"
+                      />
+                      <div class="card-img-overlay">
+                        <h5>Category Name</h5>
+                      </div>
                     </div>
                     <div className="card-body text-center">
                       <h4 className="card-title text-left">
