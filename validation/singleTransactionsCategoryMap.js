@@ -11,7 +11,7 @@ module.exports = function validateSingleTransactionsCategoryMapInput(data) {
     : "";
   // Transaction ID check
   if (Validator.isEmpty(data.transactionID)) {
-    errors.bankCategoryName = "Transaction ID field is required";
+    errors.transactionID = "Transaction ID field is required";
   }
   // New Name checks
   if (Validator.isEmpty(data.newCategoryName)) {
