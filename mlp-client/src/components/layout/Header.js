@@ -8,7 +8,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 const Header = () => {
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar expand="lg">
         <LinkContainer to="/">
           <NavItem>
             <Navbar.Brand href="/">
@@ -19,38 +19,40 @@ const Header = () => {
                 height="30"
                 className="d-inline-block align-top"
               />{" "}
-             Waiwai
+              Waiwai
             </Navbar.Brand>
           </NavItem>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-      {/*<LinkContainer to="/">
+          <Nav>
+            {/*<LinkContainer to="/">
               <Nav.Link href="#home">Home</Nav.Link>
             </LinkContainer>*/}
-            <LinkContainer to="/spend-story">
-              <Nav.Link href="#">spend</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/save-story">
-              <Nav.Link href="#">save</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/borrow-story">
-              <Nav.Link href="#">borrow</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/plan-story">
-              <Nav.Link href="#">plan</Nav.Link>
-            </LinkContainer>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+            <div className="mr-auto navbar-nav">
+              <LinkContainer to="/spend-story">
+                <Nav.Link href="#">spend</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/save-story">
+                <Nav.Link href="#">save</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/borrow-story">
+                <Nav.Link href="#">borrow</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/plan-story">
+                <Nav.Link href="#">plan</Nav.Link>
+              </LinkContainer>
+            </div>
+            <NavDropdown
+              title="User"
+              id="basic-nav-dropdown"
+              className="ml-auto dropdown-menu-right"
+            >
+              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
-                Another action
+                Bank Accounts
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
