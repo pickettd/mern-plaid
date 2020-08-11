@@ -137,10 +137,14 @@ class SpendStory extends Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-4 col-sm-6">
+                <div className="col-lg-3 col-md-4 col-sm-6">
                   <div className="card card-blog">
-                    <div className="card-image">
-                      <img className="img" alt="Category Name" src={foodLogo} />
+                    <div className="card-image dark-green-background">
+                      <img
+                        className="img "
+                        alt="Category Name"
+                        src={foodLogo}
+                      />
                       <div className="card-img-overlay">
                         <h5>Category Name</h5>
                       </div>

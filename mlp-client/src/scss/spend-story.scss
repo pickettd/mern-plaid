@@ -30,10 +30,17 @@ div.section-spend-plan-footer {
   color: white;
 }
 div.section-spend-categories {
-  .card-image img.img {
-    width: 100%;
-    min-width: 100%;
+  .card-image {
     min-height: 8em;
+    img.img {
+      height: 4em;
+      width: 4em;
+      max-height: 25%;
+      max-width: 25%;
+      margin: 0 auto;
+      display: block;
+      margin-top: 2.5em;
+    }
   }
   div.card-img-overlay {
     color: white;
@@ -52,4 +59,7 @@ div.section-spend-categories {
       background-color: transparent;
     }
   }
+}
+.dark-green-background {
+  background: theme-color("dark-green");
 }
