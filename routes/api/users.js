@@ -27,14 +27,14 @@ router.post("/register", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }).then(user => {
+  User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
       });
 
       // Hash password before saving in database
@@ -44,8 +44,8 @@ router.post("/register", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
+            .then((user) => res.json(user))
+            .catch((err) => console.log(err));
         });
       });
     }
@@ -69,14 +69,14 @@ router.post("/login", (req, res) => {
   const password = req.body.password;
 
   // Find user by email
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     // Check if user exists
     if (!user) {
       return res.status(404).json({ emailnotfound: "Email not found" });
     }
 
     // Check password
-    bcrypt.compare(password, user.password).then(isMatch => {
+    bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
         // User matched
         // Create JWT Payload
@@ -85,19 +85,19 @@ router.post("/login", (req, res) => {
           name: user.name,
           categoryMap: user.categoryMap,
           budgets: user.budgets,
-          categoryOverridePatterns: user.categoryOverridePatterns
+          categoryOverridePatterns: user.categoryOverridePatterns,
         };
         // Sign token
         jwt.sign(
           payload,
           keys.secretOrKey,
           {
-            expiresIn: 31556926 // 1 year in seconds
+            expiresIn: 31556926, // 1 year in seconds
           },
           (err, token) => {
             res.json({
               success: true,
-              token: "Bearer " + token
+              token: "Bearer " + token,
             });
           }
         );
@@ -113,7 +113,8 @@ router.post("/login", (req, res) => {
 // @route POST api/users/budget
 // @desc Set budget object
 // @access Private
-router.post("/budgets",
+router.post(
+  "/budgets",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userId = req.user.id;
@@ -123,28 +124,35 @@ router.post("/budgets",
 
     // Check validation
     if (!isValid) {
-      console.log('budget request not valid');
+      console.log("budget request not valid");
       return res.status(400).json(errors);
     }
 
     const budgetName = req.body.budgetName;
     const budgetAmount = req.body.budgetAmount;
 
-    User.findById(userId).then(user => {
+    User.findById(userId).then((user) => {
       if (!user.budgets) {
         user.budgets = new Map();
       }
-      user.budgets.set(budgetName,budgetAmount);
-      user.save().then(user => {
-        res.json({userId: userId, budgets: user.budgets});
-      }).catch(err => {console.log(err);});
-    })
-});
+      user.budgets.set(budgetName, budgetAmount);
+      user
+        .save()
+        .then((user) => {
+          res.json({ userId: userId, budgets: user.budgets });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+);
 
 // @route POST api/users/category-map
 // @desc Set categoryMap object
 // @access Private
-router.post("/category-map",
+router.post(
+  "/category-map",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userId = req.user.id;
@@ -154,46 +162,58 @@ router.post("/category-map",
 
     // Check validation
     if (!isValid) {
-      console.log('categoryMap request not valid');
+      console.log("categoryMap request not valid");
       return res.status(400).json(errors);
     }
 
     const bankCategoryName = req.body.bankCategoryName;
     const newCategoryName = req.body.newCategoryName;
 
-    User.findById(userId).then(user => {
+    User.findById(userId).then((user) => {
       if (!user.categoryMap) {
         user.categoryMap = new Map();
       }
-      user.categoryMap.set(bankCategoryName,newCategoryName);
-      user.save().then(user => {
-        res.json({userId: userId, categoryMap: user.categoryMap});
-      }).catch(err => {console.log(err);});
-    })
-});
+      user.categoryMap.set(bankCategoryName, newCategoryName);
+      user
+        .save()
+        .then((user) => {
+          res.json({ userId: userId, categoryMap: user.categoryMap });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
+);
 
 // @route GET api/users/user-info
 // @desc Return the user object (eg budgets and categoryMap data)
 // @access Private
-router.get("/user-info",
+router.get(
+  "/user-info",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userId = req.user.id;
 
-    User.findById(userId).then(user => {
-      if (!user.budgets) {
-        user.budgets = {};
-      }
-      if (!user.categoryMap) {
-        user.categoryMap = {};
-      }
-      const returnUser = {
-        id: user.id,
-        budgets: user.budgets,
-        categoryMap: user.categoryMap
-      };
-      res.json(returnUser);
-    }).catch(err => {console.log(err);});
-});
+    User.findById(userId)
+      .then((user) => {
+        if (!user.budgets) {
+          user.budgets = {};
+        }
+        if (!user.categoryMap) {
+          user.categoryMap = {};
+        }
+        const returnUser = {
+          id: user.id,
+          budgets: user.budgets,
+          categoryMap: user.categoryMap,
+        };
+        res.json(returnUser);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+);
 
 module.exports = router;

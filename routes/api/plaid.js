@@ -17,11 +17,9 @@ const PLAID_ENV_STRING = process.env.REACT_APP_PLAID_ENV_STRING || "sandbox";
 var PLAID_ENVIRONMENT = null;
 if (PLAID_ENV_STRING == "production") {
   PLAID_ENVIRONMENT = plaid.environments.production;
-}
-else if (PLAID_ENV_STRING == "development") {
+} else if (PLAID_ENV_STRING == "development") {
   PLAID_ENVIRONMENT = plaid.environments.development;
-}
-else {
+} else {
   PLAID_ENVIRONMENT = plaid.environments.sandbox;
 }
 
@@ -45,8 +43,8 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Account.find({ userId: req.user.id })
-      .then(accounts => res.json(accounts))
-      .catch(err => console.log(err));
+      .then((accounts) => res.json(accounts))
+      .catch((err) => console.log(err));
   }
 );
 
@@ -67,16 +65,16 @@ router.post(
     if (PUBLIC_TOKEN) {
       client
         .exchangePublicToken(PUBLIC_TOKEN)
-        .then(exchangeResponse => {
+        .then((exchangeResponse) => {
           ACCESS_TOKEN = exchangeResponse.access_token;
           ITEM_ID = exchangeResponse.item_id;
 
           // Check if account already exists for specific user
           Account.findOne({
             userId: req.user.id,
-            institutionId: institution_id
+            institutionId: institution_id,
           })
-            .then(account => {
+            .then((account) => {
               if (account) {
                 console.log("Account already exists");
               } else {
@@ -85,15 +83,15 @@ router.post(
                   accessToken: ACCESS_TOKEN,
                   itemId: ITEM_ID,
                   institutionId: institution_id,
-                  institutionName: name
+                  institutionName: name,
                 });
 
-                newAccount.save().then(account => res.json(account));
+                newAccount.save().then((account) => res.json(account));
               }
             })
-            .catch(err => console.log(err)); // Mongo Error
+            .catch((err) => console.log(err)); // Mongo Error
         })
-        .catch(err => console.log(err)); // Plaid Error
+        .catch((err) => console.log(err)); // Plaid Error
     }
   }
 );
@@ -109,18 +107,18 @@ router.post(
     const { name, institution_id } = institution;
     Account.findOne({
       userId: req.user.id,
-      institutionId: institution_id
+      institutionId: institution_id,
     })
-    .then(account => {
-      if (account) {
-        account.toRefresh = false;
-        account.save();
-      } else {
-        console.log("could not find account to refresh");
-      }
-      res.json(account);
-    })
-    .catch(err => console.log(err)); // Mongo Error
+      .then((account) => {
+        if (account) {
+          account.toRefresh = false;
+          account.save();
+        } else {
+          console.log("could not find account to refresh");
+        }
+        res.json(account);
+      })
+      .catch((err) => console.log(err)); // Mongo Error
   }
 );
 
@@ -131,7 +129,7 @@ router.delete(
   "/accounts/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Account.findById(req.params.id).then(account => {
+    Account.findById(req.params.id).then((account) => {
       // Delete account
       account.remove().then(() => res.json({ success: true }));
     });
@@ -156,54 +154,59 @@ router.post(
     const accounts = req.body;
 
     if (accounts) {
-      accounts.forEach(function(account) {
+      accounts.forEach(function (account) {
         ACCESS_TOKEN = account.accessToken;
         const institutionName = account.institutionName;
         accountPromises.push(
           client
             .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
-            .then(response => {
-              transactions.push({
-                accountName: institutionName,
-                transactions: response.transactions
-              });
-            // We want to handle the case of item_login_required here
-            }, reject => {
-              if (reject && (reject.error_code === "ITEM_LOGIN_REQUIRED")) {
-                return client.createPublicToken(ACCESS_TOKEN)
-                  .then(tokenResponse => {
-                    return Account.findOne({"itemId": account.itemId}).then(foundAccount => {
-                      foundAccount.toRefresh = true;
-                      foundAccount.publicToken = tokenResponse.public_token;
-                      needUpdate.push(foundAccount);
-                      console.log("found an account that needs refresh and got the token for it");
-                      console.log(foundAccount);
-                      return foundAccount.save()
-                      .then(() => {
-                        return foundAccount;
-                      })
-                    });
+            .then(
+              (response) => {
+                transactions.push({
+                  accountName: institutionName,
+                  transactions: response.transactions,
                 });
+                // We want to handle the case of item_login_required here
+              },
+              (reject) => {
+                if (reject && reject.error_code === "ITEM_LOGIN_REQUIRED") {
+                  return client
+                    .createPublicToken(ACCESS_TOKEN)
+                    .then((tokenResponse) => {
+                      return Account.findOne({ itemId: account.itemId }).then(
+                        (foundAccount) => {
+                          foundAccount.toRefresh = true;
+                          foundAccount.publicToken = tokenResponse.public_token;
+                          needUpdate.push(foundAccount);
+                          console.log(
+                            "found an account that needs refresh and got the token for it"
+                          );
+                          console.log(foundAccount);
+                          return foundAccount.save().then(() => {
+                            return foundAccount;
+                          });
+                        }
+                      );
+                    });
+                } else {
+                  // If it is not the error above, then reject
+                  return new Error(reject);
+                }
               }
-              else {
-                // If it is not the error above, then reject
-                return new Error(reject);
-              }
-            })
-            .catch(err => {
-                console.log(err);
+            )
+            .catch((err) => {
+              console.log(err);
             })
         );
       });
-      Promise.allSettled(accountPromises).then( () => {
+      Promise.allSettled(accountPromises).then(() => {
         // If there are any transactions or accounts, respond with them, otherwise error
         if (transactions.length || needUpdate.length) {
-          res.json({transactions: transactions, needUpdate: needUpdate});
+          res.json({ transactions: transactions, needUpdate: needUpdate });
+        } else {
+          res.status(400).send({ message: "This is an error!" });
         }
-        else {
-          res.status(400).send({ message: 'This is an error!' });
-        }
-      } );
+      });
     }
   }
 );

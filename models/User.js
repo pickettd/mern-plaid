@@ -5,34 +5,36 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  categoryOverridePatterns: [{
-    pattern: String,
-    flags: String,
-    mainCategory: String,
-    subCategory: String
-  }],
+  categoryOverridePatterns: [
+    {
+      pattern: String,
+      flags: String,
+      mainCategory: String,
+      subCategory: String,
+    },
+  ],
   categoryMap: {
     type: Map,
-    of: String
+    of: String,
   },
   budgets: {
     type: Map,
-    of: Number
-  }
+    of: Number,
+  },
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
