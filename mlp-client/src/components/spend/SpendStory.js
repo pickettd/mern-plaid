@@ -185,7 +185,7 @@ class SpendStory extends Component {
           <div className="section section-spend-plan-footer">
             <div className="container">
               <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-6 offset-md-1">
                   <h2>
                     <span className="small top">Savings</span>
                     <br />

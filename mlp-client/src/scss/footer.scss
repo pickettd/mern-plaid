@@ -1,0 +1,16 @@
+footer {
+  background: theme-color("dark-blue");
+  padding: 2em 1em 1em;
+  color: white;
+  a {
+    color: white;
+  }
+  .footer-nav {
+    a {
+      padding: 1em 1.5em;
+    }
+  }
+  p {
+    padding-top: 1em;
+  }
+}

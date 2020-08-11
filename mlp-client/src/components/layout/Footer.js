@@ -3,29 +3,27 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div className="main-footer">
+    <footer>
       <div className="container">
         <div className="row">
-          {/*Column 1*/}
-          <div className="col">
-            <h4>Footer</h4>
-            <ul className="footer-list">
-              <li>item 1</li>
-              <li>item 2</li>
-              <li>item 3</li>
-            </ul>
+          <div className="mr-auto footer-nav">
+            <Link to="/spend-story">spend</Link>
+            <Link to="/save-story">save</Link>
+            <Link to="/borrow-story">borrow</Link>
+            <Link to="/plan-story">plan</Link>
           </div>
-          {/*Column 2*/}
-          {/*Column 3*/}
         </div>
+
         <div className="row">
           <p className="col-sm">
-            &copy;{new Date().getFullYear()} WAIWAI | All rights reserved |
-            Terms of service | Privacy
+            <small>
+              &copy;{new Date().getFullYear()} WAIWAI | All rights reserved |
+              Terms of service | Privacy{" "}
+            </small>
           </p>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
