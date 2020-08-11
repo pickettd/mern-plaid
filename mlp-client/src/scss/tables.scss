@@ -1,14 +1,28 @@
-table {
+table.table {
   font-size: 0.9rem;
-  th {
-    font-size: 0.75rem;
-    font-weight: bold;
+  thead {
+    th {
+      font-size: 0.75rem;
+      font-weight: bold;
+      border-top: 0 solid transparent;
+      border-bottom: 0 solid transparent;
+    }
+  }
+  td {
+    input {
+      border: none;
+      border-bottom: 1px solid #d8d8d8;
+      height: 2em;
+    }
   }
   button.btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
     &.secondary {
-      background-color: theme-color("dark-green");
+      border-color: theme-color("dark-green");
+      border-width: 1px;
+      color: theme-color("dark-green");
+      background-color: white;
     }
   }
 }

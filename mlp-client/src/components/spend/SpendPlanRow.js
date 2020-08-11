@@ -18,7 +18,7 @@ const SpendPlanRow = (props) => {
           ) : (
             <input />
           )}
-          <button className="">Save</button>
+          <button className="btn secondary">Save</button>
         </td>
         <td>
           {props.budgets && props.budgets[props.category.bankName] ? (
@@ -30,7 +30,7 @@ const SpendPlanRow = (props) => {
           ) : (
             <input />
           )}
-          <button className="">Save</button>
+          <button className="btn secondary">Save</button>
         </td>
         <td>
           {currencyFormatter.format(

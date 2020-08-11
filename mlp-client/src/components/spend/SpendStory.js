@@ -180,6 +180,15 @@ class SpendStory extends Component {
                   </div>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-8 pt-4 pb-4">
+                  <h4>
+                    Needs Work
+                    <br />
+                    <span className="small bottom">4 categories</span>
+                  </h4>
+                </div>
+              </div>
             </div>
           </div>
           <div className="section section-spend-plan-footer">

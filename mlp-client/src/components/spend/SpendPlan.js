@@ -8,12 +8,13 @@ const SpendPlan = (props) => {
   return (
     <>
       <SpendRangeHeader mainHeaderText="Spend" subHeaderText="Plan" />
-      <div className="section section-header-generic">
+      <div className="section">
         <div className="container">
           <div className="row">
             <div className="col">
               <h2>Income</h2>
               <label for="pay-frequency">Pay Frequency</label>
+              <br />
               <select className="selectpicker" data-style="btn btn-default">
                 <option disabled selected>
                   {" "}
@@ -30,7 +31,7 @@ const SpendPlan = (props) => {
       </div>
       <div className="section table-section">
         <div className="container">
-          <Table striped bordered hover>
+          <Table hover>
             <thead>
               <tr>
                 <th>Bank category name</th>
