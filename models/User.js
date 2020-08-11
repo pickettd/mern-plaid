@@ -31,6 +31,10 @@ const UserSchema = new Schema({
     type: Map,
     of: String,
   },
+  singleTransactionsCategoryMap: {
+    type: Map,
+    of: String,
+  },
   budgets: {
     type: Map,
     of: Number,
