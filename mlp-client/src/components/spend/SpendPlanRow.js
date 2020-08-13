@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import currencyFormatter from "../../utils/currencyFormatter";
+import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const SpendPlanRow = (props) => {
   if (

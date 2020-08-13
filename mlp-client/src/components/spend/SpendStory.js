@@ -10,10 +10,11 @@ import {
 import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import UserProfile from "../profile/UserProfile";
-import currencyFormatter from "../../utils/currencyFormatter";
+import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
-import foodLogo from "../../img/spend-plan/food-background.svg";
+import SpendCategoryCard from "./SpendCategoryCard";
+
 class SpendStory extends Component {
   render() {
     const { plaid } = this.props;
@@ -35,7 +36,7 @@ class SpendStory extends Component {
                     <h1>
                       <span className="small top">Income</span>
                       <br />
-                      {currencyFormatter.format(plaid.incomeSum)}
+                      {noDecimalCurrencyFormatter.format(plaid.incomeSum)}
                     </h1>
                     <h3>
                       <span className="small top">Paycheck</span>
@@ -55,7 +56,7 @@ class SpendStory extends Component {
                     <h1>
                       <span className="small top">Spent</span>
                       <br />
-                      {currencyFormatter.format(plaid.spendingSum)}
+                      {noDecimalCurrencyFormatter.format(plaid.spendingSum)}
                     </h1>
                     <h3>
                       <span className="small top">Transactions</span>
@@ -96,7 +97,7 @@ class SpendStory extends Component {
                     </div>
                     <div className="row">
                       <h3>
-                        {currencyFormatter.format(
+                        {noDecimalCurrencyFormatter.format(
                           plaid.incomeSum - plaid.spendingSum
                         )}
                         <br />
@@ -138,50 +139,12 @@ class SpendStory extends Component {
               </div>
               <div className="row">
                 <div className="col-lg-3 col-md-4 col-sm-6">
-                  <div className="card card-blog">
-                    <div className="card-image dark-green-background">
-                      <img
-                        className="img "
-                        alt="Category Name"
-                        src={foodLogo}
-                      />
-                      <div className="card-img-overlay">
-                        <h5>Category Name</h5>
-                      </div>
-                    </div>
-                    <div className="card-body text-center">
-                      <h4 className="card-title text-left">
-                        $200
-                        <span className="small bottom">
-                          <br />
-                          Available
-                        </span>
-                      </h4>
-                      <div className="card-description">graph</div>
-                      <div className="card-footer">
-                        <div className="row mt-3">
-                          <div className="col">
-                            <p className=" text-left">
-                              $200
-                              <span className="small bottom">
-                                <br />
-                                Budget
-                              </span>
-                            </p>
-                          </div>
-                          <div className="col">
-                            <p className=" text-left">
-                              $200
-                              <span className="small bottom">
-                                <br />
-                                Spent
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <SpendCategoryCard
+                    categoryName="Food"
+                    underBudget={true}
+                    budgetAmount="300"
+                    spentAmount="100"
+                  ></SpendCategoryCard>
                 </div>
               </div>
               <div className="row">
@@ -193,6 +156,16 @@ class SpendStory extends Component {
                   </h4>
                 </div>
               </div>
+              <div className="row">
+                <div className="col-lg-3 col-md-4 col-sm-6">
+                  <SpendCategoryCard
+                    categoryName="Personal"
+                    underBudget={false}
+                    budgetAmount="100"
+                    spentAmount="150"
+                  ></SpendCategoryCard>
+                </div>
+              </div>
             </div>
           </div>
           <div className="section section-spend-plan-footer">
@@ -202,7 +175,9 @@ class SpendStory extends Component {
                   <h2>
                     <span className="small top">Savings</span>
                     <br />
-                    $522
+                    {noDecimalCurrencyFormatter.format(
+                      plaid.incomeSum - plaid.spendingSum
+                    )}
                   </h2>
                 </div>
               </div>
