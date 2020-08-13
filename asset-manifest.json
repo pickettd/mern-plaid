@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/mern-plaid/static/css/main.b5c1e128.chunk.css",
-    "main.js": "/mern-plaid/static/js/main.1abf425a.chunk.js",
-    "main.js.map": "/mern-plaid/static/js/main.1abf425a.chunk.js.map",
+    "main.css": "/mern-plaid/static/css/main.21f76025.chunk.css",
+    "main.js": "/mern-plaid/static/js/main.f2131a4f.chunk.js",
+    "main.js.map": "/mern-plaid/static/js/main.f2131a4f.chunk.js.map",
     "runtime-main.js": "/mern-plaid/static/js/runtime-main.8500bda8.js",
     "runtime-main.js.map": "/mern-plaid/static/js/runtime-main.8500bda8.js.map",
-    "static/js/2.270d3b74.chunk.js": "/mern-plaid/static/js/2.270d3b74.chunk.js",
-    "static/js/2.270d3b74.chunk.js.map": "/mern-plaid/static/js/2.270d3b74.chunk.js.map",
+    "static/js/2.58601a9a.chunk.js": "/mern-plaid/static/js/2.58601a9a.chunk.js",
+    "static/js/2.58601a9a.chunk.js.map": "/mern-plaid/static/js/2.58601a9a.chunk.js.map",
     "index.html": "/mern-plaid/index.html",
-    "precache-manifest.a41cb6d61d4ef363ad62e5104b4654ce.js": "/mern-plaid/precache-manifest.a41cb6d61d4ef363ad62e5104b4654ce.js",
+    "precache-manifest.185789f078f1dc2387312ace63ba1338.js": "/mern-plaid/precache-manifest.185789f078f1dc2387312ace63ba1338.js",
     "service-worker.js": "/mern-plaid/service-worker.js",
-    "static/css/main.b5c1e128.chunk.css.map": "/mern-plaid/static/css/main.b5c1e128.chunk.css.map",
-    "static/js/2.270d3b74.chunk.js.LICENSE.txt": "/mern-plaid/static/js/2.270d3b74.chunk.js.LICENSE.txt",
-    "static/media/food-background.svg": "/mern-plaid/static/media/food-background.b39a2d44.svg",
+    "static/css/main.21f76025.chunk.css.map": "/mern-plaid/static/css/main.21f76025.chunk.css.map",
+    "static/js/2.58601a9a.chunk.js.LICENSE.txt": "/mern-plaid/static/js/2.58601a9a.chunk.js.LICENSE.txt",
+    "static/media/food-background.svg": "/mern-plaid/static/media/food-background.b4828793.svg",
     "static/media/logo.svg": "/mern-plaid/static/media/logo.5d5d9eef.svg",
-    "static/media/App.scss": "/mern-plaid/static/media/waiwai-savings-footer.88f2e7e4.svg"
+    "static/media/App.scss": "/mern-plaid/static/media/waiwai-savings-footer.da879027.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.8500bda8.js",
-    "static/js/2.270d3b74.chunk.js",
-    "static/css/main.b5c1e128.chunk.css",
-    "static/js/main.1abf425a.chunk.js"
+    "static/js/2.58601a9a.chunk.js",
+    "static/css/main.21f76025.chunk.css",
+    "static/js/main.f2131a4f.chunk.js"
   ]
 }
