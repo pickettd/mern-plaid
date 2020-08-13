@@ -7,6 +7,7 @@ import {
   ACCOUNTS_LOADING,
   GET_TRANSACTIONS,
   TRANSACTIONS_LOADING,
+  SET_INCOME_SUM,
 } from "../actions/types";
 
 import { PLAID_MOCK_DATA } from "./reduxMockData";
@@ -81,6 +82,11 @@ export default function (state = initialState, action) {
         ...state,
         accounts: action.payload,
         accountsLoading: false,
+      };
+    case SET_INCOME_SUM:
+      return {
+        ...state,
+        incomeSum: action.payload,
       };
     case TRANSACTIONS_LOADING:
       return {
