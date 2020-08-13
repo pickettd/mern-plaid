@@ -18,6 +18,7 @@ table.table {
   button.btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
+    margin-top: 0;
     &.secondary {
       border-color: theme-color("dark-green");
       border-width: 1px;

@@ -9,3 +9,11 @@
     left: auto;
   }
 }
+
+.dropdown:hover>.dropdown-menu {
+  display: block;
+}
+
+.dropdown-item:hover {
+  background-color: whitesmoke;
+}
