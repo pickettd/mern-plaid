@@ -28,12 +28,13 @@ const Header = () => {
           <Nav>
             {/*<LinkContainer to="/">
               <Nav.Link href="#home">Home</Nav.Link>
-            </LinkContainer>*/}
+            </LinkContainer>
             <div className="mr-auto navbar-nav">
               <LinkContainer to="/spend-story">
                 <Nav.Link href="#">spend</Nav.Link>
-              </LinkContainer>
+              </LinkContainer>*/}
 
+            <div className="mr-auto navbar-nav">
             {/*hover dropdown test*/}
             <NavDropdown
                 renderMenuOnMount={true}
@@ -41,6 +42,7 @@ const Header = () => {
                 id="hover-nav-dropdown"
                 className="dropdown-menu-left"
             >
+                <NavDropdown.Item href="/spend-story">spend story</NavDropdown.Item>
                 <NavDropdown.Item href="/transactions">view transactions</NavDropdown.Item>
                 <NavDropdown.Item href="/spend-plan">manage spend plan</NavDropdown.Item>
             </NavDropdown>
