@@ -13,10 +13,14 @@ const SpendPlan = (props) => {
           <div className="row">
             <div className="col">
               <h2>Income</h2>
-              <label for="pay-frequency">Pay Frequency</label>
+              <label htmlFor="pay-frequency">Pay Frequency</label>
               <br />
-              <select className="selectpicker" data-style="btn btn-default">
-                <option disabled selected>
+              <select
+                className="selectpicker"
+                data-style="btn btn-default"
+                defaultValue="0"
+              >
+                <option disabled value="0">
                   {" "}
                   Choose date range
                 </option>
