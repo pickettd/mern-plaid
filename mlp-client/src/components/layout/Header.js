@@ -1,11 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import NavItem from "react-bootstrap/NavItem";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-const Header = () => {
+const Header = (props) => {
   return (
     <>
       <Navbar expand="lg">
@@ -66,7 +67,7 @@ const Header = () => {
               </LinkContainer>
             </div>
             <NavDropdown
-              title="User"
+              title={props.userName}
               id="basic-nav-dropdown"
               className="ml-auto dropdown-menu-right"
             >
@@ -74,7 +75,7 @@ const Header = () => {
               <NavDropdown.Item href="#action/3.2">
                 Bank Accounts
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              {/*<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/}
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
@@ -83,4 +84,9 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  userName: state.auth.user.name,
+});
+
+// Note that there is probably a better way to do this with React hooks now
+export default connect(mapStateToProps, {})(Header);
