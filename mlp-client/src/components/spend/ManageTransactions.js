@@ -8,18 +8,19 @@ const ManageTransactions = (props) => {
   return (
     <>
       <SpendRangeHeader mainHeaderText="Transaction" subHeaderText="History" />
-      <div className="section section-donuts">
+      {/* Commenting this out because in this version we won't have need/want/save */}
+      {/*<div className="section section-donuts">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-3 col-6">Donut Graph</div>
             <div className="col-lg-3 col-6">
-              <h2 classNameName="">70%</h2>
+              <h2 className="">70%</h2>
             </div>
             <div className="col-lg-3 col-6">Graph</div>
             <div className="col-lg-3 col-6">Graph</div>
           </div>
         </div>
-      </div>
+      </div>*/}
       <div className="section table-section">
         <div className="container">
           <Table striped hover>
