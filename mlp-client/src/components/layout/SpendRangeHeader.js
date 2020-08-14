@@ -10,7 +10,9 @@ const SpendRangeHeader = (props) => {
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-sm-6 offset-sm-3 justify-content-center text-center">
-              <div className="form-group">
+              {/* Commenting this out for now because we're not going to have the range
+              on every page */}
+              {/*<div className="form-group">
                 <select
                   className="selectpicker"
                   data-style="btn btn-default"
@@ -28,7 +30,7 @@ const SpendRangeHeader = (props) => {
                     );
                   })}
                 </select>
-              </div>
+              </div>*/}
 
               <h1>
                 {props.mainHeaderText}
