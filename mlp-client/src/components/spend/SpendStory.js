@@ -41,12 +41,12 @@ class SpendStory extends Component {
                     <h3>
                       <span className="small top">Paycheck</span>
                       <br />
-                      $300
+                      {noDecimalCurrencyFormatter.format(plaid.paycheckSum)}
                     </h3>
                     <h3>
                       <span className="small top">Other Source</span>
                       <br />
-                      $300
+                      {noDecimalCurrencyFormatter.format(plaid.otherIncomeSum)}
                     </h3>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ class SpendStory extends Component {
                     <div className="row">
                       <h3>
                         {noDecimalCurrencyFormatter.format(
-                          plaid.incomeSum - plaid.spendingSum
+                          plaid.incomeSum - auth.budgetSum
                         )}
                         <br />
                         <span className="small bottom">budget available</span>
@@ -122,7 +122,7 @@ class SpendStory extends Component {
                 </div>
                 <div className="col-md-6 text-md-right">
                   <h3>
-                    $300
+                    {noDecimalCurrencyFormatter.format(auth.budgetSum)}
                     <br />
                     <span className="small bottom">budget estimate</span>
                   </h3>
