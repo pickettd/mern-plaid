@@ -17,7 +17,7 @@ import SpendCategoryCard from "./SpendCategoryCard";
 
 class SpendStory extends Component {
   render() {
-    const { plaid } = this.props;
+    const { plaid, auth } = this.props;
     const connectedBankAccounts = plaid.accounts.map((account) => (
       <div key={account._id}>Account Name here: {account.institutionName}</div>
     ));
@@ -25,7 +25,7 @@ class SpendStory extends Component {
       <>
         <div>
           <SpendRangeHeader
-            mainHeaderText={this.props.userName + "'s"}
+            mainHeaderText={this.props.auth.user.name + "'s"}
             subHeaderText="Spend Story"
           />
           <div className="section income-spend">
@@ -133,38 +133,56 @@ class SpendStory extends Component {
                   <h4>
                     On track
                     <br />
-                    <span className="small bottom">7 categories</span>
+                    <span className="small bottom">
+                      {plaid.sortedCategoriesUnderBudget.length}
+                      {plaid.sortedCategoriesUnderBudget.length === 1
+                        ? " category"
+                        : " catiegories"}
+                    </span>
                   </h4>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-6">
-                  <SpendCategoryCard
-                    categoryName="Food"
-                    underBudget={true}
-                    budgetAmount="300"
-                    spentAmount="100"
-                  ></SpendCategoryCard>
-                </div>
+                {plaid.sortedCategoriesUnderBudget.map((categoryName, i) => {
+                  return (
+                    <div key={i} className="col-lg-3 col-md-4 col-sm-6">
+                      <SpendCategoryCard
+                        categoryName={categoryName}
+                        underBudget={true}
+                        budgetAmount={auth.budgets[categoryName]}
+                        spentAmount={plaid.spendingByCategory[categoryName]}
+                      ></SpendCategoryCard>
+                    </div>
+                  );
+                })}
               </div>
               <div className="row">
                 <div className="col-8 pt-4 pb-4">
                   <h4>
                     Needs Work
                     <br />
-                    <span className="small bottom">4 categories</span>
+                    <span className="small bottom">
+                      {plaid.sortedCategoriesOverBudget.length}
+                      {plaid.sortedCategoriesOverBudget.length === 1
+                        ? " category"
+                        : " catiegories"}
+                    </span>
                   </h4>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-3 col-md-4 col-sm-6">
-                  <SpendCategoryCard
-                    categoryName="Personal"
-                    underBudget={false}
-                    budgetAmount="100"
-                    spentAmount="150"
-                  ></SpendCategoryCard>
-                </div>
+                {plaid.sortedCategoriesOverBudget.map((categoryName, i) => {
+                  return (
+                    <div key={i} className="col-lg-3 col-md-4 col-sm-6">
+                      <SpendCategoryCard
+                        categoryName={categoryName}
+                        underBudget={false}
+                        budgetAmount={auth.budgets[categoryName]}
+                        spentAmount={plaid.spendingByCategory[categoryName]}
+                      ></SpendCategoryCard>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -200,7 +218,7 @@ SpendStory.propTypes = {
 
 const mapStateToProps = (state) => ({
   plaid: state.plaid,
-  userName: state.auth.user.name,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
