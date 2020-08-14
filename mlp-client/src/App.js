@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import logo from "./logo.svg";
 import "./App.scss";
 import Header from "./components/layout/Header.js";
 import Footer from "./components/layout/Footer.js";
@@ -21,17 +20,7 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/">
-            <div className="App">
-              <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                  Welcome to the temporary homepage, click spend in the navbar
-                  to get started
-                </p>
-              </header>
-            </div>
-          </Route>
+          <Route exact path="/" component={SpendStory}></Route>
           <Route path="/spend-story" component={SpendStory} />
           <Route path="/spend-plan" component={SpendPlan} />
           <Route path="/manage-transactions" component={ManageTransactions} />
