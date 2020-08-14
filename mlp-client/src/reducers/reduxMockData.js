@@ -16,7 +16,7 @@ export const AUTH_MOCK_DATA = {
     Recreation: 10,
     Personal: 100,
   },
-  budgetSum: 380,
+  expenseBudgetSum: 380,
   categoryMap: {
     "Food and Drink": "Groceries",
     Shops: "Shopping",

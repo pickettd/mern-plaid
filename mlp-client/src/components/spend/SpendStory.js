@@ -97,8 +97,11 @@ class SpendStory extends Component {
                     </div>
                     <div className="row">
                       <h3>
+                        {/* Note, Joe's explanation of budget available is
+                        supposed to be what you earned last 30 days versus what you
+                        budgeted to spend for 30 days */}
                         {noDecimalCurrencyFormatter.format(
-                          plaid.incomeSum - auth.budgetSum
+                          plaid.incomeSum - auth.expenseBudgetSum
                         )}
                         <br />
                         <span className="small bottom">budget available</span>
@@ -122,7 +125,9 @@ class SpendStory extends Component {
                 </div>
                 <div className="col-md-6 text-md-right">
                   <h3>
-                    {noDecimalCurrencyFormatter.format(auth.budgetSum)}
+                    {/* Note, Joe's explanation of budget estimate is
+                        supposed to be the sum of all the expense budgets */}
+                    {noDecimalCurrencyFormatter.format(auth.expenseBudgetSum)}
                     <br />
                     <span className="small bottom">budget estimate</span>
                   </h3>
