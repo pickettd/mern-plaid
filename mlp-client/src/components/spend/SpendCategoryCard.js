@@ -21,10 +21,9 @@ const SpendCategoryCard = (props) => {
       subValueDisplay = percentFormatter.format(spentAmount / budgetAmount);
     }
   } else {
+    // this is an over budget category
     colorBackgroundClass = "brown-yellow-background";
-    subValueDisplay = noDecimalCurrencyFormatter.format(
-      budgetAmount - spentAmount
-    );
+    subValueDisplay = noDecimalCurrencyFormatter.format(spentAmount);
     if (budgetAmount !== 0) {
       mainValueDisplay = percentFormatter.format(spentAmount / budgetAmount);
     }
