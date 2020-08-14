@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c984d20b8a3aa638d7b81e1e19361418",
+    "revision": "7cc2ef636075b5c86b3df46f6317f1b9",
     "url": "/mern-plaid/index.html"
   },
   {
-    "revision": "695980bfa40e41a6c659",
+    "revision": "2af996c9591d5eceacfd",
     "url": "/mern-plaid/static/css/main.21f76025.chunk.css"
   },
   {
-    "revision": "ce0782fa6608107d9956",
-    "url": "/mern-plaid/static/js/2.58601a9a.chunk.js"
+    "revision": "10e1c70f8b68ae9af486",
+    "url": "/mern-plaid/static/js/2.dd3aa33c.chunk.js"
   },
   {
     "revision": "3453b8997016469371284a28c0e873e2",
-    "url": "/mern-plaid/static/js/2.58601a9a.chunk.js.LICENSE.txt"
+    "url": "/mern-plaid/static/js/2.dd3aa33c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "695980bfa40e41a6c659",
-    "url": "/mern-plaid/static/js/main.f2131a4f.chunk.js"
+    "revision": "2af996c9591d5eceacfd",
+    "url": "/mern-plaid/static/js/main.33d78e7a.chunk.js"
   },
   {
     "revision": "acf514c6fd0ca56eaf15",
@@ -30,6 +30,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "5d5d9eefa31e5e13a6610d9fa7a283bb",
     "url": "/mern-plaid/static/media/logo.5d5d9eef.svg"
+  },
+  {
+    "revision": "c58cebc57e23a5fcf710a3e5ce7763b6",
+    "url": "/mern-plaid/static/media/question_mark.c58cebc5.svg"
   },
   {
     "revision": "19f3b71cd53794b38d8e9e97ee1f10b0",
