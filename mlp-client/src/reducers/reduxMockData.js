@@ -16,6 +16,7 @@ export const AUTH_MOCK_DATA = {
     Recreation: 10,
     Personal: 100,
   },
+  budgetSum: 380,
   categoryMap: {
     "Food and Drink": "Groceries",
     Shops: "Shopping",
@@ -1281,6 +1282,8 @@ export const PLAID_MOCK_DATA = {
   accountsLoading: false,
   transactionsLoading: false,
   incomeSum: 1000,
+  paycheckSum: 500,
+  otherIncomeSum: 500,
   spendingSum: 4391.92,
   spendRangeDaysSelected: 30,
   totalTransactionCount: 50,
