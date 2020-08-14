@@ -20,7 +20,11 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/" component={SpendStory}></Route>
+          <Route
+            exact
+            path={process.env.PUBLIC_URL + "/"}
+            component={SpendStory}
+          ></Route>
           <Route path="/spend-story" component={SpendStory} />
           <Route path="/spend-plan" component={SpendPlan} />
           <Route path="/manage-transactions" component={ManageTransactions} />
