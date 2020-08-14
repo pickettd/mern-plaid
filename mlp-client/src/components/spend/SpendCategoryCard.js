@@ -3,15 +3,20 @@ import { connect } from "react-redux";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
 import foodLogo from "../../img/spend-plan/food-background.svg";
+import questionMarkLogo from "../../img/spend-plan/question_mark.svg";
 
 const SpendCategoryCard = (props) => {
-  const thisCategoryLogo = foodLogo;
   const budgetAmount = props.budgetAmount;
   const spentAmount = props.spentAmount;
 
   let mainValueDisplay = "";
   let subValueDisplay = "";
   let colorBackgroundClass = "";
+  let thisCategoryLogo = questionMarkLogo;
+
+  if (props.categoryName === "Food and Drink") {
+    thisCategoryLogo = foodLogo;
+  }
   if (props.underBudget) {
     colorBackgroundClass = "dark-green-background";
     mainValueDisplay = noDecimalCurrencyFormatter.format(
