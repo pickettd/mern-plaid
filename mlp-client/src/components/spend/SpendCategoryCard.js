@@ -3,6 +3,10 @@ import { connect } from "react-redux";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
 import foodLogo from "../../img/spend-plan/food-background.svg";
+import transportationLogo from "../../img/spend-plan/transportation.svg";
+import giftsLogo from "../../img/spend-plan/gifts.svg";
+import entertainmentLogo from "../../img/spend-plan/entertainment.svg";
+import personalLogo from "../../img/spend-plan/personal.svg";
 import questionMarkLogo from "../../img/spend-plan/question_mark.svg";
 
 const SpendCategoryCard = (props) => {
@@ -16,6 +20,18 @@ const SpendCategoryCard = (props) => {
 
   if (props.categoryName === "Food and Drink") {
     thisCategoryLogo = foodLogo;
+  }
+  if (props.categoryName === "Travel") {
+    thisCategoryLogo = transportationLogo;
+  }
+  if (props.categoryName === "Shops") {
+    thisCategoryLogo = giftsLogo;
+  }
+  if (props.categoryName === "Recreation") {
+    thisCategoryLogo = entertainmentLogo;
+  }
+  if (props.categoryName === "Personal") {
+    thisCategoryLogo = personalLogo;
   }
   if (props.underBudget) {
     colorBackgroundClass = "dark-green-background";
