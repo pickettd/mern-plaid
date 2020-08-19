@@ -9,4 +9,10 @@
   .login-box {
     background: gray;
   }
+  &.mountain-background {
+    background: url("../img/background-images/waiwai-background-header.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+  }
 }

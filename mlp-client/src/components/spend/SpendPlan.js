@@ -44,7 +44,7 @@ const SpendPlan = (props) => {
                   </tr>
                 </tbody>
               </Table>
-              <div>
+              <div className="mt-5">
                 <h3>Add Income Sources</h3>
               </div>
               <div className="row">
@@ -52,7 +52,7 @@ const SpendPlan = (props) => {
                   <label htmlFor="pay-frequency">Paycheck Frequency</label>
                   <br />
                   <select
-                    className="selectpicker"
+                    className="selectpicker form-control custom-select"
                     data-style="btn btn-default"
                     defaultValue="0"
                   >
@@ -66,9 +66,9 @@ const SpendPlan = (props) => {
                     <option value="1">Monthly</option>
                   </select>
                   <br />
-                  <label>Paycheck amount</label>
+                  <label className="mt-4">Paycheck amount</label>
                   <br />
-                  <input></input>
+                  <input className="form-control"></input>
                 </div>
                 <div className="col">
                   <label htmlFor="other-frequency">
@@ -76,7 +76,7 @@ const SpendPlan = (props) => {
                   </label>
                   <br />
                   <select
-                    className="selectpicker"
+                    className="selectpicker form-control custom-select"
                     data-style="btn btn-default"
                     defaultValue="0"
                   >
@@ -90,11 +90,15 @@ const SpendPlan = (props) => {
                     <option value="1">Monthly</option>
                   </select>
                   <br />
-                  <label>Other Income Amount</label>
+                  <label className="mt-4">Other Income Amount</label>
                   <br />
-                  <input></input>
+                  <input className="form-control"></input>
                 </div>
-                <button className="btn secondary">Save</button>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <button className="btn secondary mt-4">Save</button>
+                </div>
               </div>
             </div>
           </div>

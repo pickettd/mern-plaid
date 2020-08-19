@@ -4,8 +4,15 @@ import { connect } from "react-redux";
 const UserProfilePage = (props) => {
   return (
     <>
-      <div>This is the User Profile Page</div>
-      <div>Name: {props.auth.user.name}</div>
+      <div className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              This is the User Profile <br /> {props.auth.user.name}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
