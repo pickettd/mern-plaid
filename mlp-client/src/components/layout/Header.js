@@ -10,9 +10,9 @@ const Header = (props) => {
   return (
     <>
       <Navbar expand="lg">
-        <LinkContainer to="/">
+        <LinkContainer to={process.env.PUBLIC_URL + "/"}>
           <NavItem>
-            <Navbar.Brand href="/">
+            <Navbar.Brand href="#">
               <img
                 alt=""
                 src=""
@@ -71,10 +71,12 @@ const Header = (props) => {
               id="basic-nav-dropdown"
               className="ml-auto dropdown-menu-right"
             >
-              <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Bank Accounts
-              </NavDropdown.Item>
+              <LinkContainer to="/user-profile">
+                <NavDropdown.Item href="#">Profile</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/bank-accounts">
+                <NavDropdown.Item href="#">Bank Accounts</NavDropdown.Item>
+              </LinkContainer>
               {/*<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/}
             </NavDropdown>
           </Nav>
