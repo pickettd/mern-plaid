@@ -44,52 +44,58 @@ const SpendPlan = (props) => {
                   </tr>
                 </tbody>
               </Table>
-              <div>Add Income Sources:</div>
               <div>
-                <label htmlFor="pay-frequency">Paycheck Frequency</label>
-                <br />
-                <select
-                  className="selectpicker"
-                  data-style="btn btn-default"
-                  defaultValue="0"
-                >
-                  <option disabled value="0">
-                    {" "}
-                    Choose date range
-                  </option>
-                  <option value="1">Weekly</option>
-                  <option value="1">Bi-weekly</option>
-                  <option value="1">Bi-monthly</option>
-                  <option value="1">Monthly</option>
-                </select>
-                <br />
-                <label>Paycheck amount</label>
-                <br />
-                <input></input>
+                <h3>Add Income Sources</h3>
               </div>
-              <div>
-                <label htmlFor="other-frequency">Other Income Frequency</label>
-                <br />
-                <select
-                  className="selectpicker"
-                  data-style="btn btn-default"
-                  defaultValue="0"
-                >
-                  <option disabled value="0">
-                    {" "}
-                    Choose date range
-                  </option>
-                  <option value="1">Weekly</option>
-                  <option value="1">Bi-weekly</option>
-                  <option value="1">Bi-monthly</option>
-                  <option value="1">Monthly</option>
-                </select>
-                <br />
-                <label>Other Income Amount</label>
-                <br />
-                <input></input>
+              <div className="row">
+                <div className="col">
+                  <label htmlFor="pay-frequency">Paycheck Frequency</label>
+                  <br />
+                  <select
+                    className="selectpicker"
+                    data-style="btn btn-default"
+                    defaultValue="0"
+                  >
+                    <option disabled value="0">
+                      {" "}
+                      Choose date range
+                    </option>
+                    <option value="1">Weekly</option>
+                    <option value="1">Bi-weekly</option>
+                    <option value="1">Bi-monthly</option>
+                    <option value="1">Monthly</option>
+                  </select>
+                  <br />
+                  <label>Paycheck amount</label>
+                  <br />
+                  <input></input>
+                </div>
+                <div className="col">
+                  <label htmlFor="other-frequency">
+                    Other Income Frequency
+                  </label>
+                  <br />
+                  <select
+                    className="selectpicker"
+                    data-style="btn btn-default"
+                    defaultValue="0"
+                  >
+                    <option disabled value="0">
+                      {" "}
+                      Choose date range
+                    </option>
+                    <option value="1">Weekly</option>
+                    <option value="1">Bi-weekly</option>
+                    <option value="1">Bi-monthly</option>
+                    <option value="1">Monthly</option>
+                  </select>
+                  <br />
+                  <label>Other Income Amount</label>
+                  <br />
+                  <input></input>
+                </div>
+                <button className="btn secondary">Save</button>
               </div>
-              <button className="btn secondary">Save</button>
             </div>
           </div>
         </div>

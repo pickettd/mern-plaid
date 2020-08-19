@@ -10,7 +10,7 @@ const Header = (props) => {
   return (
     <>
       <Navbar expand="lg">
-        <LinkContainer to={process.env.PUBLIC_URL + "/"}>
+        <LinkContainer to="/spend-story">
           <NavItem>
             <Navbar.Brand href="#">
               <img
