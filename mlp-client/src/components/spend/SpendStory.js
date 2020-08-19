@@ -33,7 +33,7 @@ class SpendStory extends Component {
               <div className="row justify-content-center">
                 <div className="col-sm-4">
                   <div className="container text-md-left">
-                    <h1>
+                    <h1 className="large-number">
                       <span className="small top">Income</span>
                       <br />
                       {noDecimalCurrencyFormatter.format(plaid.incomeSum)}
@@ -53,7 +53,7 @@ class SpendStory extends Component {
 
                 <div className="col-sm-4">
                   <div className="container text-md-right">
-                    <h1>
+                    <h1 className="large-number">
                       <span className="small top">Spent</span>
                       <br />
                       {noDecimalCurrencyFormatter.format(plaid.spendingSum)}
@@ -89,14 +89,14 @@ class SpendStory extends Component {
                 <div className="col-md-6">
                   <div className="container">
                     <div className="row">
-                      <h1>
+                      <h1 className="darktext">
                         Spending Plan
                         <br />
                         <span className="small bottom">Breakdown</span>
                       </h1>
                     </div>
-                    <div className="row">
-                      <h3>
+                    <div className="row mt-5 mb-3">
+                      <h3 className="large-number">
                         {/* Note, Joe's explanation of budget available is
                         supposed to be what you earned last 30 days versus what you
                         budgeted to spend for 30 days */}
@@ -124,7 +124,7 @@ class SpendStory extends Component {
                   <h1>Spend Plan</h1>
                 </div>
                 <div className="col-md-6 text-md-right">
-                  <h3>
+                  <h3 className="large-number">
                     {/* Note, Joe's explanation of budget estimate is
                         supposed to be the sum of all the expense budgets */}
                     {noDecimalCurrencyFormatter.format(auth.expenseBudgetSum)}
@@ -193,9 +193,9 @@ class SpendStory extends Component {
           </div>
           <div className="section section-spend-plan-footer">
             <div className="container">
-              <div className="row">
+              <div className="row mt-5">
                 <div className="col-md-6 offset-md-1">
-                  <h2>
+                  <h2 className="large-number">
                     <span className="small top">Savings</span>
                     <br />
                     {noDecimalCurrencyFormatter.format(

@@ -1,6 +1,6 @@
 div.section-header-generic {
   background: url("../img/background-images/waiwai-background-header.svg");
-  padding: 15% 0 7%;
+  padding: 20% 0 10%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -12,7 +12,7 @@ div.section-header-generic {
 
 div.section-spending-plan {
   background: url("../img/background-images/spending-plan-background.svg");
-  padding: 25% 0 15%;
+  padding: 10% 0 10%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -21,9 +21,9 @@ div.section-spending-plan {
 }
 div.section-spend-plan-footer {
   background: url("../img/background-images/waiwai-savings-footer.svg");
-  padding: 25% 0 15%;
+  padding: 10% 0 15%;
   margin-top: -10%;
-  margin-bottom: 0;
+  margin-bottom: -3%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -67,4 +67,12 @@ div.section-spend-categories {
 
 .brown-yellow-background {
   background: theme-color("brown-yellow");
+}
+h1.large-number,
+h3.large-number,
+h2.large-number {
+  font-size: 3rem;
+}
+.darktext {
+  color: #444;
 }
