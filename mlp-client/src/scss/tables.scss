@@ -1,4 +1,5 @@
-table.table {
+table.table,
+table {
   font-size: 0.9rem;
   thead {
     th {
@@ -26,4 +27,7 @@ table.table {
       background-color: white;
     }
   }
+}
+.MuiPaper-root.MUIDataTable-paper-2.undefined.MuiPaper-elevation4.MuiPaper-rounded {
+  box-shadow: 0 0 0 0;
 }

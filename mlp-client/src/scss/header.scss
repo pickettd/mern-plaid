@@ -10,10 +10,11 @@
   }
 }
 
-.dropdown:hover>.dropdown-menu {
+.dropdown:hover > .dropdown-menu {
   display: block;
 }
 
 .dropdown-item:hover {
-  background-color: whitesmoke;
+  background-color: theme-color("dark-blue");
+  color: white;
 }
