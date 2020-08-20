@@ -5,6 +5,7 @@ import NavItem from "react-bootstrap/NavItem";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Logo from "../../img/waiwai-logo.svg";
 
 const Header = (props) => {
   return (
@@ -14,12 +15,12 @@ const Header = (props) => {
           <NavItem>
             <Navbar.Brand href="#">
               <img
-                alt=""
-                src=""
+                alt="Waiwai Logo"
+                src={Logo}
                 width="30"
                 height="30"
                 className="d-inline-block align-top"
-              />{" "}
+              />
               Waiwai
             </Navbar.Brand>
           </NavItem>
