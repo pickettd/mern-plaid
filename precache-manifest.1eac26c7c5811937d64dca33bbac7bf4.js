@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "129d1a2cd92cbfb1c9a8e50c7f065923",
+    "revision": "abb66413e46724589b2d0c2f66e90369",
     "url": "/mern-plaid/index.html"
   },
   {
-    "revision": "8d0cb71b6e77fdc62087",
-    "url": "/mern-plaid/static/css/main.0976e1e3.chunk.css"
+    "revision": "307e4bdb621928d0cde7",
+    "url": "/mern-plaid/static/css/main.21810ed9.chunk.css"
   },
   {
-    "revision": "5b3f9081bb04aef4626f",
-    "url": "/mern-plaid/static/js/2.3ca5e670.chunk.js"
+    "revision": "b90dab33ab926ec4e02e",
+    "url": "/mern-plaid/static/js/2.aad8f93a.chunk.js"
   },
   {
-    "revision": "0bf38cf6c0b51ec69d7a52e8875a6dbf",
-    "url": "/mern-plaid/static/js/2.3ca5e670.chunk.js.LICENSE.txt"
+    "revision": "b4bb1fb0e0439930a57fb2a627c1300e",
+    "url": "/mern-plaid/static/js/2.aad8f93a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8d0cb71b6e77fdc62087",
-    "url": "/mern-plaid/static/js/main.38b9b6e8.chunk.js"
+    "revision": "307e4bdb621928d0cde7",
+    "url": "/mern-plaid/static/js/main.4e2273e1.chunk.js"
   },
   {
     "revision": "e015beafe7d90dd0662a",
@@ -44,8 +44,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/media/question_mark.c58cebc5.svg"
   },
   {
-    "revision": "19f3b71cd53794b38d8e9e97ee1f10b0",
-    "url": "/mern-plaid/static/media/spending-plan-background.19f3b71c.svg"
+    "revision": "634026ec69cd705e53c19fe6ba475e0c",
+    "url": "/mern-plaid/static/media/spending-plan-background.634026ec.svg"
   },
   {
     "revision": "7ab81113565bc0f820f7fb22cf26ccfe",
@@ -56,7 +56,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/media/waiwai-background-header.2ab84c27.svg"
   },
   {
-    "revision": "da879027c23e746fc179e22fef975325",
-    "url": "/mern-plaid/static/media/waiwai-savings-footer.da879027.svg"
+    "revision": "e57023e1f3e2e1fd770464222c5b2feb",
+    "url": "/mern-plaid/static/media/waiwai-logo.e57023e1.svg"
+  },
+  {
+    "revision": "fdc2be4e48d3e7af62061c69bf4408b6",
+    "url": "/mern-plaid/static/media/waiwai-savings-footer.fdc2be4e.svg"
   }
 ]);
