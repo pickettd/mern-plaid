@@ -5,9 +5,12 @@ import NavItem from "react-bootstrap/NavItem";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useAuth0 } from "@auth0/auth0-react";
 import Logo from "../../img/waiwai-logo.svg";
+import LogoutButton from "../../components/profile/LogoutButton.js";
 
 const Header = (props) => {
+  const { isAuthenticated } = useAuth0();
   return (
     <>
       <Navbar expand="lg">
@@ -28,7 +31,9 @@ const Header = (props) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav>
-            {/*<LinkContainer to="/">
+            {isAuthenticated ? (
+              <>
+                {/*<LinkContainer to="/">
               <Nav.Link href="#home">Home</Nav.Link>
             </LinkContainer>
             <div className="mr-auto navbar-nav">
@@ -36,50 +41,56 @@ const Header = (props) => {
                 <Nav.Link href="#">spend</Nav.Link>
               </LinkContainer>*/}
 
-            <div className="mr-auto navbar-nav">
-              {/*hover dropdown test*/}
-              <NavDropdown
-                renderMenuOnMount={true}
-                title="spend"
-                id="hover-nav-dropdown"
-                className="dropdown-menu-left"
-              >
-                <LinkContainer to="/spend-story">
-                  <NavDropdown.Item>spend story</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/manage-transactions">
-                  <NavDropdown.Item>view transactions</NavDropdown.Item>
-                </LinkContainer>
-                <LinkContainer to="/spend-plan">
-                  <NavDropdown.Item>manage spend plan</NavDropdown.Item>
-                </LinkContainer>
-              </NavDropdown>
+                <div className="mr-auto navbar-nav">
+                  {/*hover dropdown test*/}
+                  <NavDropdown
+                    renderMenuOnMount={true}
+                    title="spend"
+                    id="hover-nav-dropdown"
+                    className="dropdown-menu-left"
+                  >
+                    <LinkContainer to="/spend-story">
+                      <NavDropdown.Item>spend story</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/manage-transactions">
+                      <NavDropdown.Item>view transactions</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/spend-plan">
+                      <NavDropdown.Item>manage spend plan</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
 
-              {/*hover dropdown test END*/}
+                  {/*hover dropdown test END*/}
 
-              <LinkContainer to="/save-story">
-                <Nav.Link href="#">save</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/borrow-story">
-                <Nav.Link href="#">borrow</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/plan-story">
-                <Nav.Link href="#">plan</Nav.Link>
-              </LinkContainer>
-            </div>
-            <NavDropdown
-              title={props.userName}
-              id="basic-nav-dropdown"
-              className="ml-auto dropdown-menu-right"
-            >
-              <LinkContainer to="/user-profile">
-                <NavDropdown.Item href="#">Profile</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to="/bank-accounts">
-                <NavDropdown.Item href="#">Bank Accounts</NavDropdown.Item>
-              </LinkContainer>
-              {/*<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>*/}
-            </NavDropdown>
+                  <LinkContainer to="/save-story">
+                    <Nav.Link href="#">save</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/borrow-story">
+                    <Nav.Link href="#">borrow</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/plan-story">
+                    <Nav.Link href="#">plan</Nav.Link>
+                  </LinkContainer>
+                </div>
+                <NavDropdown
+                  title={props.userName}
+                  id="basic-nav-dropdown"
+                  className="ml-auto dropdown-menu-right"
+                >
+                  <LinkContainer to="/user-profile">
+                    <NavDropdown.Item href="#">Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/bank-accounts">
+                    <NavDropdown.Item href="#">Bank Accounts</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item href="#">
+                    <LogoutButton />
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              <></>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
