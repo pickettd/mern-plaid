@@ -8,7 +8,7 @@ const LogoutButton = () => {
     <Button
       onClick={() =>
         logout({
-          returnTo: window.location.origin,
+          returnTo: window.location.origin + process.env.PUBLIC_URL,
         })
       }
       variant="danger"
