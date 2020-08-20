@@ -10,7 +10,8 @@ import Logo from "../../img/waiwai-logo.svg";
 import LogoutButton from "../../components/profile/LogoutButton.js";
 
 const Header = (props) => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, user } = useAuth0();
+  const { name } = user;
   return (
     <>
       <Navbar expand="lg">
@@ -73,7 +74,7 @@ const Header = (props) => {
                   </LinkContainer>
                 </div>
                 <NavDropdown
-                  title={props.userName}
+                  title={name}
                   id="basic-nav-dropdown"
                   className="ml-auto dropdown-menu-right"
                 >
