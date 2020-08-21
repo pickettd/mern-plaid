@@ -1,7 +1,7 @@
 {
   "name": "mern-auth",
   "version": "1.0.0",
-  "description": "Mern Auth Example",
+  "description": "Waiwai Mern Plaid",
   "main": "server.js",
   "scripts": {
     "build": "npm run client-install && npm run build --prefix mlp-client",
@@ -9,7 +9,7 @@
     "start": "node server.js",
     "server": "HOST=0.0.0.0 nodemon --ignore 'mlp-client/' server.js",
     "client": "HOST=0.0.0.0 npm start --prefix mlp-client",
-    "dev": "concurrently \"PORT=5000 npm run server\" \"npm run mlp-client\""
+    "dev": "concurrently \"PORT=5000 npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "MIT",
