@@ -3,3 +3,5 @@ package-lock.json
 .vagrant
 client/build
 client/node_modules
+mlp-client/build
+mlp-client/node_modules
