@@ -10,7 +10,6 @@ import {
 } from "../../actions/accountActions";
 import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
-import UserProfilePage from "../profile/UserProfilePage";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
