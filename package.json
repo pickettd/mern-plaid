@@ -1,7 +1,7 @@
 {
-  "name": "mern-auth",
+  "name": "waiwai",
   "version": "1.0.0",
-  "description": "Waiwai Mern Plaid",
+  "description": "Waiwai",
   "main": "server.js",
   "scripts": {
     "build": "npm run client-install && npm run build --prefix mlp-client",
@@ -18,8 +18,11 @@
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
     "express": "^4.16.4",
+    "express-jwt": "^6.0.0",
+    "express-jwt-authz": "^2.4.1",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.3.0",
+    "jwks-rsa": "^1.9.0",
     "moment": "^2.23.0",
     "mongoose": "^5.3.11",
     "passport": "^0.4.0",
