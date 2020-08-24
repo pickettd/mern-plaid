@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 // https://github.com/auth0-blog/auth0-express-sample
 export const ExternalApi = () => {
   const [message, setMessage] = useState("");
-  const apiUrl = "http://localhost:7000"; //process.env.REACT_APP_API_URL;
+  const apiUrl = "http://localhost:3001/api/plaid/"; //process.env.REACT_APP_API_URL;
 
   const { getAccessTokenSilently } = useAuth0();
 
