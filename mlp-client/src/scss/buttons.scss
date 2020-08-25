@@ -12,3 +12,19 @@
   background-color: theme-color("green");
   color: white;
 }
+a.notButton {
+  button,
+  button:hover {
+    background: none;
+
+    border: 0px solid transparent;
+    margin-top: 0;
+    padding: 0;
+  }
+  button {
+    color: #444;
+  }
+  button:hover {
+    color: inherit;
+  }
+}

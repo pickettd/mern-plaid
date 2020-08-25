@@ -7,7 +7,14 @@
   align-items: center;
   justify-content: center;
   .login-box {
-    background: gray;
+    background: #f6f6f6;
+    width: 350px;
+    max-width: 100%;
+
+    button {
+      width: 100%;
+      text-align: center;
+    }
   }
   &.mountain-background {
     background: url("../img/background-images/waiwai-background-header.svg");
