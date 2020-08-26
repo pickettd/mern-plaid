@@ -1,8 +1,9 @@
 import { SET_TRANSACTION_DATA } from "../actions/types";
 
-const varStringDefaultMainPlaidCat = "category[0]";
-const varStringMainPlaidCat = "plaid_categories[0]";
-const varStringMainWaiwaiCat = "waiwai_categories[0]";
+// These are just listed for reference purposes right now (what the server sends)
+//const varStringServerSetMainCat = "category[0]";
+//const varStringMainPlaidCat = "plaid_categories[0]";
+//const varStringMainWaiwaiCat = "waiwai_categories[0]";
 
 // NOTE: this is not the redux way, this should be designed differently in next refactor
 const processTransactionList = (transactions, budgets) => (dispatch) => {
@@ -63,44 +64,44 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
         }*/
         // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
         transaction.amount *= -1;
-        if (
+        /*if (
           serverSetCategory !== "Transfer" &&
           serverSetCategory !== "Payment"
-        ) {
-          totalTransactionCount++;
-          // NOTE: none of our transactions from the API will have these right now
-          //--------------------------------------------------------------------
-          if (transaction.reviewed) {
-            reviewedTransactionCount++;
-          }
-          // Income is done later in income section
-          /*if (transaction.category[1] === "Paycheck") {
+        ) {*/
+        totalTransactionCount++;
+        // NOTE: none of our transactions from the API will have these right now
+        //--------------------------------------------------------------------
+        if (transaction.reviewed) {
+          reviewedTransactionCount++;
+        }
+        // Income is done later in income section
+        /*if (transaction.category[1] === "Paycheck") {
             paycheckSum += transaction.amount;
           }
           if (transaction.category[1] === "Other Income") {
             otherIncomeSum += transaction.amount;
           }*/
-          //--------------------------------------------------------------------
-          //profit += transaction.amount;
-          if (transaction.amount < 0) {
-            spending += -1 * transaction.amount;
+        //--------------------------------------------------------------------
+        //profit += transaction.amount;
+        if (transaction.amount < 0) {
+          spending += -1 * transaction.amount;
 
-            // This if/else sets up the spending category object with category as key and amount total as value
-            if (spendingByCategory[serverSetCategory]) {
-              spendingByCategory[serverSetCategory] += -1 * transaction.amount;
-            } else {
-              // This is the case that the category hasn't been seen before
-              categoriesThisSpendRange.push({
-                x: categoryCount,
-                waiwaiName: waiwaiMainCategory,
-                plaidName: plaidMainCategory,
-                name: serverSetCategory,
-              });
-              categoryCount++;
-              spendingByCategory[serverSetCategory] = -1 * transaction.amount;
-            }
+          // This if/else sets up the spending category object with category as key and amount total as value
+          if (spendingByCategory[serverSetCategory]) {
+            spendingByCategory[serverSetCategory] += -1 * transaction.amount;
+          } else {
+            // This is the case that the category hasn't been seen before
+            categoriesThisSpendRange.push({
+              x: categoryCount,
+              waiwaiName: waiwaiMainCategory,
+              plaidName: plaidMainCategory,
+              name: serverSetCategory,
+            });
+            categoryCount++;
+            spendingByCategory[serverSetCategory] = -1 * transaction.amount;
+          }
 
-            /* Don't think we need spending by date in mlp
+          /* Don't think we need spending by date in mlp
             // This if/else sets up the spending date object with date as key and amount total as value
             if (spendingByDate[transaction.date]) {
               spendingByDate[transaction.date] += -1 * transaction.amount;
@@ -108,15 +109,15 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
               // This is the case that the date hasn't been seen before
               spendingByDate[transaction.date] = -1 * transaction.amount;
             }*/
+        } else {
+          income += transaction.amount;
+          if (transaction.category[1] === "Paycheck") {
+            paycheckSum += transaction.amount;
           } else {
-            income += transaction.amount;
-            if (transaction.category[1] === "Paycheck") {
-              paycheckSum += transaction.amount;
-            } else {
-              otherIncomeSum += transaction.amount;
-            }
+            otherIncomeSum += transaction.amount;
           }
         }
+        //}
 
         /*transactionsData.push({
           account: account.accountName,
