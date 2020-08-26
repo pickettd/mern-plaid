@@ -13,9 +13,6 @@ class SpendStory extends Component {
     const { user } = this.props.auth0;
     const { name } = user;
     const { plaid, auth } = this.props;
-    const connectedBankAccounts = plaid.accounts.map((account) => (
-      <div key={account._id}>Account Name here: {account.institutionName}</div>
-    ));
     return (
       <>
         <div>
@@ -205,7 +202,6 @@ class SpendStory extends Component {
 }
 
 SpendStory.propTypes = {
-  getTransactions: PropTypes.func.isRequired,
   plaid: PropTypes.object.isRequired,
 };
 
