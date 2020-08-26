@@ -5,6 +5,8 @@ const passport = require("passport");
 const moment = require("moment");
 const mongoose = require("mongoose");
 
+const checkJwt = require("../../config/checkJwt-Auth0");
+
 // Load Account and User models
 const Account = require("../../models/Account");
 const User = require("../../models/User");
@@ -35,66 +37,60 @@ var PUBLIC_TOKEN = null;
 var ACCESS_TOKEN = null;
 var ITEM_ID = null;
 
+// Auth0 version of get accounts
 // @route GET api/plaid/accounts
 // @desc Get all accounts linked with plaid for a specific user
 // @access Private
-router.get(
-  "/accounts",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Account.find({ userId: req.user.id })
-      .then((accounts) => res.json(accounts))
-      .catch((err) => console.log(err));
-  }
-);
+router.get("/accounts", checkJwt, (req, res) => {
+  Account.find({ userId: req.user.sub })
+    .then((accounts) => res.json(accounts))
+    .catch((err) => console.log(err));
+});
 
+// Auth0 version of add account
 // @route POST api/plaid/accounts/add
 // @desc Trades public token for access token and stores credentials in database
 // @access Private
-router.post(
-  "/accounts/add",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    PUBLIC_TOKEN = req.body.public_token;
+router.post("/accounts/add", checkJwt, (req, res) => {
+  PUBLIC_TOKEN = req.body.public_token;
 
-    const userId = req.user.id;
+  const reqUserId = req.user.sub;
 
-    const institution = req.body.metadata.institution;
-    const { name, institution_id } = institution;
+  const institution = req.body.metadata.institution;
+  const { name, institution_id } = institution;
 
-    if (PUBLIC_TOKEN) {
-      client
-        .exchangePublicToken(PUBLIC_TOKEN)
-        .then((exchangeResponse) => {
-          ACCESS_TOKEN = exchangeResponse.access_token;
-          ITEM_ID = exchangeResponse.item_id;
+  if (PUBLIC_TOKEN) {
+    client
+      .exchangePublicToken(PUBLIC_TOKEN)
+      .then((exchangeResponse) => {
+        ACCESS_TOKEN = exchangeResponse.access_token;
+        ITEM_ID = exchangeResponse.item_id;
 
-          // Check if account already exists for specific user
-          Account.findOne({
-            userId: req.user.id,
-            institutionId: institution_id,
-          })
-            .then((account) => {
-              if (account) {
-                console.log("Account already exists");
-              } else {
-                const newAccount = new Account({
-                  userId: userId,
-                  accessToken: ACCESS_TOKEN,
-                  itemId: ITEM_ID,
-                  institutionId: institution_id,
-                  institutionName: name,
-                });
-
-                newAccount.save().then((account) => res.json(account));
-              }
-            })
-            .catch((err) => console.log(err)); // Mongo Error
+        // Check if account already exists for specific user
+        Account.findOne({
+          userId: reqUserId,
+          institutionId: institution_id,
         })
-        .catch((err) => console.log(err)); // Plaid Error
-    }
+          .then((account) => {
+            if (account) {
+              console.log("Account already exists");
+            } else {
+              const newAccount = new Account({
+                userId: reqUserId,
+                accessToken: ACCESS_TOKEN,
+                itemId: ITEM_ID,
+                institutionId: institution_id,
+                institutionName: name,
+              });
+
+              newAccount.save().then((account) => res.json(account));
+            }
+          })
+          .catch((err) => console.log(err)); // Mongo Error
+      })
+      .catch((err) => console.log(err)); // Plaid Error
   }
-);
+});
 
 // @route POST api/plaid/accounts/:id
 // @desc Refresh the token
