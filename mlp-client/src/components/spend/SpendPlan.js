@@ -1,11 +1,15 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
+import Loading from "../../utils/loading.js";
 import SpendPlanRow from "./SpendPlanRow";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const SpendPlan = (props) => {
+  if (props.accountsLoading || props.transactionsLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <SpendRangeHeader mainHeaderText="Spend" subHeaderText="Plan" />
@@ -17,7 +21,7 @@ const SpendPlan = (props) => {
               <Table hover>
                 <thead>
                   <tr>
-                    <th>Bank category name</th>
+                    <th>Waiwai category</th>
                     <th></th>
                     <th>Budget for {props.spendRangeDaysSelected} days</th>
                     <th>Earned last {props.spendRangeDaysSelected} days</th>
@@ -112,8 +116,8 @@ const SpendPlan = (props) => {
               <Table hover>
                 <thead>
                   <tr>
-                    <th>Bank category name</th>
-                    <th>Waiwai category name</th>
+                    <th>Waiwai category</th>
+                    <th></th>
                     <th>Budget for {props.spendRangeDaysSelected} days</th>
                     <th>Spent last {props.spendRangeDaysSelected} days</th>
                   </tr>
@@ -143,6 +147,8 @@ const mapStateToProps = (state) => ({
   otherIncomeSum: state.plaid.otherIncomeSum,
   categoriesThisSpendRange: state.plaid.categoriesThisSpendRange,
   spendRangeDaysSelected: state.plaid.spendRangeDaysSelected,
+  accountsLoading: state.plaid.accountsLoading,
+  transactionsLoading: state.plaid.transactionsLoading,
 });
 
 // Note that there is probably a better way to do this with React hooks now
