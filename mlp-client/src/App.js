@@ -37,7 +37,11 @@ const Routing = () => {
   return (
     <>
       <Header />
-      {isAuthenticated ? <AccountBootstrap /> : <></>}
+      {isAuthenticated && process.env.REACT_APP_LIVEDATA === "true" ? (
+        <AccountBootstrap />
+      ) : (
+        <></>
+      )}
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + "/"}>
           {isAuthenticated ? <Redirect to="/spend-story" /> : <HomePage />}
