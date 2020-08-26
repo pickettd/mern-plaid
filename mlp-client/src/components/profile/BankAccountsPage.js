@@ -5,7 +5,7 @@ import { PlaidButton, DeleteAccountButton } from "../../utils/plaidButton.js";
 const BankAccountsPage = (props) => {
   const listAccounts = props.accounts.map((account, i) => {
     return (
-      <div className="row" key={i}>
+      <div className="row" key={account._id}>
         <div className="col">{account.institutionName}</div>
         <div className="col">
           <PlaidButton buttonText="Refresh" existingAccount={account} />
