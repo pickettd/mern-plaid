@@ -45,7 +45,7 @@ export default function (state = initialState, action) {
     case ADD_ACCOUNT:
       return {
         ...state,
-        accounts: [action.payload, ...state.accounts],
+        accounts: [...state.accounts, action.payload],
         accountsLoading: false,
       };
     // The payload to refresh an account is the same account (or new account)
