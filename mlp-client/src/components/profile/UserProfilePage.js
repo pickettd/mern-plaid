@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const UserProfilePage = (props) => {
+  const { user } = useAuth0();
+  const { name } = user;
   const spendRangeDaysOptions = [7, 14, 30];
   return (
     <>
@@ -9,7 +12,7 @@ const UserProfilePage = (props) => {
         <div className="container">
           <div className="row">
             <div className="col">
-              This is {props.auth.user.name}'s user profile page <br />
+              This is {name}'s user profile page <br />
               You are using this date range:
             </div>
           </div>
