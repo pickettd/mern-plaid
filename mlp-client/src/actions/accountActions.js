@@ -11,6 +11,8 @@ import {
   TRANSACTIONS_LOADING,
 } from "./types";
 
+import processTransactionList from "../utils/processTransactionList.js";
+
 const setAxiosAuth = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
@@ -100,7 +102,10 @@ export const setAccountsLoading = () => {
 };
 
 // Get Transactions with Auth0
-export const getTransactions = (accessToken, plaidData) => (dispatch) => {
+export const getTransactions = (accessToken, plaidData) => (
+  dispatch,
+  getState
+) => {
   if (accessToken) {
     setAxiosAuth(accessToken);
   }
@@ -111,6 +116,10 @@ export const getTransactions = (accessToken, plaidData) => (dispatch) => {
       .then((res) => {
         // Need to check if there are transactions?
         if (res.data.transactions) {
+          const state = getState();
+          dispatch(
+            processTransactionList(res.data.transactions, state.auth.budgets)
+          );
           dispatch({
             type: GET_TRANSACTIONS,
             payload: res.data.transactions,
@@ -128,6 +137,7 @@ export const getTransactions = (accessToken, plaidData) => (dispatch) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         dispatch({
           type: GET_TRANSACTIONS,
           payload: null,
