@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 
 const SpendRangeHeader = (props) => {
-  const spendRangeDaysOptions = [7, 14, 30];
   return (
     <>
       <div className="section-space"></div>
@@ -10,28 +9,6 @@ const SpendRangeHeader = (props) => {
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-sm-6 offset-sm-3 justify-content-center text-center">
-              {/* Commenting this out for now because we're not going to have the range
-              on every page */}
-              {/*<div className="form-group">
-                <select
-                  className="selectpicker"
-                  data-style="btn btn-default"
-                  defaultValue={props.spendRangeDaysSelected}
-                >
-                  <option disabled value={0}>
-                    {" "}
-                    Choose date range
-                  </option>
-                  {spendRangeDaysOptions.map((daysOption, i) => {
-                    return (
-                      <option key={i} value={daysOption}>
-                        {daysOption + " days"}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>*/}
-
               <h1>
                 {props.mainHeaderText}
                 <br />
