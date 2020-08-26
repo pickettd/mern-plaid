@@ -2,12 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
-import foodLogo from "../../img/spend-plan/food-background.svg";
-import transportationLogo from "../../img/spend-plan/transportation.svg";
-import giftsLogo from "../../img/spend-plan/gifts.svg";
+import childCareLogo from "../../img/spend-plan/childcare.svg";
+// No categories that match this yet
+//import crossLogo from "../../img/spend-plan/cross.svg";
+import debtLogo from "../../img/spend-plan/debt.svg";
+// Looks like the dollar logo is black line art instead of white like the others
+import dollarLogo from "../../img/spend-plan/dollar-sign.svg";
+import educationLogo from "../../img/spend-plan/education.svg";
 import entertainmentLogo from "../../img/spend-plan/entertainment.svg";
+import foodLogo from "../../img/spend-plan/food-background.svg";
+// No categories that match this yet
+//import giftsLogo from "../../img/spend-plan/gifts.svg";
+
+// Looks like the healthcareLogo is black line art instead of white like the others
+//import healthcareLogo from "../../img/spend-plan/healthcare.svg";
+// No categories that match this yet
+//import healthLogo from "../../img/spend-plan/health.svg";
+import housingLogo from "../../img/spend-plan/housing.svg";
+import insuranceLogo from "../../img/spend-plan/insurance.svg";
+import miscellaneousLogo from "../../img/spend-plan/miscellaneous.svg";
 import personalLogo from "../../img/spend-plan/personal.svg";
-import questionMarkLogo from "../../img/spend-plan/question_mark.svg";
+import savingsLogo from "../../img/spend-plan/savings.svg";
+import transportationLogo from "../../img/spend-plan/transportation.svg";
+import utilitiesLogo from "../../img/spend-plan/utilities.svg";
+// Looks like the wallet logo is black line art instead of white like the others
+//import walletLogo from "../../img/spend-plan/wallet.svg";
 
 const SpendCategoryCard = (props) => {
   const budgetAmount = props.budgetAmount;
@@ -16,22 +35,44 @@ const SpendCategoryCard = (props) => {
   let mainValueDisplay = "";
   let subValueDisplay = "";
   let colorBackgroundClass = "";
-  let thisCategoryLogo = questionMarkLogo;
+  let thisCategoryLogo = miscellaneousLogo;
 
-  if (props.categoryName === "Food and Drink") {
-    thisCategoryLogo = foodLogo;
+  if (props.categoryName === "Income") {
+    thisCategoryLogo = dollarLogo;
   }
-  if (props.categoryName === "Travel") {
+  if (props.categoryName === "Housing") {
+    thisCategoryLogo = housingLogo;
+  }
+  if (props.categoryName === "Transportation") {
     thisCategoryLogo = transportationLogo;
   }
-  if (props.categoryName === "Shops") {
-    thisCategoryLogo = giftsLogo;
+  if (props.categoryName === "Food") {
+    thisCategoryLogo = foodLogo;
   }
-  if (props.categoryName === "Recreation") {
-    thisCategoryLogo = entertainmentLogo;
+  if (props.categoryName === "Utilities") {
+    thisCategoryLogo = utilitiesLogo;
+  }
+  // Note there are two possible logos here
+  if (props.categoryName === "Insurance & Healthcare") {
+    thisCategoryLogo = insuranceLogo;
+  }
+  if (props.categoryName === "Debt") {
+    thisCategoryLogo = debtLogo;
   }
   if (props.categoryName === "Personal") {
     thisCategoryLogo = personalLogo;
+  }
+  if (props.categoryName === "Education") {
+    thisCategoryLogo = educationLogo;
+  }
+  if (props.categoryName === "Child Care") {
+    thisCategoryLogo = childCareLogo;
+  }
+  if (props.categoryName === "Savings") {
+    thisCategoryLogo = savingsLogo;
+  }
+  if (props.categoryName === "Entertainment") {
+    thisCategoryLogo = entertainmentLogo;
   }
   if (props.underBudget) {
     colorBackgroundClass = "dark-green-background";
