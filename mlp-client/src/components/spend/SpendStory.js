@@ -167,7 +167,10 @@ class SpendStory extends Component {
               <div className="row">
                 {plaid.sortedCategoriesOverBudget.map((categoryName, i) => {
                   return (
-                    <div key={i} className="col-lg-3 col-md-4 col-sm-6">
+                    <div
+                      key={categoryName}
+                      className="col-lg-3 col-md-4 col-sm-6"
+                    >
                       <SpendCategoryCard
                         categoryName={categoryName}
                         underBudget={false}
