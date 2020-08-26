@@ -43,7 +43,13 @@ var ITEM_ID = null;
 // @access Private
 router.get("/accounts", checkJwt, (req, res) => {
   Account.find({ userId: req.user.sub })
-    .then((accounts) => res.json(accounts))
+    .then((accounts) => {
+      if (accounts && accounts.length == 0) {
+        res.status(400).send("No accounts found");
+      } else {
+        res.json(accounts);
+      }
+    })
     .catch((err) => console.log(err));
 });
 

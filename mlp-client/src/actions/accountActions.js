@@ -30,7 +30,6 @@ export const addAccount = (accessToken, plaidData) => (dispatch) => {
       })
     )
     .then((data) =>
-      //return null;
       accounts
         ? dispatch(getTransactions(accessToken, accounts.concat(data.payload)))
         : null
@@ -88,12 +87,9 @@ export const getAccounts = (accessToken) => (dispatch) => {
         payload: res.data,
       })
     )
-    .catch((err) =>
-      dispatch({
-        type: GET_ACCOUNTS,
-        payload: null,
-      })
-    );
+    .catch((err) => {
+      console.log("Error 400 indicates user hasn't added any accounts yet");
+    });
 };
 
 // Accounts loading
@@ -108,34 +104,36 @@ export const getTransactions = (accessToken, plaidData) => (dispatch) => {
   if (accessToken) {
     setAxiosAuth(accessToken);
   }
-  dispatch(setTransactionsLoading());
-  axios
-    .post("/api/plaid/accounts/transactions", plaidData)
-    .then((res) => {
-      // Need to check if there are transactions?
-      if (res.data.transactions) {
+  if (plaidData && plaidData.length !== 0) {
+    dispatch(setTransactionsLoading());
+    axios
+      .post("/api/plaid/accounts/transactions", plaidData)
+      .then((res) => {
+        // Need to check if there are transactions?
+        if (res.data.transactions) {
+          dispatch({
+            type: GET_TRANSACTIONS,
+            payload: res.data.transactions,
+          });
+        } else {
+          // Should throw no a tranasactions error here
+        }
+        if (res.data.needUpdate && res.data.needUpdate.length) {
+          res.data.needUpdate.forEach(function (account) {
+            dispatch({
+              type: UPDATE_ACCOUNT,
+              payload: account,
+            });
+          });
+        }
+      })
+      .catch((err) => {
         dispatch({
           type: GET_TRANSACTIONS,
-          payload: res.data.transactions,
+          payload: null,
         });
-      } else {
-        // Should throw no a tranasactions error here
-      }
-      if (res.data.needUpdate && res.data.needUpdate.length) {
-        res.data.needUpdate.forEach(function (account) {
-          dispatch({
-            type: UPDATE_ACCOUNT,
-            payload: account,
-          });
-        });
-      }
-    })
-    .catch((err) => {
-      dispatch({
-        type: GET_TRANSACTIONS,
-        payload: null,
       });
-    });
+  }
 };
 
 // Transactions loading
