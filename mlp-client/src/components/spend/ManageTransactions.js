@@ -1,10 +1,14 @@
 import React from "react";
 import { connect } from "react-redux";
 import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
+import Loading from "../../utils/loading.js";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const ManageTransactions = (props) => {
+  if (props.accountsLoading || props.transactionsLoading) {
+    return <Loading />;
+  }
   // Setting up mui table
   const transactionMUIColumns = [
     { label: "Date", name: "date" },
@@ -86,6 +90,8 @@ const ManageTransactions = (props) => {
 const mapStateToProps = (state) => ({
   transactions: state.plaid.transactions,
   accounts: state.plaid.accounts,
+  accountsLoading: state.plaid.accountsLoading,
+  transactionsLoading: state.plaid.transactionsLoading,
 });
 const mapDispatchToProps = {};
 
