@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
+import Loading from "../../utils/loading.js";
 import SpendRangeHeader from "../layout/SpendRangeHeader";
 import SpendCategoryCard from "./SpendCategoryCard";
 
@@ -13,6 +14,21 @@ class SpendStory extends Component {
     const { user } = this.props.auth0;
     const { name } = user;
     const { plaid, auth } = this.props;
+
+    if (plaid.userFirstVisit) {
+      return (
+        <div>
+          <Redirect to="/bank-accounts" />
+        </div>
+      );
+    } else if (!plaid.accounts || plaid.accounts.length === 0) {
+      return (
+        <div>
+          <SpendRangeHeader mainHeaderText={name} subHeaderText="Spend Story" />
+          <Loading />
+        </div>
+      );
+    }
     return (
       <>
         <div>

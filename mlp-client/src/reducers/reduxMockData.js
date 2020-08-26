@@ -1281,6 +1281,7 @@ export const PLAID_MOCK_DATA = {
   ],
   accountsLoading: false,
   transactionsLoading: false,
+  userFirstVisit: false,
   incomeSum: 1000,
   paycheckSum: 500,
   otherIncomeSum: 500,

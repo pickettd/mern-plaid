@@ -8,6 +8,7 @@ import {
   GET_TRANSACTIONS,
   TRANSACTIONS_LOADING,
   SET_TRANSACTION_DATA,
+  USER_FIRST_VISIT,
 } from "../actions/types";
 
 import { PLAID_MOCK_DATA } from "./reduxMockData";
@@ -19,6 +20,7 @@ if (process.env.REACT_APP_LIVEDATA === "true") {
   initialState.transactions = [];
   initialState.accountsLoading = true;
   initialState.transactionsLoading = true;
+  initialState.userFirstVisit = false;
 }
 // Below here is the normal initial state
 /*const initialState = {
@@ -47,6 +49,7 @@ export default function (state = initialState, action) {
         ...state,
         accounts: [...state.accounts, action.payload],
         accountsLoading: false,
+        userFirstVisit: false,
       };
     // The payload to refresh an account is the same account (or new account)
     case REFRESH_ACCOUNT:
@@ -106,6 +109,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...action.payload,
+      };
+    case USER_FIRST_VISIT:
+      return {
+        ...state,
+        userFirstVisit: true,
       };
     default:
       return state;
