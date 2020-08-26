@@ -2,13 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withAuth0 } from "@auth0/auth0-react";
-import {
-  getTransactions,
-  addAccount,
-  refreshAccount,
-  deleteAccount,
-} from "../../actions/accountActions";
-import { logoutUser } from "../../actions/authActions";
 import { Link } from "react-router-dom";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
@@ -212,11 +205,7 @@ class SpendStory extends Component {
 }
 
 SpendStory.propTypes = {
-  logoutUser: PropTypes.func.isRequired,
   getTransactions: PropTypes.func.isRequired,
-  addAccount: PropTypes.func.isRequired,
-  deleteAccount: PropTypes.func.isRequired,
-  refreshAccount: PropTypes.func.isRequired,
   plaid: PropTypes.object.isRequired,
 };
 
@@ -224,11 +213,9 @@ const mapStateToProps = (state) => ({
   plaid: state.plaid,
   auth: state.auth,
 });
+const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, {
-  logoutUser,
-  getTransactions,
-  addAccount,
-  deleteAccount,
-  refreshAccount,
-})(withAuth0(SpendStory));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withAuth0(SpendStory));
