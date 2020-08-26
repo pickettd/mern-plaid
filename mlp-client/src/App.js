@@ -21,6 +21,7 @@ import ManageTransactions from "./components/spend/ManageTransactions.js";
 import BankAccountsPage from "./components/profile/BankAccountsPage.js";
 import UserProfilePage from "./components/profile/UserProfilePage.js";
 import rootReducer from "./reducers";
+import AccountBootstrap from "./components/layout/TransactionBootstrap.js";
 
 const store = configureStore({
   reducer: rootReducer,
@@ -36,6 +37,7 @@ const Routing = () => {
   return (
     <>
       <Header />
+      {isAuthenticated ? <AccountBootstrap /> : <></>}
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + "/"}>
           {isAuthenticated ? <Redirect to="/spend-story" /> : <HomePage />}

@@ -11,9 +11,16 @@ import {
   TRANSACTIONS_LOADING,
 } from "./types";
 
+const setAxiosAuth = (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
+
 // Add account
-export const addAccount = (plaidData) => (dispatch) => {
+export const addAccount = (accessToken, plaidData) => (dispatch) => {
   const accounts = plaidData.accounts;
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
   axios
     .post("/api/plaid/accounts/add", plaidData)
     .then((res) =>
@@ -23,7 +30,10 @@ export const addAccount = (plaidData) => (dispatch) => {
       })
     )
     .then((data) =>
-      accounts ? dispatch(getTransactions(accounts.concat(data.payload))) : null
+      //return null;
+      accounts
+        ? dispatch(getTransactions(accessToken, accounts.concat(data.payload)))
+        : null
     )
     .catch((err) => console.log(err));
 };
@@ -64,8 +74,11 @@ export const deleteAccount = (plaidData) => (dispatch) => {
   }
 };
 
-// Get all accounts for specific user
-export const getAccounts = () => (dispatch) => {
+// Get all accounts for specific user with Auth0
+export const getAccounts = (accessToken) => (dispatch) => {
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
   dispatch(setAccountsLoading());
   axios
     .get("/api/plaid/accounts")
@@ -90,8 +103,11 @@ export const setAccountsLoading = () => {
   };
 };
 
-// Get Transactions
-export const getTransactions = (plaidData) => (dispatch) => {
+// Get Transactions with Auth0
+export const getTransactions = (accessToken, plaidData) => (dispatch) => {
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
   dispatch(setTransactionsLoading());
   axios
     .post("/api/plaid/accounts/transactions", plaidData)

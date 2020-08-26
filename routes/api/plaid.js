@@ -132,79 +132,76 @@ router.delete(
   }
 );
 
+// Auth0 version of get accounts
 // @route POST api/plaid/accounts/transactions
 // @desc Fetch transactions from past 30 days from all linked accounts
 // @access Private
-router.post(
-  "/accounts/transactions",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const now = moment();
-    const today = now.format("YYYY-MM-DD");
-    const thirtyDaysAgo = now.subtract(30, "days").format("YYYY-MM-DD");
+router.post("/accounts/transactions", checkJwt, (req, res) => {
+  const now = moment();
+  const today = now.format("YYYY-MM-DD");
+  const thirtyDaysAgo = now.subtract(30, "days").format("YYYY-MM-DD");
 
-    let transactions = [];
-    let needUpdate = [];
-    let accountPromises = [];
+  let transactions = [];
+  let needUpdate = [];
+  let accountPromises = [];
 
-    const accounts = req.body;
+  const accounts = req.body;
 
-    if (accounts) {
-      accounts.forEach(function (account) {
-        ACCESS_TOKEN = account.accessToken;
-        const institutionName = account.institutionName;
-        accountPromises.push(
-          client
-            .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
-            .then(
-              (response) => {
-                transactions.push({
-                  accountName: institutionName,
-                  transactions: response.transactions,
-                });
-                // We want to handle the case of item_login_required here
-              },
-              (reject) => {
-                if (reject && reject.error_code === "ITEM_LOGIN_REQUIRED") {
-                  return client
-                    .createPublicToken(ACCESS_TOKEN)
-                    .then((tokenResponse) => {
-                      return Account.findOne({ itemId: account.itemId }).then(
-                        (foundAccount) => {
-                          foundAccount.toRefresh = true;
-                          foundAccount.publicToken = tokenResponse.public_token;
-                          needUpdate.push(foundAccount);
-                          console.log(
-                            "found an account that needs refresh and got the token for it"
-                          );
-                          console.log(foundAccount);
-                          return foundAccount.save().then(() => {
-                            return foundAccount;
-                          });
-                        }
-                      );
-                    });
-                } else {
-                  // If it is not the error above, then reject
-                  return new Error(reject);
-                }
+  if (accounts) {
+    accounts.forEach(function (account) {
+      ACCESS_TOKEN = account.accessToken;
+      const institutionName = account.institutionName;
+      accountPromises.push(
+        client
+          .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
+          .then(
+            (response) => {
+              transactions.push({
+                accountName: institutionName,
+                transactions: response.transactions,
+              });
+              // We want to handle the case of item_login_required here
+            },
+            (reject) => {
+              if (reject && reject.error_code === "ITEM_LOGIN_REQUIRED") {
+                return client
+                  .createPublicToken(ACCESS_TOKEN)
+                  .then((tokenResponse) => {
+                    return Account.findOne({ itemId: account.itemId }).then(
+                      (foundAccount) => {
+                        foundAccount.toRefresh = true;
+                        foundAccount.publicToken = tokenResponse.public_token;
+                        needUpdate.push(foundAccount);
+                        console.log(
+                          "found an account that needs refresh and got the token for it"
+                        );
+                        console.log(foundAccount);
+                        return foundAccount.save().then(() => {
+                          return foundAccount;
+                        });
+                      }
+                    );
+                  });
+              } else {
+                // If it is not the error above, then reject
+                return new Error(reject);
               }
-            )
-            .catch((err) => {
-              console.log(err);
-            })
-        );
-      });
-      Promise.allSettled(accountPromises).then(() => {
-        // If there are any transactions or accounts, respond with them, otherwise error
-        if (transactions.length || needUpdate.length) {
-          res.json({ transactions: transactions, needUpdate: needUpdate });
-        } else {
-          res.status(400).send({ message: "This is an error!" });
-        }
-      });
-    }
+            }
+          )
+          .catch((err) => {
+            console.log(err);
+          })
+      );
+    });
+    Promise.allSettled(accountPromises).then(() => {
+      // If there are any transactions or accounts, respond with them, otherwise error
+      if (transactions.length || needUpdate.length) {
+        res.json({ transactions: transactions, needUpdate: needUpdate });
+      } else {
+        res.status(400).send({ message: "This is an error!" });
+      }
+    });
   }
-);
+});
 
 module.exports = router;
