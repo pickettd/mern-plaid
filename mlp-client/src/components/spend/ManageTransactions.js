@@ -7,7 +7,7 @@ import { currencyFormatter } from "../../utils/currencyFormatter";
 const ManageTransactions = (props) => {
   // Setting up mui table
   const transactionMUIColumns = [
-    { label: "Date", name: "date", options: { sortDirection: "desc" } },
+    { label: "Date", name: "date", options: { sortOrder: "desc" } },
     { label: "Account", name: "account" },
     { label: "Name", name: "name" },
     { label: "Amount", name: "amount" },
