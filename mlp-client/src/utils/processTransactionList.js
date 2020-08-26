@@ -154,16 +154,21 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
         sortedCategoriesOverBudget.push(category.bankName);
       }
     });
-    payloadObject.sortedCategoriesOverBudget = sortedCategoriesOverBudget;
-    payloadObject.sortedCategoriesUnderBudget = sortedCategoriesUnderBudget;
-    payloadObject.totalTransactionCount = totalTransactionCount;
     payloadObject.incomeSum = income;
     payloadObject.spendingSum = spending;
+    payloadObject.totalTransactionCount = totalTransactionCount;
+
+    payloadObject.categoriesThisSpendRange = categoriesThisMonth;
+    payloadObject.spendingByCategory = spendingByCategory;
+
+    payloadObject.sortedCategoriesOverBudget = sortedCategoriesOverBudget;
+    payloadObject.sortedCategoriesUnderBudget = sortedCategoriesUnderBudget;
+
     // NOTE this is being set to zero right now
     //--------------------------------------------------------------------
-    payloadObject.reviewedTransactionCount = reviewedTransactionCount;
     payloadObject.paycheckSum = paycheckSum;
     payloadObject.otherIncomeSum = otherIncomeSum;
+    payloadObject.reviewedTransactionCount = reviewedTransactionCount;
     //--------------------------------------------------------------------
   }
   dispatch({
