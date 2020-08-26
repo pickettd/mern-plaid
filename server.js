@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-const path = require('path');
+const path = require("path");
 
 const users = require("./routes/api/users");
 const plaid = require("./routes/api/plaid");
@@ -12,23 +12,20 @@ const app = express();
 // Bodyparser middleware
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: false,
   })
 );
 app.use(bodyParser.json());
 
 // DB Config
 //const db = process.env.MONGO_URL || require("./config/keys").mongoURI;
-const db = process.env.MONGO_URL
+const db = process.env.MONGO_URL;
 
 // Connect to MongoDB
 mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
+  .connect(db, { useNewUrlParser: true })
   .then(() => console.log("MongoDB successfully connected"))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 // Passport middleware
 app.use(passport.initialize());
@@ -40,11 +37,11 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/plaid", plaid);
 
-app.use(express.static('client/build'));
+app.use(express.static("mlp-client/build"));
 
 // Handles any requests that don't match the ones above
-app.get('*', (req,res) =>{
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
 const port = process.env.PORT || 5000;
