@@ -18,8 +18,8 @@ const setAxiosAuth = (token) => {
 };
 
 // Add account
-export const addAccount = (accessToken, plaidData) => (dispatch) => {
-  const accounts = plaidData.accounts;
+export const addAccount = (accessToken, plaidData) => (dispatch, getState) => {
+  const state = getState();
   if (accessToken) {
     setAxiosAuth(accessToken);
   }
@@ -31,11 +31,18 @@ export const addAccount = (accessToken, plaidData) => (dispatch) => {
         payload: res.data,
       })
     )
-    .then((data) =>
-      accounts
-        ? dispatch(getTransactions(accessToken, accounts.concat(data.payload)))
-        : null
-    )
+    .then((data) => {
+      if (state.plaid.accounts) {
+        return dispatch(
+          getTransactions(
+            accessToken,
+            state.plaid.accounts.concat(data.payload)
+          )
+        );
+      } else {
+        return null;
+      }
+    })
     .catch((err) => console.log(err));
 };
 

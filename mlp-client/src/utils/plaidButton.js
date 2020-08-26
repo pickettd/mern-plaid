@@ -26,7 +26,6 @@ const PlaidToExport = (props) => {
       const plaidData = {
         public_token: token,
         metadata: metadata,
-        accounts: [],
       };
       getAccessTokenSilently().then((accessToken) => {
         addAccount(accessToken, plaidData);
