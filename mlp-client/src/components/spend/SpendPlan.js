@@ -18,7 +18,7 @@ const SpendPlan = (props) => {
                 <thead>
                   <tr>
                     <th>Bank category name</th>
-                    <th>My category name</th>
+                    <th></th>
                     <th>Budget for {props.spendRangeDaysSelected} days</th>
                     <th>Earned last {props.spendRangeDaysSelected} days</th>
                   </tr>
@@ -113,7 +113,7 @@ const SpendPlan = (props) => {
                 <thead>
                   <tr>
                     <th>Bank category name</th>
-                    <th>My category name</th>
+                    <th>Waiwai category name</th>
                     <th>Budget for {props.spendRangeDaysSelected} days</th>
                     <th>Spent last {props.spendRangeDaysSelected} days</th>
                   </tr>
