@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const SpendPlanRow = (props) => {
-  const renameCategory = (bankCategory) => {
+  /*const renameCategory = (bankCategory) => {
     if (bankCategory === "Food and Drink") {
       return "Food";
     }
@@ -17,37 +17,37 @@ const SpendPlanRow = (props) => {
       return "Transportation";
     }
     return bankCategory;
-  };
-  if (
+  };*/
+  /*if (
     props.category.bankName !== "Transfer" &&
     props.category.bankName !== "Payment"
-  ) {
-    return (
-      <tr key={props.category.bankName}>
-        <td>{props.category.bankName}</td>
-        <td>{renameCategory(props.category.bankName)}</td>
-        <td>
-          {props.budgets && props.budgets[props.category.bankName] ? (
-            <input
-              defaultValue={currencyFormatter.format(
-                props.budgets[props.category.bankName]
-              )}
-            ></input>
-          ) : (
-            <input />
-          )}
-          <button className="btn secondary">Save</button>
-        </td>
-        <td>
-          {currencyFormatter.format(
-            props.spendingByCategory[props.category.bankName]
-          )}
-        </td>
-      </tr>
-    );
-  } else {
+  ) {*/
+  return (
+    <tr>
+      <td>{props.category.name}</td>
+      <td></td>
+      <td>
+        {props.budgets && props.budgets[props.category.name] ? (
+          <input
+            defaultValue={currencyFormatter.format(
+              props.budgets[props.category.name]
+            )}
+          ></input>
+        ) : (
+          <input />
+        )}
+        <button className="btn secondary">Save</button>
+      </td>
+      <td>
+        {currencyFormatter.format(
+          props.spendingByCategory[props.category.name]
+        )}
+      </td>
+    </tr>
+  );
+  /*} else {
     return <></>;
-  }
+  }*/
 };
 const mapStateToProps = (state) => ({
   budgets: state.auth.budgets,
