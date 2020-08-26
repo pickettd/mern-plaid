@@ -169,6 +169,8 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
                 transaction.waiwai_categories = translatePlaidCategoriesToWaiwai(
                   transaction.plaid_categories
                 );
+                // NOTE: this is likely where we'd need to apply per-transaction cat edits
+                transaction.category = transaction.waiwai_categories;
                 thisAccountTransactions.push(transaction);
               });
               transactions.push({

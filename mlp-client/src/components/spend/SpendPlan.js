@@ -121,7 +121,10 @@ const SpendPlan = (props) => {
                 <tbody>
                   {props.categoriesThisSpendRange.map((category, i) => {
                     return (
-                      <SpendPlanRow key={i} category={category}></SpendPlanRow>
+                      <SpendPlanRow
+                        key={category.name}
+                        category={category}
+                      ></SpendPlanRow>
                     );
                   })}
                 </tbody>

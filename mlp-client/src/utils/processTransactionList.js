@@ -1,5 +1,9 @@
 import { SET_TRANSACTION_DATA } from "../actions/types";
 
+const varStringDefaultMainPlaidCat = "category[0]";
+const varStringMainPlaidCat = "plaid_categories[0]";
+const varStringMainWaiwaiCat = "waiwai_categories[0]";
+
 // NOTE: this is not the redux way, this should be designed differently in next refactor
 const processTransactionList = (transactions, budgets) => (dispatch) => {
   // This payloadObject is what the demo data looks like right now
@@ -43,7 +47,7 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
   let income = 0;
   let spending = 0;
   const spendingByCategory = {};
-  const categoriesThisMonth = [];
+  const categoriesThisSpendRange = [];
   let categoryCount = 1;
   //const spendingByDate = {};
   //const datesLastThirty = [];
@@ -51,15 +55,17 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
   if (transactions && transactions.length) {
     transactions.forEach(function (account) {
       account.transactions.forEach(function (transaction) {
-        let displayCategory = transaction.category[0];
+        let serverSetCategory = transaction.category[0];
+        let waiwaiMainCategory = transaction.waiwai_categories[0];
+        let plaidMainCategory = transaction.plaid_categories[0];
         /*if (user.categoryMap && user.categoryMap[transaction.category[0]]) {
           displayCategory = user.categoryMap[transaction.category[0]];
         }*/
         // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
         transaction.amount *= -1;
         if (
-          transaction.category[0] !== "Transfer" &&
-          transaction.category[0] !== "Payment"
+          serverSetCategory !== "Transfer" &&
+          serverSetCategory !== "Payment"
         ) {
           totalTransactionCount++;
           // NOTE: none of our transactions from the API will have these right now
@@ -80,19 +86,18 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
             spending += -1 * transaction.amount;
 
             // This if/else sets up the spending category object with category as key and amount total as value
-            if (spendingByCategory[transaction.category[0]]) {
-              spendingByCategory[transaction.category[0]] +=
-                -1 * transaction.amount;
+            if (spendingByCategory[serverSetCategory]) {
+              spendingByCategory[serverSetCategory] += -1 * transaction.amount;
             } else {
               // This is the case that the category hasn't been seen before
-              categoriesThisMonth.push({
+              categoriesThisSpendRange.push({
                 x: categoryCount,
-                bankName: transaction.category[0],
-                name: displayCategory,
+                waiwaiName: waiwaiMainCategory,
+                plaidName: plaidMainCategory,
+                name: serverSetCategory,
               });
               categoryCount++;
-              spendingByCategory[transaction.category[0]] =
-                -1 * transaction.amount;
+              spendingByCategory[serverSetCategory] = -1 * transaction.amount;
             }
 
             /* Don't think we need spending by date in mlp
@@ -138,27 +143,24 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
       });
     }*/
     // Then need to generate new data we didn't calculate before
-    categoriesThisMonth.sort(function (a, b) {
-      const aSpend = spendingByCategory[a.bankName] / budgets[a.bankName];
-      const bSpend = spendingByCategory[b.bankName] / budgets[b.bankName];
+    categoriesThisSpendRange.sort(function (a, b) {
+      const aSpend = spendingByCategory[a.name] / budgets[a.name];
+      const bSpend = spendingByCategory[b.name] / budgets[b.name];
       return aSpend - bSpend;
     });
 
-    categoriesThisMonth.forEach((category) => {
-      if (
-        spendingByCategory[category.bankName] / budgets[category.bankName] <=
-        1
-      ) {
-        sortedCategoriesUnderBudget.push(category.bankName);
+    categoriesThisSpendRange.forEach((category) => {
+      if (spendingByCategory[category.name] / budgets[category.name] <= 1) {
+        sortedCategoriesUnderBudget.push(category.name);
       } else {
-        sortedCategoriesOverBudget.push(category.bankName);
+        sortedCategoriesOverBudget.push(category.name);
       }
     });
     payloadObject.incomeSum = income;
     payloadObject.spendingSum = spending;
     payloadObject.totalTransactionCount = totalTransactionCount;
 
-    payloadObject.categoriesThisSpendRange = categoriesThisMonth;
+    payloadObject.categoriesThisSpendRange = categoriesThisSpendRange;
     payloadObject.spendingByCategory = spendingByCategory;
 
     payloadObject.sortedCategoriesOverBudget = sortedCategoriesOverBudget;
