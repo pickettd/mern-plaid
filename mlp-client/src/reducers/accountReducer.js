@@ -7,7 +7,7 @@ import {
   ACCOUNTS_LOADING,
   GET_TRANSACTIONS,
   TRANSACTIONS_LOADING,
-  SET_INCOME_SUM,
+  SET_TRANSACTION_DATA,
 } from "../actions/types";
 
 import { PLAID_MOCK_DATA } from "./reduxMockData";
@@ -90,11 +90,6 @@ export default function (state = initialState, action) {
         accounts: action.payload,
         accountsLoading: false,
       };
-    case SET_INCOME_SUM:
-      return {
-        ...state,
-        incomeSum: action.payload,
-      };
     case TRANSACTIONS_LOADING:
       return {
         ...state,
@@ -105,6 +100,12 @@ export default function (state = initialState, action) {
         ...state,
         transactions: action.payload,
         transactionsLoading: false,
+      };
+    // NOTE: this is not the redux way, this should be designed differently in next refactor
+    case SET_TRANSACTION_DATA:
+      return {
+        ...state,
+        ...action.payload,
       };
     default:
       return state;
