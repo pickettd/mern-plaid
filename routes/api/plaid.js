@@ -6,6 +6,7 @@ const moment = require("moment");
 const mongoose = require("mongoose");
 
 const checkJwt = require("../../config/checkJwt-Auth0");
+const translatePlaidCategoriesToWaiwai = require("../../config/waiwaiCategories");
 
 // Load Account and User models
 const Account = require("../../models/Account");
@@ -162,9 +163,17 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
           .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
           .then(
             (response) => {
+              let thisAccountTransactions = [];
+              response.transactions.forEach((transaction) => {
+                transaction.plaid_categories = [...transaction.category];
+                transaction.waiwai_categories = translatePlaidCategoriesToWaiwai(
+                  transaction.plaid_categories
+                );
+                thisAccountTransactions.push(transaction);
+              });
               transactions.push({
                 accountName: institutionName,
-                transactions: response.transactions,
+                transactions: thisAccountTransactions,
               });
               // We want to handle the case of item_login_required here
             },
