@@ -7,7 +7,7 @@ import { currencyFormatter } from "../../utils/currencyFormatter";
 const ManageTransactions = (props) => {
   // Setting up mui table
   const transactionMUIColumns = [
-    { label: "Date", name: "date", options: { sortOrder: "desc" } },
+    { label: "Date", name: "date" },
     { label: "Account", name: "account" },
     { label: "Name", name: "name" },
     { label: "Amount", name: "amount" },
@@ -36,6 +36,7 @@ const ManageTransactions = (props) => {
   const optionsMUI = {
     filterType: "checkbox",
     selectableRows: "none",
+    sortOrder: { name: "date", direction: "desc" },
   };
 
   let transactionsData = [];
@@ -84,7 +85,9 @@ const ManageTransactions = (props) => {
 
 const mapStateToProps = (state) => ({
   transactions: state.plaid.transactions,
+  accounts: state.plaid.accounts,
 });
+const mapDispatchToProps = {};
 
 // Note that there is probably a better way to do this with React hooks now
-export default connect(mapStateToProps, {})(ManageTransactions);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageTransactions);
