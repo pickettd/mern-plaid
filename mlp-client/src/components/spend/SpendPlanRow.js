@@ -26,21 +26,6 @@ const SpendPlanRow = (props) => {
       setBudget(budgets[category.name]);
     }
   }, [budgets, category, setBudget]);
-  /*const renameCategory = (bankCategory) => {
-    if (bankCategory === "Food and Drink") {
-      return "Food";
-    }
-    if (bankCategory === "Recreation") {
-      return "Entertainment";
-    }
-    if (bankCategory === "Shops") {
-      return "Personal";
-    }
-    if (bankCategory === "Travel") {
-      return "Transportation";
-    }
-    return bankCategory;
-  };*/
   /*if (
     props.category.bankName !== "Transfer" &&
     props.category.bankName !== "Payment"
@@ -50,23 +35,11 @@ const SpendPlanRow = (props) => {
       <td>{props.category.name}</td>
       <td></td>
       <td>
-        {props.budgets && props.budgets[props.category.name] ? (
-          // This example would be an uncontrolled input
-          /*<input
-            defaultValue={currencyFormatter.format(
-              props.budgets[props.category.name]
-            )}
-          ></input>*/
-          // This is a controlled input
-          <input
-            // Note that the currencyFormatter makes controlled edits difficult
-            //value={currencyFormatter.format(budget)}
-            value={budget}
-            onChange={onChangeValue}
-          ></input>
-        ) : (
-          <input />
-        )}
+        {/* This is a controlled input
+            Note that the currencyFormatter makes controlled edits difficult, e.g.
+            value={currencyFormatter.format(budget)}
+        */}
+        <input value={budget} onChange={onChangeValue}></input>
         <button className="btn secondary" onClick={() => saveButton()}>
           Save
         </button>

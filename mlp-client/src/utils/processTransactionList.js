@@ -1,4 +1,8 @@
 import { SET_TRANSACTION_DATA } from "../actions/types";
+import {
+  defaultCategoriesThisSpendRange,
+  defaultSpendingByCategory,
+} from "./waiwaiCategories.js";
 
 // These are just listed for reference purposes right now (what the server sends)
 //const varStringServerSetMainCat = "category[0]";
@@ -40,8 +44,8 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
 
   let income = 0;
   let spending = 0;
-  const spendingByCategory = {};
-  const categoriesThisSpendRange = [];
+  const spendingByCategory = { ...defaultSpendingByCategory };
+  const categoriesThisSpendRange = [...defaultCategoriesThisSpendRange];
   let categoryCount = 1;
   //const spendingByDate = {};
   //const datesLastThirty = [];
@@ -78,10 +82,12 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
           spending += -1 * transaction.amount;
 
           // This if/else sets up the spending category object with category as key and amount total as value
-          if (spendingByCategory[serverSetCategory]) {
+          // Note that we have to check if undefined (because expense of 0 would be falsey)
+          if (spendingByCategory[serverSetCategory] !== undefined) {
             spendingByCategory[serverSetCategory] += -1 * transaction.amount;
           } else {
             // This is the case that the category hasn't been seen before
+            // And that means this shouldn't happen anymore (all categories loaded by default)
             categoriesThisSpendRange.push({
               x: categoryCount,
               waiwaiName: waiwaiMainCategory,
