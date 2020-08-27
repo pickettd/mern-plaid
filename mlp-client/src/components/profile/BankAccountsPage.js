@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PlaidButton, DeleteAccountButton } from "../../utils/plaidButton.js";
-import BlueHeader from "../layout/BlueHeader";
+import ColorHeader from "../layout/ColorHeader";
 
 const BankAccountsPage = (props) => {
   const listAccounts = props.accounts.map((account, i) => {
@@ -31,7 +31,11 @@ const BankAccountsPage = (props) => {
 
   return (
     <>
-      <BlueHeader mainHeaderText="Bank Accounts" subHeaderText="" />
+      <ColorHeader
+        mainHeaderText="Bank Accounts"
+        subHeaderText=""
+        colorClassName="section-header-blue"
+      />
       <div className="section">
         <div className="container">
           <div className="row">

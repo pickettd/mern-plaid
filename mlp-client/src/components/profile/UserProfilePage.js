@@ -1,14 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import GreenHeader from "../layout/GreenHeader";
+import ColorHeader from "../layout/ColorHeader";
 const UserProfilePage = (props) => {
   const { user } = useAuth0();
   const { name } = user;
   const spendRangeDaysOptions = [7, 14, 30];
   return (
     <>
-      <GreenHeader mainHeaderText="Profile" subHeaderText="" />
+      <ColorHeader
+        mainHeaderText="Profile"
+        subHeaderText=""
+        colorClassName="section-header-green"
+      />
       <div className="section">
         <div className="container">
           <div className="row">

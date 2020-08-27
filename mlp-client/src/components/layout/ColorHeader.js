@@ -1,11 +1,10 @@
 import React from "react";
-import { connect } from "react-redux";
 
-const GreenHeader = (props) => {
+const ColorHeader = (props) => {
   return (
     <>
       <div className="section-space"></div>
-      <div className="section section-header-green">
+      <div className={"section " + props.colorClassName}>
         <div className="container">
           <div className="row">
             <div className="col-md-6 col-sm-6 offset-sm-3 justify-content-center text-center">
@@ -22,9 +21,5 @@ const GreenHeader = (props) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  spendRangeDaysSelected: state.plaid.spendRangeDaysSelected,
-});
-
 // Note that there is probably a better way to do this with React hooks now
-export default connect(mapStateToProps, {})(GreenHeader);
+export default ColorHeader;
