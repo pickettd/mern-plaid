@@ -103,7 +103,7 @@ const SpendCategoryCard = (props) => {
       </div>
       <div className="card-body text-center">
         <h4 className="card-title text-left">
-          {mainValueDisplay}
+          {isNaN(mainValueDisplay) ? "--" : mainValueDisplay}
           <span className="small bottom">
             <br />
             {props.underBudget ? "Available" : "Spent"}
@@ -114,7 +114,7 @@ const SpendCategoryCard = (props) => {
           <div className="row mt-3">
             <div className="col">
               <p className=" text-left">
-                {budgetAmountDisplay}
+                {isNaN(budgetAmountDisplay) ? 0 : budgetAmountDisplay}
                 <span className="small bottom">
                   <br />
                   Budget
@@ -123,7 +123,7 @@ const SpendCategoryCard = (props) => {
             </div>
             <div className="col">
               <p className=" text-left">
-                {subValueDisplay}
+                {isNaN(subValueDisplay) ? "--" : subValueDisplay}
                 <span className="small bottom">
                   <br />
                   Spent
