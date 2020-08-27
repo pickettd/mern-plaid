@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.css": "/mern-plaid/static/css/main.87b7f999.chunk.css",
-    "main.js": "/mern-plaid/static/js/main.0c20aa6d.chunk.js",
-    "main.js.map": "/mern-plaid/static/js/main.0c20aa6d.chunk.js.map",
+    "main.css": "/mern-plaid/static/css/main.5ee6f045.chunk.css",
+    "main.js": "/mern-plaid/static/js/main.f5224746.chunk.js",
+    "main.js.map": "/mern-plaid/static/js/main.f5224746.chunk.js.map",
     "runtime-main.js": "/mern-plaid/static/js/runtime-main.ef8f6bf6.js",
     "runtime-main.js.map": "/mern-plaid/static/js/runtime-main.ef8f6bf6.js.map",
-    "static/js/2.4aa9289e.chunk.js": "/mern-plaid/static/js/2.4aa9289e.chunk.js",
-    "static/js/2.4aa9289e.chunk.js.map": "/mern-plaid/static/js/2.4aa9289e.chunk.js.map",
+    "static/js/2.79a8c967.chunk.js": "/mern-plaid/static/js/2.79a8c967.chunk.js",
+    "static/js/2.79a8c967.chunk.js.map": "/mern-plaid/static/js/2.79a8c967.chunk.js.map",
     "index.html": "/mern-plaid/index.html",
-    "precache-manifest.c38e4c103f449bca3ed3efd2de11496b.js": "/mern-plaid/precache-manifest.c38e4c103f449bca3ed3efd2de11496b.js",
+    "precache-manifest.de101b972664ba2fa72d759dfed5953a.js": "/mern-plaid/precache-manifest.de101b972664ba2fa72d759dfed5953a.js",
     "service-worker.js": "/mern-plaid/service-worker.js",
-    "static/css/main.87b7f999.chunk.css.map": "/mern-plaid/static/css/main.87b7f999.chunk.css.map",
-    "static/js/2.4aa9289e.chunk.js.LICENSE.txt": "/mern-plaid/static/js/2.4aa9289e.chunk.js.LICENSE.txt",
+    "static/css/main.5ee6f045.chunk.css.map": "/mern-plaid/static/css/main.5ee6f045.chunk.css.map",
+    "static/js/2.79a8c967.chunk.js.LICENSE.txt": "/mern-plaid/static/js/2.79a8c967.chunk.js.LICENSE.txt",
+    "static/media/App.scss": "/mern-plaid/static/media/waiwai-savings-footer.fdc2be4e.svg",
     "static/media/childcare.svg": "/mern-plaid/static/media/childcare.de097c9d.svg",
     "static/media/debt.svg": "/mern-plaid/static/media/debt.72b94b4b.svg",
     "static/media/dollar-sign.svg": "/mern-plaid/static/media/dollar-sign.0c497f66.svg",
@@ -23,15 +24,14 @@
     "static/media/miscellaneous.svg": "/mern-plaid/static/media/miscellaneous.41d25eac.svg",
     "static/media/personal.svg": "/mern-plaid/static/media/personal.56aa4ee5.svg",
     "static/media/savings.svg": "/mern-plaid/static/media/savings.9f40c6eb.svg",
-    "static/media/App.scss": "/mern-plaid/static/media/waiwai-savings-footer.fdc2be4e.svg",
     "static/media/transportation.svg": "/mern-plaid/static/media/transportation.7ab81113.svg",
     "static/media/utilities.svg": "/mern-plaid/static/media/utilities.b6b6ce9e.svg",
     "static/media/waiwai-logo.svg": "/mern-plaid/static/media/waiwai-logo.e57023e1.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.ef8f6bf6.js",
-    "static/js/2.4aa9289e.chunk.js",
-    "static/css/main.87b7f999.chunk.css",
-    "static/js/main.0c20aa6d.chunk.js"
+    "static/js/2.79a8c967.chunk.js",
+    "static/css/main.5ee6f045.chunk.css",
+    "static/js/main.f5224746.chunk.js"
   ]
 }
