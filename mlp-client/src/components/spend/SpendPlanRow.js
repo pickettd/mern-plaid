@@ -5,7 +5,7 @@ import { saveUserBudget } from "../../actions/authActions";
 
 const SpendPlanRow = (props) => {
   const [budget, setBudget] = useState("");
-  const { category, budgets, spendingByCategory, saveUserBudget } = props;
+  const { category, budgets, saveUserBudget } = props;
 
   const saveButton = () => {
     const budgetData = {};
