@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
 import Loading from "../../utils/loading.js";
-import SpendRangeHeader from "../layout/SpendRangeHeader";
+import GreenHeader from "../layout/GreenHeader.js";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const ManageTransactions = (props) => {
@@ -59,7 +59,7 @@ const ManageTransactions = (props) => {
   }
   return (
     <>
-      <SpendRangeHeader mainHeaderText="Transaction" subHeaderText="History" />
+      <GreenHeader mainHeaderText="Transaction" subHeaderText="History" />
       {/* Commenting this out because in this version we won't have need/want/save */}
       {/*<div className="section section-donuts">
           <div className="container">

@@ -7,13 +7,17 @@
   align-items: center;
   justify-content: center;
   .login-box {
-    background: #f6f6f6;
-    width: 350px;
-    max-width: 100%;
+    text-align: center;
+    margin-top: -10vh;
 
-    button {
-      width: 100%;
-      text-align: center;
+    .button-box {
+      width: 350px;
+      max-width: 100%;
+      margin: 0 auto;
+      button {
+        width: 100%;
+        text-align: center;
+      }
     }
   }
   &.mountain-background {

@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { PlaidButton, DeleteAccountButton } from "../../utils/plaidButton.js";
+import BlueHeader from "../layout/BlueHeader";
 
 const BankAccountsPage = (props) => {
   const listAccounts = props.accounts.map((account, i) => {
@@ -29,15 +30,18 @@ const BankAccountsPage = (props) => {
   );
 
   return (
-    <div className="section">
-      <div className="container">
-        <div className="row">
-          <div className="col">Bank Accounts page</div>
+    <>
+      <BlueHeader mainHeaderText="Bank Accounts" subHeaderText="" />
+      <div className="section">
+        <div className="container">
+          <div className="row">
+            <div className="col">Bank Accounts page</div>
+          </div>
+          {props.accountsLoading ? <></> : listAccounts}
+          {addButton}
         </div>
-        {props.accountsLoading ? <></> : listAccounts}
-        {addButton}
       </div>
-    </div>
+    </>
   );
 };
 

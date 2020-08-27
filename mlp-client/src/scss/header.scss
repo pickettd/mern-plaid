@@ -9,7 +9,9 @@
     left: auto;
   }
 }
-
+a.active.dropdown-item {
+  background: theme-color("dark-blue");
+}
 .dropdown:hover > .dropdown-menu {
   display: block;
 }

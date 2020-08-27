@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
 import Loading from "../../utils/loading.js";
 import SpendPlanRow from "./SpendPlanRow";
-import SpendRangeHeader from "../layout/SpendRangeHeader";
+import BlueHeader from "../layout/BlueHeader";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 
 const SpendPlan = (props) => {
@@ -12,7 +12,7 @@ const SpendPlan = (props) => {
   }
   return (
     <>
-      <SpendRangeHeader mainHeaderText="Spend" subHeaderText="Plan" />
+      <BlueHeader mainHeaderText="Spend" subHeaderText="Plan" />
       <div className="section">
         <div className="container">
           <div className="row">
