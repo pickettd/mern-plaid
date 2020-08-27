@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { currencyFormatter } from "../../utils/currencyFormatter";
+import { saveUserBudget } from "../../actions/authActions";
 
 const SpendPlanRow = (props) => {
+  const [budget, setBudget] = useState("");
+  const { category, budgets, spendingByCategory, saveUserBudget } = props;
+
+  const saveButton = () => {
+    const budgetData = {};
+    budgetData[category.name] = budget;
+    saveUserBudget(budgetData);
+  };
+
+  const onChangeValue = (event) => {
+    let justNumber = event.target.value;
+    if (justNumber.charAt(0) === "$") {
+      justNumber = justNumber.substring(1);
+    }
+    setBudget(justNumber);
+  };
+
+  useEffect(() => {
+    if (budgets && category && budgets[category.name]) {
+      setBudget(budgets[category.name]);
+    }
+  }, [budgets, category, setBudget]);
   /*const renameCategory = (bankCategory) => {
     if (bankCategory === "Food and Drink") {
       return "Food";
@@ -28,15 +51,25 @@ const SpendPlanRow = (props) => {
       <td></td>
       <td>
         {props.budgets && props.budgets[props.category.name] ? (
-          <input
+          // This example would be an uncontrolled input
+          /*<input
             defaultValue={currencyFormatter.format(
               props.budgets[props.category.name]
             )}
+          ></input>*/
+          // This is a controlled input
+          <input
+            // Note that the currencyFormatter makes controlled edits difficult
+            //value={currencyFormatter.format(budget)}
+            value={budget}
+            onChange={onChangeValue}
           ></input>
         ) : (
           <input />
         )}
-        <button className="btn secondary">Save</button>
+        <button className="btn secondary" onClick={() => saveButton()}>
+          Save
+        </button>
       </td>
       <td>
         {currencyFormatter.format(
@@ -54,6 +87,7 @@ const mapStateToProps = (state) => ({
   categoryMap: state.auth.categoryMap,
   spendingByCategory: state.plaid.spendingByCategory,
 });
+const mapDispatchToProps = { saveUserBudget };
 
 // Note that there is probably a better way to do this with React hooks now
-export default connect(mapStateToProps, {})(SpendPlanRow);
+export default connect(mapStateToProps, mapDispatchToProps)(SpendPlanRow);
