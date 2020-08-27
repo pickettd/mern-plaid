@@ -12,14 +12,15 @@ export const updateSortedCategories = (
 ) => {
   const returnUnderBudgets = [];
   const returnOverBudgets = [];
+  const arrayToSort = [...categoriesThisSpendRange];
 
-  categoriesThisSpendRange.sort(function (a, b) {
+  arrayToSort.sort(function (a, b) {
     const aSpend = spendingByCategory[a.name] / budgets[a.name];
     const bSpend = spendingByCategory[b.name] / budgets[b.name];
     return aSpend - bSpend;
   });
 
-  categoriesThisSpendRange.forEach((category) => {
+  arrayToSort.forEach((category) => {
     if (spendingByCategory[category.name] / budgets[category.name] <= 1) {
       returnUnderBudgets.push(category.name);
     } else {
