@@ -32,42 +32,12 @@ export const updateSortedCategories = (
 
 // NOTE: this is not the redux way, this should be designed differently in next refactor
 export const processTransactionList = (transactions, budgets) => (dispatch) => {
-  // This payloadObject is what the demo data looks like right now
-  const payloadObject = {
-    /*incomeSum: 1001,
-    paycheckSum: 500,
-    otherIncomeSum: 500,
-    spendingSum: 4391.92,
-    totalTransactionCount: 50,
-    reviewedTransactionCount: 45,
-    categoriesThisSpendRange: [
-      { bankName: "Food and Drink", x: 1, name: "" },
-      { bankName: "Shops", x: 2, name: "" },
-      { bankName: "Travel", x: 3, name: "" },
-      { bankName: "Recreation", x: 4, name: "" },
-      { bankName: "Personal", x: 5, name: "" },
-    ],
-    spendingByCategory: {
-      "Food and Drink": 2211.46,
-      Shops: 1000,
-      Travel: 10233.46,
-      Recreation: 157,
-      Personal: 50,
-    },
-    sortedCategoriesUnderBudget: ["Personal"],
-    sortedCategoriesOverBudget: [
-      "Food and Drink",
-      "Recreation",
-      "Shops",
-      "Travel",
-    ],*/
-  };
+  const payloadObject = {};
   let totalTransactionCount = 0;
   let reviewedTransactionCount = 0;
   let paycheckSum = 0;
   let otherIncomeSum = 0;
 
-  //let profit = 0;
   let income = 0;
   let spending = 0;
   const spendingByCategory = {};
@@ -82,9 +52,7 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
         let serverSetCategory = transaction.category[0];
         let waiwaiMainCategory = transaction.waiwai_categories[0];
         let plaidMainCategory = transaction.plaid_categories[0];
-        /*if (user.categoryMap && user.categoryMap[transaction.category[0]]) {
-          displayCategory = user.categoryMap[transaction.category[0]];
-        }*/
+
         // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
         transaction.amount *= -1;
         /*if (
@@ -141,14 +109,6 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
           }
         }
         //}
-
-        /*transactionsData.push({
-          account: account.accountName,
-          date: transaction.date,
-          category: displayCategory,
-          name: transaction.name,
-          amount: currencyFormatter.format(transaction.amount),
-        });*/
       });
     });
 
