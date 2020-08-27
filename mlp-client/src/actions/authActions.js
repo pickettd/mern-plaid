@@ -8,7 +8,9 @@ import {
   USER_LOADING,
   SET_BUDGETS,
   SET_CATEGORY_MAP,
+  SET_TRANSACTION_DATA,
 } from "./types";
+import { updateSortedCategories } from "../utils/processTransactionList.js";
 
 // Register User
 export const registerUser = (userData, history) => (dispatch) => {
@@ -23,7 +25,26 @@ export const registerUser = (userData, history) => (dispatch) => {
     );
 };
 
-export const saveUserBudget = (budgetData) => (dispatch) => {
+export const saveUserBudget = (budgetData) => (dispatch, getState) => {
+  const state = getState();
+  const { categoriesThisSpendRange, spendingByCategory } = state.plaid;
+  const allBudgets = { ...state.auth.budgets, ...budgetData };
+  dispatch(setCurrentBudgets(allBudgets));
+  const sortedCategories = updateSortedCategories(
+    categoriesThisSpendRange,
+    spendingByCategory,
+    allBudgets
+  );
+  const updateTransactions = {
+    sortedCategoriesOverBudget: sortedCategories.overBudgets,
+    sortedCategoriesUnderBudget: sortedCategories.underBudgets,
+  };
+  dispatch({
+    type: SET_TRANSACTION_DATA,
+    payload: updateTransactions,
+  });
+  // Temporarily just handle in the frontend
+  /*
   axios
     .post(`/api/users/budgets`, budgetData)
     .then((res) => {
@@ -38,7 +59,7 @@ export const saveUserBudget = (budgetData) => (dispatch) => {
         type: GET_ERRORS,
         payload: toSend,
       });
-    });
+    });*/
 };
 
 export const saveUserCategoryMap = (catMapData) => (dispatch) => {
