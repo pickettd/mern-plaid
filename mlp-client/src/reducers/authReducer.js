@@ -34,7 +34,8 @@ export default function (state = initialState, action) {
     case SET_BUDGETS:
       return {
         ...state,
-        budgets: action.payload,
+        budgets: action.payload.allBudgets,
+        expenseBudgetSum: action.payload.expenseBudgetSum,
       };
     case SET_CATEGORY_MAP:
       return {

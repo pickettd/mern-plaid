@@ -28,8 +28,18 @@ export const registerUser = (userData, history) => (dispatch) => {
 export const saveUserBudget = (budgetData) => (dispatch, getState) => {
   const state = getState();
   const { categoriesThisSpendRange, spendingByCategory } = state.plaid;
-  const allBudgets = { ...state.auth.budgets, ...budgetData };
-  dispatch(setCurrentBudgets(allBudgets));
+  const { expenseBudgetSum } = state.auth;
+  let oldBudgetAmount = 0;
+  if (state.auth.budgets[budgetData.name]) {
+    oldBudgetAmount = state.auth.budgets[budgetData.name];
+  }
+  const newBudgetAmount = parseFloat(budgetData.payload[budgetData.name]);
+  const allBudgets = { ...state.auth.budgets, ...budgetData.payload };
+  const budgetPayload = {
+    allBudgets,
+    expenseBudgetSum: expenseBudgetSum - oldBudgetAmount + newBudgetAmount,
+  };
+  dispatch(setCurrentBudgets(budgetPayload));
   const sortedCategories = updateSortedCategories(
     categoriesThisSpendRange,
     spendingByCategory,

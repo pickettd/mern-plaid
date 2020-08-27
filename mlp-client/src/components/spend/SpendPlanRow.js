@@ -8,9 +8,15 @@ const SpendPlanRow = (props) => {
   const { category, budgets, saveUserBudget } = props;
 
   const saveButton = () => {
-    const budgetData = {};
-    budgetData[category.name] = budget;
-    saveUserBudget(budgetData);
+    const budgetData = { name: category.name, payload: {} };
+    budgetData.payload[category.name] = budget;
+    // This checks if the string in budget is a number
+    const valid = !isNaN(budget.trim());
+    if (valid) {
+      // We only save the budget if it is a number
+      // But should have UI here to tell the user something wrong happened if it isn't a number
+      saveUserBudget(budgetData);
+    }
   };
 
   const onChangeValue = (event) => {
