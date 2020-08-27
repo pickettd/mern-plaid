@@ -12,7 +12,7 @@ import {
   USER_FIRST_VISIT,
 } from "./types";
 
-import processTransactionList from "../utils/processTransactionList.js";
+import { processTransactionList } from "../utils/processTransactionList.js";
 
 const setAxiosAuth = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

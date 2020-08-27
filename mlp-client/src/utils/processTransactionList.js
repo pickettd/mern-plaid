@@ -5,8 +5,32 @@ import { SET_TRANSACTION_DATA } from "../actions/types";
 //const varStringMainPlaidCat = "plaid_categories[0]";
 //const varStringMainWaiwaiCat = "waiwai_categories[0]";
 
+export const updateSortedCategories = (
+  categoriesThisSpendRange,
+  spendingByCategory,
+  budgets
+) => {
+  const returnUnderBudgets = [];
+  const returnOverBudgets = [];
+
+  categoriesThisSpendRange.sort(function (a, b) {
+    const aSpend = spendingByCategory[a.name] / budgets[a.name];
+    const bSpend = spendingByCategory[b.name] / budgets[b.name];
+    return aSpend - bSpend;
+  });
+
+  categoriesThisSpendRange.forEach((category) => {
+    if (spendingByCategory[category.name] / budgets[category.name] <= 1) {
+      returnUnderBudgets.push(category.name);
+    } else {
+      returnOverBudgets.push(category.name);
+    }
+  });
+  return { underBudgets: returnUnderBudgets, overBudgets: returnOverBudgets };
+};
+
 // NOTE: this is not the redux way, this should be designed differently in next refactor
-const processTransactionList = (transactions, budgets) => (dispatch) => {
+export const processTransactionList = (transactions, budgets) => (dispatch) => {
   // This payloadObject is what the demo data looks like right now
   const payloadObject = {
     /*incomeSum: 1001,
@@ -37,8 +61,6 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
       "Travel",
     ],*/
   };
-  let sortedCategoriesUnderBudget = [];
-  let sortedCategoriesOverBudget = [];
   let totalTransactionCount = 0;
   let reviewedTransactionCount = 0;
   let paycheckSum = 0;
@@ -144,19 +166,11 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
       });
     }*/
     // Then need to generate new data we didn't calculate before
-    categoriesThisSpendRange.sort(function (a, b) {
-      const aSpend = spendingByCategory[a.name] / budgets[a.name];
-      const bSpend = spendingByCategory[b.name] / budgets[b.name];
-      return aSpend - bSpend;
-    });
-
-    categoriesThisSpendRange.forEach((category) => {
-      if (spendingByCategory[category.name] / budgets[category.name] <= 1) {
-        sortedCategoriesUnderBudget.push(category.name);
-      } else {
-        sortedCategoriesOverBudget.push(category.name);
-      }
-    });
+    const sortedCategories = updateSortedCategories(
+      categoriesThisSpendRange,
+      spendingByCategory,
+      budgets
+    );
     payloadObject.incomeSum = income;
     payloadObject.spendingSum = spending;
     payloadObject.totalTransactionCount = totalTransactionCount;
@@ -164,8 +178,8 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
     payloadObject.categoriesThisSpendRange = categoriesThisSpendRange;
     payloadObject.spendingByCategory = spendingByCategory;
 
-    payloadObject.sortedCategoriesOverBudget = sortedCategoriesOverBudget;
-    payloadObject.sortedCategoriesUnderBudget = sortedCategoriesUnderBudget;
+    payloadObject.sortedCategoriesOverBudget = sortedCategories.overBudgets;
+    payloadObject.sortedCategoriesUnderBudget = sortedCategories.underBudgets;
 
     // NOTE this is being set to zero right now
     //--------------------------------------------------------------------
@@ -179,5 +193,3 @@ const processTransactionList = (transactions, budgets) => (dispatch) => {
     payload: payloadObject,
   });
 };
-
-export default processTransactionList;
