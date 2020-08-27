@@ -134,7 +134,7 @@ class SpendStory extends Component {
                         supposed to be the sum of all the expense budgets */}
                     {noDecimalCurrencyFormatter.format(auth.expenseBudgetSum)}
                     <br />
-                    <span className="small bottom">budget estimate</span>
+                    <span className="small bottom">total budget</span>
                   </h3>
                 </div>
               </div>
