@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ColorHeader from "../layout/ColorHeader";
 const UserProfilePage = (props) => {
   const { user } = useAuth0();
-  const { name } = user;
   const spendRangeDaysOptions = [7, 14, 30];
   return (
     <>
@@ -15,6 +14,17 @@ const UserProfilePage = (props) => {
       />
       <div className="section">
         <div className="container">
+          <div className="row">
+            <div className="col">
+              <img src={user.picture} alt={user.name} />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">Name: {user.name}</div>
+          </div>
+          <div className="row">
+            <div className="col">Email: {user.email}</div>
+          </div>
           <div className="row">
             <div className="col">You are using this date range:</div>
           </div>
