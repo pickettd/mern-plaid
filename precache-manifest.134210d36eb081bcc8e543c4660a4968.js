@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e61abba07cc2a663064c636a73a67844",
+    "revision": "3d650e60cf033c2fea19bdfcee732140",
     "url": "/mern-plaid/index.html"
   },
   {
-    "revision": "71f91ccabb59d460208d",
-    "url": "/mern-plaid/static/css/main.5ee6f045.chunk.css"
+    "revision": "e09bf452f318990d3062",
+    "url": "/mern-plaid/static/css/main.0f3e62ea.chunk.css"
   },
   {
     "revision": "2fc7c81f6d66373e7f31",
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/js/2.2fd46951.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "71f91ccabb59d460208d",
-    "url": "/mern-plaid/static/js/main.bd5e19ef.chunk.js"
+    "revision": "e09bf452f318990d3062",
+    "url": "/mern-plaid/static/js/main.163e0c56.chunk.js"
   },
   {
     "revision": "e015beafe7d90dd0662a",
@@ -28,16 +28,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/media/blue-header.59490305.svg"
   },
   {
-    "revision": "de097c9d8ef2e6358b5e55839d4c1517",
-    "url": "/mern-plaid/static/media/childcare.de097c9d.svg"
+    "revision": "3217e63b496c195fb40e49c57fd3d3b4",
+    "url": "/mern-plaid/static/media/childcare.3217e63b.svg"
   },
   {
     "revision": "72b94b4be81f1efb442a84fae68c93e6",
     "url": "/mern-plaid/static/media/debt.72b94b4b.svg"
   },
   {
-    "revision": "0c497f664c64e75482ec6b06201d356b",
-    "url": "/mern-plaid/static/media/dollar-sign.0c497f66.svg"
+    "revision": "69e96d44c387576dec307aedb81f9130",
+    "url": "/mern-plaid/static/media/dollar-sign.69e96d44.svg"
   },
   {
     "revision": "28dcaf58e8fcb45e7404f5cacec7c9ca",
@@ -56,8 +56,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/media/green-header.c54f4811.svg"
   },
   {
-    "revision": "ab16350f26025b40157aa7031629a471",
-    "url": "/mern-plaid/static/media/housing.ab16350f.svg"
+    "revision": "aa8416a13f306cc7b7544b6354307d2f",
+    "url": "/mern-plaid/static/media/housing.aa8416a1.svg"
   },
   {
     "revision": "ccb70d55a4d39936f2b591f77085e28f",
@@ -72,8 +72,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/media/personal.56aa4ee5.svg"
   },
   {
-    "revision": "9f40c6eb37508abb3e3d311e578ab954",
-    "url": "/mern-plaid/static/media/savings.9f40c6eb.svg"
+    "revision": "0d8cb36a3686ae9f7144890003656168",
+    "url": "/mern-plaid/static/media/savings.0d8cb36a.svg"
   },
   {
     "revision": "634026ec69cd705e53c19fe6ba475e0c",
@@ -84,8 +84,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/mern-plaid/static/media/transportation.7ab81113.svg"
   },
   {
-    "revision": "b6b6ce9ec6b7d2da91be3db26fd3152e",
-    "url": "/mern-plaid/static/media/utilities.b6b6ce9e.svg"
+    "revision": "73512e34dfd01103edfc8bcb41da275e",
+    "url": "/mern-plaid/static/media/utilities.73512e34.svg"
   },
   {
     "revision": "2ab84c278408b64714850d9a0f7b6d7a",
