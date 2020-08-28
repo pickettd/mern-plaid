@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/mern-plaid/static/css/main.0f3e62ea.chunk.css",
-    "main.js": "/mern-plaid/static/js/main.dfae899b.chunk.js",
-    "main.js.map": "/mern-plaid/static/js/main.dfae899b.chunk.js.map",
+    "main.js": "/mern-plaid/static/js/main.7ead9411.chunk.js",
+    "main.js.map": "/mern-plaid/static/js/main.7ead9411.chunk.js.map",
     "runtime-main.js": "/mern-plaid/static/js/runtime-main.ef8f6bf6.js",
     "runtime-main.js.map": "/mern-plaid/static/js/runtime-main.ef8f6bf6.js.map",
     "static/js/2.4ece2d3d.chunk.js": "/mern-plaid/static/js/2.4ece2d3d.chunk.js",
     "static/js/2.4ece2d3d.chunk.js.map": "/mern-plaid/static/js/2.4ece2d3d.chunk.js.map",
     "index.html": "/mern-plaid/index.html",
-    "precache-manifest.b8073e35082b37a2c134d60005e27b52.js": "/mern-plaid/precache-manifest.b8073e35082b37a2c134d60005e27b52.js",
+    "precache-manifest.2fdc0c75743050480734b6ccde042cfc.js": "/mern-plaid/precache-manifest.2fdc0c75743050480734b6ccde042cfc.js",
     "service-worker.js": "/mern-plaid/service-worker.js",
     "static/css/main.0f3e62ea.chunk.css.map": "/mern-plaid/static/css/main.0f3e62ea.chunk.css.map",
     "static/js/2.4ece2d3d.chunk.js.LICENSE.txt": "/mern-plaid/static/js/2.4ece2d3d.chunk.js.LICENSE.txt",
@@ -32,6 +32,6 @@
     "static/js/runtime-main.ef8f6bf6.js",
     "static/js/2.4ece2d3d.chunk.js",
     "static/css/main.0f3e62ea.chunk.css",
-    "static/js/main.dfae899b.chunk.js"
+    "static/js/main.7ead9411.chunk.js"
   ]
 }
