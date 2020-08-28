@@ -8,7 +8,7 @@ const HomePage = (props) => {
       <div className="login-box  p-5">
         <h1>Mālama Wai. Ho'oulu Waiwai</h1>
         <p>Manage your financial resources. Grow waiwai.</p>
-        <div class="button-box">
+        <div className="button-box">
           <LoginButton />
           <br />
           <SignupButton />
