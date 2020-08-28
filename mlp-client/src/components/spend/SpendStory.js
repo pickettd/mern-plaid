@@ -204,7 +204,7 @@ class SpendStory extends Component {
               <div className="row mt-5">
                 <div className="col-md-6 offset-md-1">
                   <h2 className="large-number">
-                    <span className="small top">Savings</span>
+                    <span className="small top">Surplus</span>
                     <br />
                     {noDecimalCurrencyFormatter.format(
                       plaid.incomeSum - plaid.spendingSum
