@@ -29,13 +29,19 @@ import utilitiesLogo from "../../img/spend-plan/utilities.svg";
 //import walletLogo from "../../img/spend-plan/wallet.svg";
 
 const SpendCategoryCard = (props) => {
-  const budgetAmount = props.budgetAmount;
-  const spentAmount = props.spentAmount;
-
+  let budgetAmount = 0;
+  let spentAmount = 0;
   let mainValueDisplay = "";
   let subValueDisplay = "";
   let colorBackgroundClass = "";
   let thisCategoryLogo = miscellaneousLogo;
+
+  if (props.budgetAmount) {
+    budgetAmount = props.budgetAmount;
+  }
+  if (props.spentAmount) {
+    spentAmount = props.spentAmount;
+  }
 
   if (props.categoryName === "Income") {
     thisCategoryLogo = dollarLogo;
@@ -81,6 +87,10 @@ const SpendCategoryCard = (props) => {
     );
     if (budgetAmount !== 0) {
       subValueDisplay = percentFormatter.format(spentAmount / budgetAmount);
+    } else if (spentAmount === 0) {
+      subValueDisplay = percentFormatter.format(0);
+    } else {
+      subValueDisplay = "--";
     }
   } else {
     // this is an over budget category
@@ -88,6 +98,10 @@ const SpendCategoryCard = (props) => {
     subValueDisplay = noDecimalCurrencyFormatter.format(spentAmount);
     if (budgetAmount !== 0) {
       mainValueDisplay = percentFormatter.format(spentAmount / budgetAmount);
+    } else if (spentAmount === 0) {
+      mainValueDisplay = percentFormatter.format(0);
+    } else {
+      mainValueDisplay = "--";
     }
   }
 
@@ -103,7 +117,7 @@ const SpendCategoryCard = (props) => {
       </div>
       <div className="card-body text-center">
         <h4 className="card-title text-left">
-          {isNaN(mainValueDisplay) ? "--" : mainValueDisplay}
+          {mainValueDisplay}
           <span className="small bottom">
             <br />
             {props.underBudget ? "Available" : "Spent"}
@@ -114,7 +128,7 @@ const SpendCategoryCard = (props) => {
           <div className="row mt-3">
             <div className="col">
               <p className=" text-left">
-                {isNaN(budgetAmountDisplay) ? 0 : budgetAmountDisplay}
+                {budgetAmountDisplay}
                 <span className="small bottom">
                   <br />
                   Budget
@@ -123,7 +137,7 @@ const SpendCategoryCard = (props) => {
             </div>
             <div className="col">
               <p className=" text-left">
-                {isNaN(subValueDisplay) ? "--" : subValueDisplay}
+                {subValueDisplay}
                 <span className="small bottom">
                   <br />
                   Spent

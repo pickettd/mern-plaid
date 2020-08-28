@@ -33,7 +33,7 @@ export const saveUserBudget = (budgetData) => (dispatch, getState) => {
   if (state.auth.budgets[budgetData.name]) {
     oldBudgetAmount = state.auth.budgets[budgetData.name];
   }
-  const newBudgetAmount = parseFloat(budgetData.payload[budgetData.name]);
+  const newBudgetAmount = budgetData.payload[budgetData.name];
   const allBudgets = { ...state.auth.budgets, ...budgetData.payload };
   const budgetPayload = {
     allBudgets,
