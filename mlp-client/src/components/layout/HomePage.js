@@ -6,11 +6,8 @@ const HomePage = (props) => {
   return (
     <div className="full-page mountain-background">
       <div className="login-box  p-5">
-        <h1>Maximize your earnings</h1>
-        <p>
-          Waiwai teaches you how to track your spending to give you financial
-          freedom.
-        </p>
+        <h1>Mālama Wai. Ho'oulu Waiwai</h1>
+        <p>Manage your financial resources. Grow waiwai.</p>
         <div class="button-box">
           <LoginButton />
           <br />
