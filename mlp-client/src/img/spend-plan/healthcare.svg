@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><style>.cls-1{fill:none;stroke:#231f20;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;}</style></defs><g id="Insurance"><polygon class="cls-1" points="44 35 54 35 54 45 63 45 63 54 54 54 54 63 44 63 44 54 35 54 35 45 44 45 44 35"/></g><g id="Health"><path class="cls-1" d="M48.54,20S71-4.63,87.54,19c21,30-39,69-39,69H48S-12,49,9,19c16.54-23.63,39,1,39,1"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 24.2.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 96 96" style="enable-background:new 0 0 96 96;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FFFFFF;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+</style>
+<g id="Insurance">
+	<polygon class="st0" points="44,35 54,35 54,45 63,45 63,54 54,54 54,63 44,63 44,54 35,54 35,45 44,45 	"/>
+</g>
+<g id="Health">
+	<path class="st0" d="M48.5,20c0,0,22.5-24.6,39-1c21,30-39,69-39,69H48c0,0-60-39-39-69c16.5-23.6,39,1,39,1"/>
+</g>
+</svg>

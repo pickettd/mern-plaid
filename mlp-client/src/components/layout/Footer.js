@@ -17,8 +17,8 @@ const Footer = () => {
         <div className="row">
           <p className="col-sm">
             <small>
-              &copy;{new Date().getFullYear()} WAIWAI | All rights reserved |
-              Terms of service | Privacy{" "}
+              &copy;{new Date().getFullYear()} WAIWAI | Ua kukulu ʻia i Hawaiʻi
+              me ke aloha nui
             </small>
           </p>
         </div>

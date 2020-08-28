@@ -16,10 +16,7 @@ const UserProfilePage = (props) => {
       <div className="section">
         <div className="container">
           <div className="row">
-            <div className="col">
-              This is {name}'s user profile page <br />
-              You are using this date range:
-            </div>
+            <div className="col">You are using this date range:</div>
           </div>
           <div>
             <div className="form-group">

@@ -6,13 +6,17 @@ import ColorHeader from "../layout/ColorHeader";
 const BankAccountsPage = (props) => {
   const listAccounts = props.accounts.map((account, i) => {
     return (
-      <div className="row" key={account._id}>
-        <div className="col">{account.institutionName}</div>
+      <div className="row mb-4" key={account._id}>
         <div className="col">
-          <PlaidButton buttonText="Refresh" existingAccount={account} />
-        </div>
-        <div className="col">
-          <DeleteAccountButton account={account} />
+          <h2>{account.institutionName}</h2>
+          <PlaidButton
+            className="Secondary"
+            buttonText="Refresh"
+            existingAccount={account}
+          />{" "}
+          <span className="notButton">
+            <DeleteAccountButton account={account} />
+          </span>
         </div>
       </div>
     );
@@ -39,7 +43,7 @@ const BankAccountsPage = (props) => {
       <div className="section">
         <div className="container">
           <div className="row">
-            <div className="col">Bank Accounts page</div>
+            <div className="col"></div>
           </div>
           {props.accountsLoading ? <></> : listAccounts}
           {addButton}

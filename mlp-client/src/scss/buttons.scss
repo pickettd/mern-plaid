@@ -28,3 +28,17 @@ a.notButton {
     color: inherit;
   }
 }
+.notButton {
+  button,
+  button:hover {
+    background: none;
+    border: 0px solid transparent;
+    color: #444;
+  }
+}
+.btn-primary.disabled,
+.btn-primary:disabled {
+  color: #666;
+  background-color: #ddd;
+  border-color: #eee;
+}
