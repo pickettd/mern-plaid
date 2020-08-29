@@ -90,7 +90,10 @@ router.post("/accounts/add", checkJwt, (req, res) => {
                 institutionName: name,
               });
 
-              newAccount.save().then((account) => res.json(account));
+              newAccount.save().then((account) => {
+                delete account.accessToken;
+                res.json(account);
+              });
             }
           })
           .catch((err) => console.log(err)); // Mongo Error
@@ -128,16 +131,12 @@ router.post(
 // @route DELETE api/plaid/accounts/:id
 // @desc Delete account with given id
 // @access Private
-router.delete(
-  "/accounts/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Account.findById(req.params.id).then((account) => {
-      // Delete account
-      account.remove().then(() => res.json({ success: true }));
-    });
-  }
-);
+router.delete("/accounts/:id", checkJwt, (req, res) => {
+  Account.findById(req.params.id).then((account) => {
+    // Delete account
+    account.remove().then(() => res.json({ success: true }));
+  });
+});
 
 // Auth0 version of get accounts
 // @route POST api/plaid/accounts/transactions
