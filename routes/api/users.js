@@ -226,15 +226,15 @@ router.get("/user-info", checkJwt, (req, res) => {
       if (!user.perTransactionSettings) {
         user.perTransactionSettings = {};
       }
-      if (!user.spendRangeDaysSelected) {
-        user.spendRangeDaysSelected = 30;
+      if (!user.spendRangeDays) {
+        user.spendRangeDays = 30;
       }
       const returnUser = {
         id: user.id,
         budgets: user.budgets,
         expenseBudgetSum: user.expenseBudgetSum,
         perTransactionSettings: user.perTransactionSettings,
-        spendRangeDaysSelected: user.spendRangeDaysSelected,
+        spendRangeDays: user.spendRangeDays,
       };
       return res.json(returnUser);
     })

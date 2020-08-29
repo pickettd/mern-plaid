@@ -51,7 +51,7 @@ const UserSchema = new Schema({
     type: Number,
     default: 0,
   },
-  spendRangeDaysSelected: {
+  spendRangeDays: {
     type: Number,
     default: 30,
     min: 1,
