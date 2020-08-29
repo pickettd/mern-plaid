@@ -75,7 +75,7 @@ export const saveUserBudget = (accessToken, budgetData) => (
     })
     .then((res) => {
       //dispatch(setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets));
-      console.log("Updated server budget");
+      return;
     })
     .catch((err) => {
       let toSend = err;
@@ -120,7 +120,10 @@ export const loginUser = (userData) => (dispatch) => {
 };
 
 // userInfo - get user info for logged in user
-export const getUserInfo = () => (dispatch) => {
+export const getUserInfo = (accessToken) => (dispatch) => {
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
   axios
     .get("/api/users/user-info")
     .then((res) => {
@@ -154,10 +157,10 @@ export const setCurrentUser = (decoded) => {
 };
 
 // Set logged in user budgets
-export const setCurrentBudgets = (budgets) => {
+export const setCurrentBudgets = (budgetPayload) => {
   return {
     type: SET_BUDGETS,
-    payload: budgets,
+    payload: budgetPayload,
   };
 };
 

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getAccounts, getTransactions } from "../../actions/accountActions";
+import { getAccounts, getTransactions } from "../../actions/accountActions.js";
+import { getUserInfo } from "../../actions/authActions.js";
 
 const TransactionBootstrap = (props) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -31,14 +32,15 @@ const UseTransactionBootstrap = connect(
 
 const AccountBootstrap = (props) => {
   const { getAccessTokenSilently } = useAuth0();
-  const { accounts, getAccounts, accountsLoading } = props;
+  const { accounts, getAccounts, accountsLoading, getUserInfo } = props;
   useEffect(() => {
     if (accounts && accounts.length === 0) {
       getAccessTokenSilently().then((accessToken) => {
+        getUserInfo(accessToken);
         getAccounts(accessToken, accounts);
       });
     }
-  }, [accounts, getAccessTokenSilently, getAccounts]);
+  }, [accounts, getAccessTokenSilently, getAccounts, getUserInfo]);
   return accountsLoading ? <></> : <UseTransactionBootstrap />;
 };
 
@@ -48,6 +50,7 @@ const accountStateToProps = (state) => ({
 });
 const accountDispatchToProps = {
   getAccounts,
+  getUserInfo,
 };
 
 export default connect(
