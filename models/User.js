@@ -33,6 +33,9 @@ const UserSchema = new Schema({
     type: Map,
     of: Number,
   },
+  expenseBudgetSum: {
+    type: Number,
+  },
 });
 
 module.exports = User = mongoose.model("users", UserSchema);
