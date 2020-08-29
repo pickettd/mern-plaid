@@ -45,9 +45,10 @@ export const saveUserBudget = (accessToken, budgetData) => (
   }
   const newBudgetAmount = budgetData.payload[budgetData.name];
   const allBudgets = { ...state.auth.budgets, ...budgetData.payload };
+  const newBudgetSum = expenseBudgetSum - oldBudgetAmount + newBudgetAmount;
   const budgetPayload = {
     allBudgets,
-    expenseBudgetSum: expenseBudgetSum - oldBudgetAmount + newBudgetAmount,
+    expenseBudgetSum: newBudgetSum,
   };
   dispatch(setCurrentBudgets(budgetPayload));
   const sortedCategories = updateSortedCategories(
@@ -71,6 +72,7 @@ export const saveUserBudget = (accessToken, budgetData) => (
     .post(`/api/users/budgets`, {
       budgetName: budgetData.name,
       budgetAmount: newBudgetAmount,
+      expenseBudgetSum: newBudgetSum,
     })
     .then((res) => {
       //dispatch(setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets));

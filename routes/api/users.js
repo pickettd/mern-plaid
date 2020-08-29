@@ -143,16 +143,22 @@ router.post("/budgets", checkJwt, (req, res) => {
 
   const budgetName = req.body.budgetName;
   const budgetAmount = req.body.budgetAmount;
+  const expenseBudgetSum = req.body.expenseBudgetSum;
 
   findOrCreateUser(reqUserId).then((user) => {
     if (!user.budgets) {
       user.budgets = new Map();
     }
+    user.expenseBudgetSum = expenseBudgetSum;
     user.budgets.set(budgetName, budgetAmount);
     return user
       .save()
       .then((user) => {
-        return res.json({ userId: reqUserId, budgets: user.budgets });
+        return res.json({
+          userId: reqUserId,
+          budgets: user.budgets,
+          expenseBudgetSum: user.expenseBudgetSum,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -206,31 +212,25 @@ router.post(
 // @route GET api/users/user-info
 // @desc Return the user object (eg budgets and categoryMap data)
 // @access Private
-router.get(
-  "/user-info",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const userId = req.user.id;
+router.get("/user-info", checkJwt, (req, res) => {
+  //const userId = req.user.id;
+  const reqUserId = req.user.sub;
 
-    User.findById(userId)
-      .then((user) => {
-        if (!user.budgets) {
-          user.budgets = {};
-        }
-        if (!user.categoryMap) {
-          user.categoryMap = {};
-        }
-        const returnUser = {
-          id: user.id,
-          budgets: user.budgets,
-          categoryMap: user.categoryMap,
-        };
-        res.json(returnUser);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-);
+  User.findById(reqUserId)
+    .then((user) => {
+      if (!user.budgets) {
+        user.budgets = {};
+      }
+      const returnUser = {
+        id: user.id,
+        budgets: user.budgets,
+        expenseBudgetSum: user.expenseBudgetSum,
+      };
+      res.json(returnUser);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 module.exports = router;
