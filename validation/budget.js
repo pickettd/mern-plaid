@@ -6,7 +6,8 @@ module.exports = function validateBudgetInput(data) {
 
   // Convert empty fields to an empty string so we can use validator functions
   data.budgetName = !isEmpty(data.budgetName) ? data.budgetName : "";
-  data.budgetAmount = !isEmpty(data.budgetAmount) ? data.budgetAmount : "";
+  // Note that budgetAmount should be coerced to a string for the validator library
+  data.budgetAmount = !isEmpty(data.budgetAmount) ? data.budgetAmount + "" : "";
   // Budget Name checks
   if (Validator.isEmpty(data.budgetName)) {
     errors.budgetName = "Budget Name is required";

@@ -3,6 +3,12 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const UserSchema = new Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
+  // Commenting out name, email, and password since we use Auth0 now
+  /*
   name: {
     type: String,
     required: true,
@@ -14,7 +20,7 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },
+  },*/
   date: {
     type: Date,
     default: Date.now,
