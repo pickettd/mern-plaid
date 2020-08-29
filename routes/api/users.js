@@ -10,7 +10,6 @@ const checkJwt = require("../../config/checkJwt-Auth0");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validateBudgetInput = require("../../validation/budget");
-const validateCategoryMapInput = require("../../validation/categoryMap");
 const validateSingleTransactionsCategoryMapInput = require("../../validation/singleTransactionsCategoryMap");
 
 // Load User model
@@ -160,44 +159,6 @@ router.post("/budgets", checkJwt, (req, res) => {
       });
   });
 });
-
-// @route POST api/users/category-map
-// @desc Set categoryMap object
-// @access Private
-router.post(
-  "/category-map",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const userId = req.user.id;
-    // Form validation
-
-    const { errors, isValid } = validateCategoryMapInput(req.body);
-
-    // Check validation
-    if (!isValid) {
-      console.log("categoryMap request not valid");
-      return res.status(400).json(errors);
-    }
-
-    const bankCategoryName = req.body.bankCategoryName;
-    const newCategoryName = req.body.newCategoryName;
-
-    User.findById(userId).then((user) => {
-      if (!user.categoryMap) {
-        user.categoryMap = new Map();
-      }
-      user.categoryMap.set(bankCategoryName, newCategoryName);
-      user
-        .save()
-        .then((user) => {
-          res.json({ userId: userId, categoryMap: user.categoryMap });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
-  }
-);
 
 // @route POST api/users/single-transactions-category-map
 // @desc Set singleTransactionsCategoryMap object

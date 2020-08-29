@@ -25,18 +25,6 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  categoryOverridePatterns: [
-    {
-      pattern: String,
-      flags: String,
-      mainCategory: String,
-      subCategory: String,
-    },
-  ],
-  categoryMap: {
-    type: Map,
-    of: String,
-  },
   singleTransactionsCategoryMap: {
     type: Map,
     of: String,
