@@ -12,6 +12,10 @@ import {
 } from "./types";
 import { updateSortedCategories } from "../utils/processTransactionList.js";
 
+const setAxiosAuth = (token) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+};
+
 // Register User
 export const registerUser = (userData, history) => (dispatch) => {
   axios
@@ -25,8 +29,14 @@ export const registerUser = (userData, history) => (dispatch) => {
     );
 };
 
-export const saveUserBudget = (budgetData) => (dispatch, getState) => {
+export const saveUserBudget = (accessToken, budgetData) => (
+  dispatch,
+  getState
+) => {
   const state = getState();
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
   const { categoriesThisSpendRange, spendingByCategory } = state.plaid;
   const { expenseBudgetSum } = state.auth;
   let oldBudgetAmount = 0;
@@ -53,12 +63,18 @@ export const saveUserBudget = (budgetData) => (dispatch, getState) => {
     type: SET_TRANSACTION_DATA,
     payload: updateTransactions,
   });
-  // Temporarily just handle in the frontend
-  /*
+  // Note: if we leave this api call in this position for now, the demo for frontend-only
+  // will continue to work but the downside is that if there is a
+  // server error then the frontend and backend could get out of sync
+
   axios
-    .post(`/api/users/budgets`, budgetData)
+    .post(`/api/users/budgets`, {
+      budgetName: budgetData.name,
+      budgetAmount: newBudgetAmount,
+    })
     .then((res) => {
-      dispatch(setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets));
+      //dispatch(setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets));
+      console.log("Updated server budget");
     })
     .catch((err) => {
       let toSend = err;
@@ -69,7 +85,7 @@ export const saveUserBudget = (budgetData) => (dispatch, getState) => {
         type: GET_ERRORS,
         payload: toSend,
       });
-    });*/
+    });
 };
 
 export const saveUserCategoryMap = (catMapData) => (dispatch) => {

@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { useAuth0 } from "@auth0/auth0-react";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { saveUserBudget } from "../../actions/authActions";
 
 const SpendPlanRow = (props) => {
+  const { getAccessTokenSilently } = useAuth0();
   const [budget, setBudget] = useState("");
   const { category, budgets, saveUserBudget } = props;
 
   const saveButton = () => {
     const budgetData = { name: category.name, payload: {} };
     // This checks if the string in budget is a number
-    const valid = !isNaN(budget.trim());
+    let valid = false;
+    if (budget.trim) {
+      valid = !isNaN(budget.trim());
+    }
 
     if (valid) {
       budgetData.payload[category.name] = parseFloat(budget);
       // We only save the budget if it is a number
       // But should have UI here to tell the user something wrong happened if it isn't a number
-      saveUserBudget(budgetData);
+      getAccessTokenSilently().then((accessToken) => {
+        saveUserBudget(accessToken, budgetData);
+      });
     }
   };
 
