@@ -64,12 +64,18 @@ export const refreshAccount = (plaidData) => (dispatch) => {
 };
 
 // Delete account
-export const deleteAccount = (plaidData) => (dispatch) => {
+export const deleteAccount = (accessToken, plaidData) => (
+  dispatch,
+  getState
+) => {
+  const state = getState();
+  const { accounts } = state.plaid;
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
   if (window.confirm("Are you sure you want to remove this account?")) {
     const id = plaidData.id;
-    const newAccounts = plaidData.accounts.filter(
-      (account) => account._id !== id
-    );
+    const newAccounts = accounts.filter((account) => account._id !== id);
     axios
       .delete(`/api/plaid/accounts/${id}`)
       .then((res) =>
@@ -78,7 +84,9 @@ export const deleteAccount = (plaidData) => (dispatch) => {
           payload: id,
         })
       )
-      .then(newAccounts ? dispatch(getTransactions(newAccounts)) : null)
+      .then(
+        newAccounts ? dispatch(getTransactions(accessToken, newAccounts)) : null
+      )
       .catch((err) => console.log(err));
   }
 };

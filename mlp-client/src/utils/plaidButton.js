@@ -4,12 +4,39 @@ import { usePlaidLink } from "react-plaid-link";
 //import { PlaidLink } from "react-plaid-link";
 import { Button } from "react-bootstrap";
 import { connect } from "react-redux";
-import { addAccount, refreshAccount } from "../actions/accountActions";
+import {
+  addAccount,
+  refreshAccount,
+  deleteAccount,
+} from "../actions/accountActions";
 import { useAuth0 } from "@auth0/auth0-react";
 
-export const DeleteAccountButton = (props) => {
-  return <Button>Delete</Button>;
+const ExportDeleteAccountButton = (props) => {
+  const { account, deleteAccount } = props;
+  const accountID = account._id;
+  const { getAccessTokenSilently } = useAuth0();
+
+  const onDeleteClick = useCallback(() => {
+    // send token to server
+    const plaidData = {
+      id: accountID,
+    };
+    getAccessTokenSilently().then((accessToken) => {
+      deleteAccount(accessToken, plaidData);
+    });
+  }, [accountID, getAccessTokenSilently, deleteAccount]);
+
+  return <Button onClick={onDeleteClick}>Delete</Button>;
 };
+
+const deleteMapStateToProps = (state) => ({
+  accounts: state.plaid.accounts,
+  accountsLoading: state.plaid.accountsLoading,
+});
+
+export const DeleteAccountButton = connect(deleteMapStateToProps, {
+  deleteAccount,
+})(ExportDeleteAccountButton);
 
 const PlaidToExport = (props) => {
   const { refreshAccount, addAccount } = props;
