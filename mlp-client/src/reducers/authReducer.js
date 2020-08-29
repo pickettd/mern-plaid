@@ -2,7 +2,7 @@ import {
   SET_CURRENT_USER,
   USER_LOADING,
   SET_BUDGETS,
-  SET_CATEGORY_MAP,
+  GET_USER_INFO,
 } from "../actions/types";
 import { AUTH_MOCK_DATA } from "./reduxMockData";
 
@@ -37,10 +37,10 @@ export default function (state = initialState, action) {
         budgets: action.payload.allBudgets,
         expenseBudgetSum: action.payload.expenseBudgetSum,
       };
-    case SET_CATEGORY_MAP:
+    case GET_USER_INFO:
       return {
         ...state,
-        categoryMap: action.payload,
+        ...action.payload,
       };
     default:
       return state;
