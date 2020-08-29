@@ -7,7 +7,6 @@ import {
   SET_CURRENT_USER,
   USER_LOADING,
   SET_BUDGETS,
-  SET_CATEGORY_MAP,
   SET_TRANSACTION_DATA,
 } from "./types";
 import { updateSortedCategories } from "../utils/processTransactionList.js";
@@ -106,7 +105,7 @@ export const loginUser = (userData) => (dispatch) => {
       const decoded = jwt_decode(token);
       // Set current user
       dispatch(setCurrentUser(decoded));
-      dispatch(setCookiesAndCurrentBudgets(decoded.id, decoded.budgets));
+      //dispatch(setCookiesAndCurrentBudgets(decoded.id, decoded.budgets));
     })
     .catch((err) => {
       let toSend = err;
@@ -126,10 +125,13 @@ export const getUserInfo = () => (dispatch) => {
     .get("/api/users/user-info")
     .then((res) => {
       const returnedUser = res.data;
+      const { budgets, expenseBudgetSum } = returnedUser;
+      const payload = {
+        allBudgets: budgets,
+        expenseBudgetSum: expenseBudgetSum,
+      };
 
-      dispatch(
-        setCookiesAndCurrentBudgets(returnedUser.id, returnedUser.budgets)
-      );
+      dispatch(setCurrentBudgets(payload));
     })
     .catch((err) => {
       let toSend = err;
@@ -149,16 +151,6 @@ export const setCurrentUser = (decoded) => {
     type: SET_CURRENT_USER,
     payload: decoded,
   };
-};
-
-export const setCookiesAndCurrentBudgets = (userId, budgets) => (dispatch) => {
-  let allBudgets = {};
-  if (localStorage.allBudgets) {
-    allBudgets = JSON.parse(localStorage.allBudgets);
-  }
-  allBudgets[userId] = budgets;
-  localStorage.allBudgets = JSON.stringify(allBudgets);
-  dispatch(setCurrentBudgets(budgets));
 };
 
 // Set logged in user budgets
