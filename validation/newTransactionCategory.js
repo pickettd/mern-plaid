@@ -1,7 +1,7 @@
 const Validator = require("validator");
 const isEmpty = require("is-empty");
 
-module.exports = function validateSingleTransactionsCategoryMapInput(data) {
+module.exports = function validateNewTransactionCategoryInput(data) {
   let errors = {};
 
   // Convert empty fields to an empty string so we can use validator functions

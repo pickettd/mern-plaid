@@ -10,7 +10,7 @@ const checkJwt = require("../../config/checkJwt-Auth0");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validateBudgetInput = require("../../validation/budget");
-const validateSingleTransactionsCategoryMapInput = require("../../validation/singleTransactionsCategoryMap");
+const validateNewTransactionCategoryInput = require("../../validation/newTransactionCategory");
 
 // Load User model
 const User = require("../../models/User");
@@ -166,48 +166,46 @@ router.post("/budgets", checkJwt, (req, res) => {
   });
 });
 
-// @route POST api/users/single-transactions-category-map
-// @desc Set singleTransactionsCategoryMap object
+// @route POST api/users/new-transaction-category
+// @desc Set new category in transaction settings object
 // @access Private
-router.post(
-  "/single-transactions-category-map",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const userId = req.user.id;
-    // Form validation
+router.post("/new-transaction-category", checkJwt, (req, res) => {
+  //const userId = req.user.id;
+  const reqUserId = req.user.sub;
+  // Form validation
 
-    const { errors, isValid } = validateSingleTransactionsCategoryMapInput(
-      req.body
-    );
+  const { errors, isValid } = validateNewTransactionCategoryInput(req.body);
 
-    // Check validation
-    if (!isValid) {
-      console.log("SingleTransactionsCategoryMap request not valid");
-      return res.status(400).json(errors);
-    }
-
-    const transactionID = req.body.transactionID;
-    const newCategoryName = req.body.newCategoryName;
-
-    User.findById(userId).then((user) => {
-      if (!user.singleTransactionsCategoryMap) {
-        user.singleTransactionsCategoryMap = new Map();
-      }
-      user.singleTransactionsCategoryMap.set(transactionID, newCategoryName);
-      user
-        .save()
-        .then((user) => {
-          res.json({
-            userId: userId,
-            singleTransactionsCategoryMap: user.singleTransactionsCategoryMap,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    });
+  // Check validation
+  if (!isValid) {
+    console.log("NewTransactionCategory request not valid");
+    return res.status(400).json(errors);
   }
-);
+
+  const transactionID = req.body.transactionID;
+  const newCategoryName = req.body.newCategoryName;
+
+  User.findById(userId).then((user) => {
+    if (!user.perTransactionSettings) {
+      user.perTransactionSettings = new Map();
+      user.perTransactionSettings.set(transactionID, { userCategories: [] });
+    }
+    const transactionSettings = user.perTransactionSettings.get(transactionID);
+    transactionSettings.userCategories.push(newCategoryName);
+    user.perTransactionSettings.set(transactionID, transactionSettings);
+    user
+      .save()
+      .then((user) => {
+        res.json({
+          userId: userId,
+          perTransactionSettings: user.perTransactionSettings,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+});
 
 // @route GET api/users/user-info
 // @desc Return the user object (eg budgets and categoryMap data)

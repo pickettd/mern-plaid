@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const transactionSettingsSchema = new Schema({
+  userCategories: [String],
+  isReviewed: {
+    type: Boolean,
+    default: false,
+  },
+  isDuplicate: {
+    type: Boolean,
+    default: false,
+  },
+});
+
 // Create Schema
 const UserSchema = new Schema({
   _id: {
@@ -25,9 +37,9 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  singleTransactionsCategoryMap: {
+  perTransactionSettings: {
     type: Map,
-    of: String,
+    of: transactionSettingsSchema,
   },
   budgets: {
     type: Map,
