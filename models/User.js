@@ -32,21 +32,30 @@ const UserSchema = new Schema({
   password: {
     type: String,
     required: true,
-  },*/
+  },
   date: {
     type: Date,
     default: Date.now,
-  },
+  },*/
   perTransactionSettings: {
     type: Map,
     of: transactionSettingsSchema,
+    default: {},
   },
   budgets: {
     type: Map,
     of: Number,
+    default: {},
   },
   expenseBudgetSum: {
     type: Number,
+    default: 0,
+  },
+  spendRangeDaysSelected: {
+    type: Number,
+    default: 30,
+    min: 1,
+    max: 30,
   },
 });
 
