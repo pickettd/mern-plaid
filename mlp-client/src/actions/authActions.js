@@ -8,6 +8,7 @@ import {
   USER_LOADING,
   SET_BUDGETS,
   SET_TRANSACTION_DATA,
+  GET_USER_INFO,
 } from "./types";
 import { updateSortedCategories } from "../utils/processTransactionList.js";
 
@@ -128,13 +129,23 @@ export const getUserInfo = (accessToken) => (dispatch) => {
     .get("/api/users/user-info")
     .then((res) => {
       const returnedUser = res.data;
-      const { budgets, expenseBudgetSum } = returnedUser;
+      const {
+        budgets,
+        expenseBudgetSum,
+        spendRangeDays,
+        perTransactionSettings,
+      } = returnedUser;
       const payload = {
-        allBudgets: budgets,
-        expenseBudgetSum: expenseBudgetSum,
+        budgets,
+        expenseBudgetSum,
+        spendRangeDays,
+        perTransactionSettings,
       };
 
-      dispatch(setCurrentBudgets(payload));
+      dispatch({
+        type: GET_USER_INFO,
+        payload,
+      });
     })
     .catch((err) => {
       if (err.response.status === 400) {
