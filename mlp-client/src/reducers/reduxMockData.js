@@ -5,8 +5,6 @@ export const AUTH_MOCK_DATA = {
     name: "Test Person",
     iat: null,
     exp: null,
-    budgets: {},
-    categoryMap: {},
   },
   loading: false,
   budgets: {
@@ -17,13 +15,8 @@ export const AUTH_MOCK_DATA = {
     Personal: 100,
   },
   expenseBudgetSum: 380,
-  categoryMap: {
-    "Food and Drink": "Groceries",
-    Shops: "Shopping",
-    Travel: "Travel",
-    Recreation: "Entertainment",
-  },
   spendRangeDays: 30,
+  perTransactionSettings: {},
 };
 // NOTE THAT I'VE ADDED EXTRA MOCK DATA FOR
 // categoriesThisSpendRange, spendingByCategory, incomeSum, and spendingSum
