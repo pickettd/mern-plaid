@@ -1,3 +1,18 @@
+const arrayOfWaiwaiCategories = [
+  "Housing",
+  "Transportation",
+  "Food",
+  "Utilities",
+  "Insurance & Healthcare",
+  "Debt",
+  "Personal",
+  "Education",
+  "Child Care",
+  "Entertainment",
+  "Savings",
+  "Income",
+];
+
 // Mapping idea one (for now just work with 2 levels of category - main and sub)
 // The wildcard character is always checked last to find the category
 const plaidToWaiwaiMapping = {
