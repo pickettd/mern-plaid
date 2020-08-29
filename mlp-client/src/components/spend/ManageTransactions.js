@@ -1,9 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
 import Loading from "../../utils/loading.js";
-import ColorHeader from "../layout/ColorHeader";
-import { currencyFormatter } from "../../utils/currencyFormatter";
+import ColorHeader from "../layout/ColorHeader.js";
+import { currencyFormatter } from "../../utils/currencyFormatter.js";
+import { defaultCategoriesThisSpendRange } from "../../utils/waiwaiCategories.js";
 
 const ManageTransactions = (props) => {
   if (props.accountsLoading || props.transactionsLoading) {
@@ -22,7 +25,21 @@ const ManageTransactions = (props) => {
       options: {
         filter: false,
         customBodyRenderLite: (dataIndex) => {
-          return <button className="btn secondary">Change Category</button>;
+          return (
+            <DropdownButton id="category-dropdown" title="Change Category">
+              {defaultCategoriesThisSpendRange.map((category) => {
+                return (
+                  <Dropdown.Item key={category.x} href="#">
+                    {category.name === "Income"
+                      ? "Income - Other"
+                      : category.name}
+                  </Dropdown.Item>
+                );
+              })}
+              <Dropdown.Item href="#">Income - Paycheck</Dropdown.Item>
+            </DropdownButton>
+          );
+          //return <button className="btn secondary">Change Category</button>;
         },
       },
     },
