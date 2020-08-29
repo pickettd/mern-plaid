@@ -57,48 +57,50 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
         let waiwaiMainCategory = transaction.waiwai_categories[0];
         let plaidMainCategory = transaction.plaid_categories[0];
 
-        // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
-        transaction.amount *= -1;
-        /*if (
+        // Note that we should check for transactions marked duplicate
+        if (!transaction.isDuplicate) {
+          // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
+          transaction.amount *= -1;
+          /*if (
           serverSetCategory !== "Transfer" &&
           serverSetCategory !== "Payment"
         ) {*/
-        totalTransactionCount++;
-        // NOTE: none of our transactions from the API will have these right now
-        //--------------------------------------------------------------------
-        if (transaction.reviewed) {
-          reviewedTransactionCount++;
-        }
-        // Income is done later in income section
-        /*if (transaction.category[1] === "Paycheck") {
+          totalTransactionCount++;
+          // NOTE: none of our transactions from the API will have these right now
+          //--------------------------------------------------------------------
+          if (transaction.isReviewed) {
+            reviewedTransactionCount++;
+          }
+          // Income is done later in income section
+          /*if (transaction.category[1] === "Paycheck") {
             paycheckSum += transaction.amount;
           }
           if (transaction.category[1] === "Other Income") {
             otherIncomeSum += transaction.amount;
           }*/
-        //--------------------------------------------------------------------
-        //profit += transaction.amount;
-        if (transaction.amount < 0) {
-          spending += -1 * transaction.amount;
+          //--------------------------------------------------------------------
+          //profit += transaction.amount;
+          if (transaction.amount < 0) {
+            spending += -1 * transaction.amount;
 
-          // This if/else sets up the spending category object with category as key and amount total as value
-          // Note that we have to check if undefined (because expense of 0 would be falsey)
-          if (spendingByCategory[serverSetCategory] !== undefined) {
-            spendingByCategory[serverSetCategory] += -1 * transaction.amount;
-          } else {
-            // This is the case that the category hasn't been seen before
-            // And that means this shouldn't happen anymore (all categories loaded by default)
-            categoriesThisSpendRange.push({
-              x: categoryCount,
-              waiwaiName: waiwaiMainCategory,
-              plaidName: plaidMainCategory,
-              name: serverSetCategory,
-            });
-            categoryCount++;
-            spendingByCategory[serverSetCategory] = -1 * transaction.amount;
-          }
+            // This if/else sets up the spending category object with category as key and amount total as value
+            // Note that we have to check if undefined (because expense of 0 would be falsey)
+            if (spendingByCategory[serverSetCategory] !== undefined) {
+              spendingByCategory[serverSetCategory] += -1 * transaction.amount;
+            } else {
+              // This is the case that the category hasn't been seen before
+              // And that means this shouldn't happen anymore (all categories loaded by default)
+              categoriesThisSpendRange.push({
+                x: categoryCount,
+                waiwaiName: waiwaiMainCategory,
+                plaidName: plaidMainCategory,
+                name: serverSetCategory,
+              });
+              categoryCount++;
+              spendingByCategory[serverSetCategory] = -1 * transaction.amount;
+            }
 
-          /* Don't think we need spending by date in mlp
+            /* Don't think we need spending by date in mlp
             // This if/else sets up the spending date object with date as key and amount total as value
             if (spendingByDate[transaction.date]) {
               spendingByDate[transaction.date] += -1 * transaction.amount;
@@ -106,15 +108,15 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
               // This is the case that the date hasn't been seen before
               spendingByDate[transaction.date] = -1 * transaction.amount;
             }*/
-        } else {
-          income += transaction.amount;
-          if (transaction.category[1] === "Paycheck") {
-            paycheckSum += transaction.amount;
           } else {
-            otherIncomeSum += transaction.amount;
+            income += transaction.amount;
+            if (transaction.category[0] === "Income - Paycheck") {
+              paycheckSum += transaction.amount;
+            } else {
+              otherIncomeSum += transaction.amount;
+            }
           }
         }
-        //}
       });
     });
 
