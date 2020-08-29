@@ -185,7 +185,7 @@ router.post("/new-transaction-category", checkJwt, (req, res) => {
   const transactionID = req.body.transactionID;
   const newCategoryName = req.body.newCategoryName;
 
-  User.findById(userId).then((user) => {
+  User.findById(reqUserId).then((user) => {
     if (!user.perTransactionSettings) {
       user.perTransactionSettings = new Map();
       user.perTransactionSettings.set(transactionID, { userCategories: [] });
@@ -197,7 +197,7 @@ router.post("/new-transaction-category", checkJwt, (req, res) => {
       .save()
       .then((user) => {
         res.json({
-          userId: userId,
+          userId: reqUserId,
           perTransactionSettings: user.perTransactionSettings,
         });
       })
@@ -219,10 +219,14 @@ router.get("/user-info", checkJwt, (req, res) => {
       if (!user.budgets) {
         user.budgets = {};
       }
+      if (!user.perTransactionSettings) {
+        user.perTransactionSettings = {};
+      }
       const returnUser = {
         id: user.id,
         budgets: user.budgets,
         expenseBudgetSum: user.expenseBudgetSum,
+        perTransactionSettings: user.perTransactionSettings,
       };
       res.json(returnUser);
     })
