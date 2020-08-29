@@ -106,7 +106,9 @@ export const getAccounts = (accessToken) => (dispatch) => {
       })
     )
     .catch((err) => {
-      console.log("Error 400 indicates user hasn't added any accounts yet");
+      if (err.response.status === 400) {
+        console.log("Error 400 indicates user hasn't added any accounts yet");
+      }
       dispatch({
         type: USER_FIRST_VISIT,
         payload: null,

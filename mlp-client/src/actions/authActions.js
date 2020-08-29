@@ -137,6 +137,9 @@ export const getUserInfo = (accessToken) => (dispatch) => {
       dispatch(setCurrentBudgets(payload));
     })
     .catch((err) => {
+      if (err.response.status === 400) {
+        console.log("Error 400 indicates user hasn't added any settings yet");
+      }
       let toSend = err;
       if (err.response) {
         toSend = err.response.data;
