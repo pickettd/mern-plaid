@@ -30,7 +30,6 @@ if (process.env.REACT_APP_LIVEDATA === "true") {
   transactionsLoading: false,
   incomeSum: 0.00,
   spendingSum: 0.00,
-  spendRangeDaysSelected: 30,
   totalTransactionCount: 0,
   reviewedTransactionCount: 0,
   categoriesThisSpendRange: [],

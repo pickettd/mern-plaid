@@ -33,7 +33,7 @@ const UserProfilePage = (props) => {
               <select
                 className="selectpicker"
                 data-style="btn btn-default"
-                defaultValue={props.spendRangeDaysSelected}
+                defaultValue={props.spendRangeDays}
               >
                 <option disabled value={0}>
                   {" "}
@@ -57,7 +57,7 @@ const UserProfilePage = (props) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  spendRangeDaysSelected: state.plaid.spendRangeDaysSelected,
+  spendRangeDays: state.auth.spendRangeDays,
 });
 
 // Note that there is probably a better way to do this with React hooks now

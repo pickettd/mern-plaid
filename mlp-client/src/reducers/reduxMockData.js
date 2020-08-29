@@ -23,6 +23,7 @@ export const AUTH_MOCK_DATA = {
     Travel: "Travel",
     Recreation: "Entertainment",
   },
+  spendRangeDays: 30,
 };
 // NOTE THAT I'VE ADDED EXTRA MOCK DATA FOR
 // categoriesThisSpendRange, spendingByCategory, incomeSum, and spendingSum
@@ -1403,7 +1404,6 @@ export const PLAID_MOCK_DATA = {
   paycheckSum: 0,
   otherIncomeSum: 1008.44,
   spendingSum: 22311.58,
-  spendRangeDaysSelected: 30,
   totalTransactionCount: 34,
   reviewedTransactionCount: 0,
   categoriesThisSpendRange: [

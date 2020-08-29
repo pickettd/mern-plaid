@@ -27,8 +27,8 @@ const SpendPlan = (props) => {
                   <tr>
                     <th>Waiwai category</th>
                     <th></th>
-                    <th>Budget for {props.spendRangeDaysSelected} days</th>
-                    <th>Earned last {props.spendRangeDaysSelected} days</th>
+                    <th>Budget for {props.spendRangeDays} days</th>
+                    <th>Earned last {props.spendRangeDays} days</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -122,8 +122,8 @@ const SpendPlan = (props) => {
                   <tr>
                     <th>Waiwai category</th>
                     <th></th>
-                    <th>Budget for {props.spendRangeDaysSelected} days</th>
-                    <th>Spent last {props.spendRangeDaysSelected} days</th>
+                    <th>Budget for {props.spendRangeDays} days</th>
+                    <th>Spent last {props.spendRangeDays} days</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -150,7 +150,7 @@ const mapStateToProps = (state) => ({
   paycheckSum: state.plaid.paycheckSum,
   otherIncomeSum: state.plaid.otherIncomeSum,
   categoriesThisSpendRange: state.plaid.categoriesThisSpendRange,
-  spendRangeDaysSelected: state.plaid.spendRangeDaysSelected,
+  spendRangeDays: state.auth.spendRangeDays,
   accountsLoading: state.plaid.accountsLoading,
   transactionsLoading: state.plaid.transactionsLoading,
 });
