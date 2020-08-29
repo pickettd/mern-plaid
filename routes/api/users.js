@@ -216,19 +216,27 @@ router.get("/user-info", checkJwt, (req, res) => {
 
   User.findById(reqUserId)
     .then((user) => {
+      if (!user) {
+        return res.status(400).send("No user settings found");
+      }
       if (!user.budgets) {
         user.budgets = {};
+        user.expenseBudgetSum = 0;
       }
       if (!user.perTransactionSettings) {
         user.perTransactionSettings = {};
+      }
+      if (!user.spendRangeDaysSelected) {
+        user.spendRangeDaysSelected = 30;
       }
       const returnUser = {
         id: user.id,
         budgets: user.budgets,
         expenseBudgetSum: user.expenseBudgetSum,
         perTransactionSettings: user.perTransactionSettings,
+        spendRangeDaysSelected: user.spendRangeDaysSelected,
       };
-      res.json(returnUser);
+      return res.json(returnUser);
     })
     .catch((err) => {
       console.log(err);
