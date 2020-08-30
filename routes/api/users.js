@@ -10,7 +10,7 @@ const checkJwt = require("../../config/checkJwt-Auth0");
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validateBudgetInput = require("../../validation/budget");
-const validateNewTransactionCategoryInput = require("../../validation/newTransactionCategory");
+const validateNewTransactionSettingsInput = require("../../validation/newTransactionSettings");
 
 // Load User model
 const User = require("../../models/User");
@@ -166,15 +166,15 @@ router.post("/budgets", checkJwt, (req, res) => {
   });
 });
 
-// @route POST api/users/new-transaction-category
-// @desc Set new category in transaction settings object
+// @route POST api/users/new-transaction-setting
+// @desc Set fields in transaction settings object
 // @access Private
-router.post("/new-transaction-category", checkJwt, (req, res) => {
+router.post("/new-transaction-settings", checkJwt, (req, res) => {
   //const userId = req.user.id;
   const reqUserId = req.user.sub;
   // Form validation
 
-  const { errors, isValid } = validateNewTransactionCategoryInput(req.body);
+  const { errors, isValid } = validateNewTransactionSettingsInput(req.body);
 
   // Check validation
   if (!isValid) {
@@ -183,16 +183,14 @@ router.post("/new-transaction-category", checkJwt, (req, res) => {
   }
 
   const transactionID = req.body.transactionID;
-  const newCategoryName = req.body.newCategoryName;
+  let settingData = req.body.settingData;
 
   User.findById(reqUserId).then((user) => {
     if (!user.perTransactionSettings) {
       user.perTransactionSettings = new Map();
-      user.perTransactionSettings.set(transactionID, { userCategories: [] });
     }
-    const transactionSettings = user.perTransactionSettings.get(transactionID);
-    transactionSettings.userCategories.push(newCategoryName);
-    user.perTransactionSettings.set(transactionID, transactionSettings);
+
+    user.perTransactionSettings.set(transactionID, settingData);
     user
       .save()
       .then((user) => {
