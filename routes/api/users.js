@@ -178,7 +178,7 @@ router.post("/new-transaction-settings", checkJwt, (req, res) => {
 
   // Check validation
   if (!isValid) {
-    console.log("NewTransactionCategory request not valid");
+    console.log("NewTransactionSettings request not valid");
     return res.status(400).json(errors);
   }
 
