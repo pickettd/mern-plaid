@@ -56,11 +56,12 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
         let serverSetCategory = transaction.category[0];
         let waiwaiMainCategory = transaction.waiwai_categories[0];
         let plaidMainCategory = transaction.plaid_categories[0];
+        let transactionAmount = 0;
 
         // Note that we should check for transactions marked duplicate
         if (!transaction.isDuplicate) {
           // By default, the plaid transactions are positive for spent money and negative for earned money - so we reverse that
-          transaction.amount *= -1;
+          transactionAmount = transaction.amount * -1;
           /*if (
           serverSetCategory !== "Transfer" &&
           serverSetCategory !== "Payment"
@@ -73,20 +74,20 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
           }
           // Income is done later in income section
           /*if (transaction.category[1] === "Paycheck") {
-            paycheckSum += transaction.amount;
+            paycheckSum += transactionAmount;
           }
           if (transaction.category[1] === "Other Income") {
-            otherIncomeSum += transaction.amount;
+            otherIncomeSum += transactionAmount;
           }*/
           //--------------------------------------------------------------------
-          //profit += transaction.amount;
-          if (transaction.amount < 0) {
-            spending += -1 * transaction.amount;
+          //profit += transactionAmount;
+          if (transactionAmount < 0) {
+            spending += -1 * transactionAmount;
 
             // This if/else sets up the spending category object with category as key and amount total as value
             // Note that we have to check if undefined (because expense of 0 would be falsey)
             if (spendingByCategory[serverSetCategory] !== undefined) {
-              spendingByCategory[serverSetCategory] += -1 * transaction.amount;
+              spendingByCategory[serverSetCategory] += -1 * transactionAmount;
             } else {
               // This is the case that the category hasn't been seen before
               // And that means this shouldn't happen anymore (all categories loaded by default)
@@ -97,23 +98,23 @@ export const processTransactionList = (transactions, budgets) => (dispatch) => {
                 name: serverSetCategory,
               });
               categoryCount++;
-              spendingByCategory[serverSetCategory] = -1 * transaction.amount;
+              spendingByCategory[serverSetCategory] = -1 * transactionAmount;
             }
 
             /* Don't think we need spending by date in mlp
             // This if/else sets up the spending date object with date as key and amount total as value
             if (spendingByDate[transaction.date]) {
-              spendingByDate[transaction.date] += -1 * transaction.amount;
+              spendingByDate[transaction.date] += -1 * transactionAmount;
             } else {
               // This is the case that the date hasn't been seen before
-              spendingByDate[transaction.date] = -1 * transaction.amount;
+              spendingByDate[transaction.date] = -1 * transactionAmount;
             }*/
           } else {
-            income += transaction.amount;
+            income += transactionAmount;
             if (transaction.category[0] === "Income - Paycheck") {
-              paycheckSum += transaction.amount;
+              paycheckSum += transactionAmount;
             } else {
-              otherIncomeSum += transaction.amount;
+              otherIncomeSum += transactionAmount;
             }
           }
         }
