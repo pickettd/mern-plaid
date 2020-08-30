@@ -9,8 +9,13 @@ import {
   SET_BUDGETS,
   SET_TRANSACTION_DATA,
   GET_USER_INFO,
+  TRANSACTIONS_LOADING,
+  GET_TRANSACTIONS,
 } from "./types";
-import { updateSortedCategories } from "../utils/processTransactionList.js";
+import {
+  updateSortedCategories,
+  processTransactionList,
+} from "../utils/processTransactionList.js";
 
 const setAxiosAuth = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -118,6 +123,94 @@ export const loginUser = (userData) => (dispatch) => {
         payload: toSend,
       });
     });
+};
+
+export const setCategory = (accessToken, transactionData) => (
+  dispatch,
+  getState
+) => {
+  const state = getState();
+
+  const transactionID = transactionData.transactionID;
+  const newCategoryName = transactionData.newMainCategory;
+
+  // NOTE, don't think I have to do this if just use return of object from server
+  // for the dispatch payload
+  // ------------------------------------------------------------------------
+  const { perTransactionSettings } = state.auth;
+  let payloadArray = [];
+  let newTransactionSettings = { ...perTransactionSettings };
+  if (perTransactionSettings && perTransactionSettings[transactionID]) {
+    newTransactionSettings = {
+      ...perTransactionSettings[transactionID],
+    };
+    if (perTransactionSettings[transactionID].userCategories) {
+      payloadArray = [...perTransactionSettings[transactionID].userCategories];
+    }
+  } else {
+    newTransactionSettings[transactionID] = {};
+  }
+  payloadArray[0] = newCategoryName;
+  newTransactionSettings[transactionID].userCategories = payloadArray;
+
+  // ------------------------------------------------------------------------
+  dispatch({
+    type: GET_USER_INFO,
+    payload: { newTransactionSettings },
+  });
+
+  // Ok - get the transaction list from state, copy it to a new variable,
+  // update category, and call to reprocess
+  // I THINK I COULD SIMPLIFY ALL OF THIS BY RETURNING TRANSACTIONS FROM SERVER
+  // ------------------------------------------------------------------------
+  const { transactions } = state.plaid;
+  const newTransactionList = [...transactions];
+  dispatch({
+    type: TRANSACTIONS_LOADING,
+  });
+  for (
+    let accountIndex = 0;
+    accountIndex < newTransactionList.length;
+    accountIndex++
+  ) {
+    const account = newTransactionList[accountIndex];
+    const newInnerTransactions = [...account.transactions];
+    for (
+      let transIndex = 0;
+      transIndex < newInnerTransactions.length;
+      transIndex++
+    ) {
+      const transaction = newInnerTransactions[transIndex];
+
+      if (transaction.transaction_id === transactionID) {
+        const newTransaction = {
+          ...transaction,
+          //amount: transaction.amount * -1,
+        };
+        const newCategories = [...newTransaction.category];
+        newCategories[0] = newCategoryName;
+        newTransaction.category = newCategories;
+        newInnerTransactions[transIndex] = newTransaction;
+        newTransactionList[accountIndex] = {
+          ...newTransactionList[accountIndex],
+          transactions: newInnerTransactions,
+        };
+        transIndex = newInnerTransactions.length;
+        accountIndex = newTransactionList.length;
+      }
+    }
+  }
+  // then dispatch process transaction list
+  dispatch(processTransactionList(newTransactionList, state.auth.budgets));
+  dispatch({
+    type: GET_TRANSACTIONS,
+    payload: newTransactionList,
+  });
+  // ------------------------------------------------------------------------
+
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
 };
 
 // userInfo - get user info for logged in user

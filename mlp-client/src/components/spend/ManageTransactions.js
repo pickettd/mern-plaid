@@ -3,15 +3,28 @@ import { connect } from "react-redux";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
+import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "../../utils/loading.js";
 import ColorHeader from "../layout/ColorHeader.js";
 import { currencyFormatter } from "../../utils/currencyFormatter.js";
 import { defaultCategoriesThisSpendRange } from "../../utils/waiwaiCategories.js";
+import { setCategory } from "../../actions/authActions.js";
 
 const ManageTransactions = (props) => {
+  const { getAccessTokenSilently } = useAuth0();
+
   if (props.accountsLoading || props.transactionsLoading) {
     return <Loading />;
   }
+  const onCategorySelect = (eventkey, event, update_id) => {
+    const transactionPayload = {
+      transactionID: update_id,
+      newMainCategory: eventkey,
+    };
+    getAccessTokenSilently().then((accessToken) => {
+      props.setCategory(accessToken, transactionPayload);
+    });
+  };
   // Setting up mui table
   const transactionMUIColumns = [
     { label: "Date", name: "date" },
@@ -21,15 +34,21 @@ const ManageTransactions = (props) => {
     { label: "Category", name: "category" },
     {
       label: "Update",
-      name: "update",
+      name: "update_id",
       options: {
         filter: false,
-        customBodyRenderLite: (dataIndex) => {
+        customBodyRender: (dataValue) => {
           return (
-            <DropdownButton id="category-dropdown" title="Change Category">
+            <DropdownButton
+              onSelect={(eventkey, event) =>
+                onCategorySelect(eventkey, event, dataValue)
+              }
+              id="category-dropdown"
+              title="Change Category"
+            >
               {defaultCategoriesThisSpendRange.map((category) => {
                 return (
-                  <Dropdown.Item key={category.x} href="#">
+                  <Dropdown.Item key={category.name} eventKey={category.name}>
                     {category.name === "Income"
                       ? "Income - Other"
                       : category.name}
@@ -64,16 +83,19 @@ const ManageTransactions = (props) => {
   if (props.transactions) {
     props.transactions.forEach(function (account) {
       account.transactions.forEach(function (transaction) {
-        transactionsData.push({
+        const pushTransaction = {
+          update_id: transaction.transaction_id,
           account: account.accountName,
           date: transaction.date,
           category: transaction.category[0],
           name: transaction.name,
-          amount: currencyFormatter.format(transaction.amount),
-        });
+          amount: currencyFormatter.format(transaction.amount * -1),
+        };
+        transactionsData.push(pushTransaction);
       });
     });
   }
+
   return (
     <>
       <ColorHeader
@@ -114,7 +136,7 @@ const mapStateToProps = (state) => ({
   accountsLoading: state.plaid.accountsLoading,
   transactionsLoading: state.plaid.transactionsLoading,
 });
-const mapDispatchToProps = {};
+const mapDispatchToProps = { setCategory };
 
 // Note that there is probably a better way to do this with React hooks now
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTransactions);
