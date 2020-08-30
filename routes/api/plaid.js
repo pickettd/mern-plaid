@@ -171,8 +171,9 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
                 let thisAccountTransactions = [];
                 response.transactions.forEach((transaction) => {
                   const transactionID = transaction.transaction_id;
-                  const thisTransactionSettings =
-                    transactionSettings[transactionID];
+                  const thisTransactionSettings = transactionSettings.get(
+                    transactionID
+                  );
                   transaction.plaid_categories = [...transaction.category];
                   transaction.waiwai_categories = translatePlaidCategoriesToWaiwai(
                     transaction.plaid_categories
