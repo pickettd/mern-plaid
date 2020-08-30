@@ -171,9 +171,12 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
                 let thisAccountTransactions = [];
                 response.transactions.forEach((transaction) => {
                   const transactionID = transaction.transaction_id;
-                  const thisTransactionSettings = transactionSettings.get(
-                    transactionID
-                  );
+                  let thisTransactionSettings = null;
+                  if (transactionSettings.get) {
+                    thisTransactionSettings = transactionSettings.get(
+                      transactionID
+                    );
+                  }
                   transaction.plaid_categories = [...transaction.category];
                   transaction.waiwai_categories = translatePlaidCategoriesToWaiwai(
                     transaction.plaid_categories
@@ -182,7 +185,7 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
                   transaction.isReviewed = false;
                   transaction.isDuplicate = false;
                   // This is where we check if the user added transaction settings
-                  if (transactionSettings && thisTransactionSettings) {
+                  if (transactionSettings.get && thisTransactionSettings) {
                     // Check if the user changed the category
                     if (
                       thisTransactionSettings.userCategories &&
