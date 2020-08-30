@@ -4,30 +4,32 @@ const isEmpty = require("is-empty");
 module.exports = function validateBudgetInput(data) {
   let errors = {};
 
+  let inputBudgetName = data.budgetName;
+  let inputBudgetAmount = data.budgetAmount;
+  let inputBudgetSum = data.expenseBudgetSum;
+
   // Convert empty fields to an empty string so we can use validator functions
-  data.budgetName = !isEmpty(data.budgetName) ? data.budgetName : "";
+  inputBudgetName = !isEmpty(inputBudgetName) ? inputBudgetName : "";
   // Note that budgetAmount should be coerced to a string for the validator library
-  data.budgetAmount = !isEmpty(data.budgetAmount) ? data.budgetAmount + "" : "";
+  inputBudgetAmount = !isEmpty(inputBudgetAmount) ? inputBudgetAmount + "" : "";
   // Note that expenseBudgetSum should be coerced to a string for the validator library
-  data.expenseBudgetSum = !isEmpty(data.expenseBudgetSum)
-    ? data.expenseBudgetSum + ""
-    : "";
+  inputBudgetSum = !isEmpty(inputBudgetSum) ? inputBudgetSum + "" : "";
   // Budget Name checks
-  if (Validator.isEmpty(data.budgetName)) {
+  if (Validator.isEmpty(inputBudgetName)) {
     errors.budgetName = "Budget Name is required";
   }
   // Budget Amount checks
-  if (Validator.isEmpty(data.budgetAmount)) {
+  if (Validator.isEmpty(inputBudgetAmount)) {
     errors.budgetAmount = "Budget Amount field is required";
   }
-  if (!Validator.isFloat(data.budgetAmount)) {
+  if (!Validator.isFloat(inputBudgetAmount)) {
     errors.budgetAmount = "Budget Amount field should be a number";
   }
   // Budget Sum checks
-  if (Validator.isEmpty(data.expenseBudgetSum)) {
+  if (Validator.isEmpty(inputBudgetSum)) {
     errors.expenseBudgetSum = "Expense Budget Sum field is required";
   }
-  if (!Validator.isFloat(data.expenseBudgetSum)) {
+  if (!Validator.isFloat(inputBudgetSum)) {
     errors.expenseBudgetSum = "Expense Budget Sum field should be a number";
   }
 
