@@ -71,8 +71,8 @@ export const saveUserBudget = (accessToken, budgetData) => (
   });
   // Note: if we leave this api call in this position for now, the demo for frontend-only
   // will continue to work but the downside is that if there is a
-  // server error then the frontend and backend could get out of sync
-
+  // server error then the frontend and backend could get out of sync.
+  // So that is why the axios.then statement just returns (since we handle frontend updates before)
   axios
     .post(`/api/users/budgets`, {
       budgetName: budgetData.name,
@@ -81,7 +81,7 @@ export const saveUserBudget = (accessToken, budgetData) => (
     })
     .then((res) => {
       //dispatch(setCookiesAndCurrentBudgets(res.data.userId, res.data.budgets));
-      return;
+      return res;
     })
     .catch((err) => {
       let toSend = err;
@@ -135,7 +135,8 @@ export const setCategory = (accessToken, transactionData) => (
   const newCategoryName = transactionData.newMainCategory;
 
   // NOTE, don't think I have to do this if just use return of object from server
-  // for the dispatch payload
+  // for the dispatch payload - however as mentioned in budgetData, doing it this
+  // way lets frontend-only deployment continue to work
   // ------------------------------------------------------------------------
   const { perTransactionSettings } = state.auth;
   let payloadArray = [];
@@ -159,9 +160,37 @@ export const setCategory = (accessToken, transactionData) => (
     payload: { newTransactionSettings },
   });
 
+  // Send to server and use the new full transactionSettings
+
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
+
+  axios
+    .post(`/api/users/new-transaction-settings`, {
+      transactionID,
+      settingData: newTransactionSettings[transactionID],
+    })
+    .then((res) => {
+      // Dispatch GET_USER_INFO is already done above
+      return res;
+    })
+    .catch((err) => {
+      let toSend = err;
+      if (err.response) {
+        toSend = err.response.data;
+      }
+      dispatch({
+        type: GET_ERRORS,
+        payload: toSend,
+      });
+    });
+
   // Ok - get the transaction list from state, copy it to a new variable,
   // update category, and call to reprocess
   // I THINK I COULD SIMPLIFY ALL OF THIS BY RETURNING TRANSACTIONS FROM SERVER
+  // although, reprocessing on the server would mean either passing the server the
+  // list of transactions or fetching from Plaid a fresh list
   // ------------------------------------------------------------------------
   const { transactions } = state.plaid;
   const newTransactionList = [...transactions];
@@ -185,7 +214,6 @@ export const setCategory = (accessToken, transactionData) => (
       if (transaction.transaction_id === transactionID) {
         const newTransaction = {
           ...transaction,
-          //amount: transaction.amount * -1,
         };
         const newCategories = [...newTransaction.category];
         newCategories[0] = newCategoryName;
@@ -207,10 +235,6 @@ export const setCategory = (accessToken, transactionData) => (
     payload: newTransactionList,
   });
   // ------------------------------------------------------------------------
-
-  if (accessToken) {
-    setAxiosAuth(accessToken);
-  }
 };
 
 // userInfo - get user info for logged in user
