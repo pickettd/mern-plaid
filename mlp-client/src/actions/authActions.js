@@ -142,7 +142,7 @@ export const setCategory = (accessToken, transactionData) => (
   let payloadArray = [];
   let newTransactionSettings = { ...perTransactionSettings };
   if (perTransactionSettings && perTransactionSettings[transactionID]) {
-    newTransactionSettings = {
+    newTransactionSettings[transactionID] = {
       ...perTransactionSettings[transactionID],
     };
     if (perTransactionSettings[transactionID].userCategories) {
