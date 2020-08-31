@@ -125,14 +125,20 @@ export const loginUser = (userData) => (dispatch) => {
     });
 };
 
-export const setCategory = (accessToken, transactionData) => (
+export const setTransactionSettings = (accessToken, transactionData) => (
   dispatch,
   getState
 ) => {
   const state = getState();
 
   const transactionID = transactionData.transactionID;
+
   const newCategoryName = transactionData.newMainCategory;
+  const newReviewedState = transactionData.newReviewedState;
+  const newDuplicateState = transactionData.newDuplicateState;
+  const isNewCategory = newCategoryName !== undefined;
+  const isNewReviewed = newReviewedState !== undefined;
+  const isNewDuplicate = newDuplicateState !== undefined;
 
   // NOTE, don't think I have to do this if just use return of object from server
   // for the dispatch payload - however as mentioned in budgetData, doing it this
@@ -145,14 +151,22 @@ export const setCategory = (accessToken, transactionData) => (
     newTransactionSettings[transactionID] = {
       ...perTransactionSettings[transactionID],
     };
-    if (perTransactionSettings[transactionID].userCategories) {
+    if (perTransactionSettings[transactionID].userCategories && isNewCategory) {
       payloadArray = [...perTransactionSettings[transactionID].userCategories];
     }
   } else {
     newTransactionSettings[transactionID] = {};
   }
-  payloadArray[0] = newCategoryName;
-  newTransactionSettings[transactionID].userCategories = payloadArray;
+  if (isNewCategory) {
+    payloadArray[0] = newCategoryName;
+    newTransactionSettings[transactionID].userCategories = payloadArray;
+  }
+  if (isNewReviewed) {
+    newTransactionSettings[transactionID].isReviewed = newReviewedState;
+  }
+  if (isNewDuplicate) {
+    newTransactionSettings[transactionID].isDuplicate = newDuplicateState;
+  }
 
   // ------------------------------------------------------------------------
   dispatch({
@@ -215,9 +229,20 @@ export const setCategory = (accessToken, transactionData) => (
         const newTransaction = {
           ...transaction,
         };
-        const newCategories = [...newTransaction.category];
-        newCategories[0] = newCategoryName;
-        newTransaction.category = newCategories;
+        let newCategories = [];
+
+        if (isNewCategory) {
+          newCategories = [...newTransaction.category];
+          newCategories[0] = newCategoryName;
+          newTransaction.category = newCategories;
+        }
+        if (isNewReviewed) {
+          newTransaction.isReviewed = newReviewedState;
+        }
+        if (isNewDuplicate) {
+          newTransaction.isDuplicate = newDuplicateState;
+        }
+
         newInnerTransactions[transIndex] = newTransaction;
         newTransactionList[accountIndex] = {
           ...newTransactionList[accountIndex],

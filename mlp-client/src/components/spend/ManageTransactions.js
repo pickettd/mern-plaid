@@ -8,7 +8,7 @@ import Loading from "../../utils/loading.js";
 import ColorHeader from "../layout/ColorHeader.js";
 import { currencyFormatter } from "../../utils/currencyFormatter.js";
 import { defaultCategoriesThisSpendRange } from "../../utils/waiwaiCategories.js";
-import { setCategory } from "../../actions/authActions.js";
+import { setTransactionSettings } from "../../actions/authActions.js";
 
 const ManageTransactions = (props) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -22,7 +22,25 @@ const ManageTransactions = (props) => {
       newMainCategory: eventkey,
     };
     getAccessTokenSilently().then((accessToken) => {
-      props.setCategory(accessToken, transactionPayload);
+      props.setTransactionSettings(accessToken, transactionPayload);
+    });
+  };
+  const onReviewClick = (review_obj) => {
+    const transactionPayload = {
+      transactionID: review_obj.id,
+      newReviewedState: !review_obj.isReviewed,
+    };
+    getAccessTokenSilently().then((accessToken) => {
+      props.setTransactionSettings(accessToken, transactionPayload);
+    });
+  };
+  const onDuplicateClick = (duplicate_obj) => {
+    const transactionPayload = {
+      transactionID: duplicate_obj.id,
+      newDuplicateState: !duplicate_obj.isDuplicate,
+    };
+    getAccessTokenSilently().then((accessToken) => {
+      props.setTransactionSettings(accessToken, transactionPayload);
     });
   };
   // Setting up mui table
@@ -64,14 +82,38 @@ const ManageTransactions = (props) => {
     },
     {
       label: "Reviewed?",
-      name: "reviewed",
+      name: "review_obj",
       options: {
         filter: false,
-        customBodyRenderLite: (dataIndex) => {
-          return <button className="btn secondary">&#x2713;</button>;
+        customBodyRender: (dataValue) => {
+          return (
+            <button
+              onClick={() => onReviewClick(dataValue)}
+              className="btn secondary"
+            >
+              {dataValue.isReviewed ? <>Done</> : <>&#x2713;</>}
+            </button>
+          );
         },
       },
-    },
+    } /* NOTE: to enable marking duplicates, remove this comment
+    {
+      label: "Duplicate?",
+      name: "duplicate_obj",
+      options: {
+        filter: false,
+        customBodyRender: (dataValue) => {
+          return (
+            <button
+              onClick={() => onDuplicateClick(dataValue)}
+              className="btn secondary"
+            >
+              {dataValue.isDuplicate ? <>Dupe</> : <>&#63;</>}
+            </button>
+          );
+        },
+      },
+    },*/,
   ];
   const optionsMUI = {
     filterType: "checkbox",
@@ -85,6 +127,14 @@ const ManageTransactions = (props) => {
       account.transactions.forEach(function (transaction) {
         const pushTransaction = {
           update_id: transaction.transaction_id,
+          review_obj: {
+            id: transaction.transaction_id,
+            isReviewed: transaction.isReviewed,
+          },
+          duplicate_obj: {
+            id: transaction.transaction_id,
+            isDuplicate: transaction.isDuplicate,
+          },
           account: account.accountName,
           date: transaction.date,
           category: transaction.category[0],
@@ -136,7 +186,7 @@ const mapStateToProps = (state) => ({
   accountsLoading: state.plaid.accountsLoading,
   transactionsLoading: state.plaid.transactionsLoading,
 });
-const mapDispatchToProps = { setCategory };
+const mapDispatchToProps = { setTransactionSettings };
 
 // Note that there is probably a better way to do this with React hooks now
 export default connect(mapStateToProps, mapDispatchToProps)(ManageTransactions);
