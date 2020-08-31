@@ -185,7 +185,7 @@ router.post("/new-transaction-settings", checkJwt, (req, res) => {
   const transactionID = req.body.transactionID;
   let settingData = req.body.settingData;
 
-  User.findById(reqUserId).then((user) => {
+  findOrCreateUser(reqUserId).then((user) => {
     if (!user.perTransactionSettings) {
       user.perTransactionSettings = new Map();
     }
