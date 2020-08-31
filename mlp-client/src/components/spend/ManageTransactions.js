@@ -98,7 +98,7 @@ const ManageTransactions = (props) => {
           );
         },
       },
-    } /* NOTE: to enable marking duplicates, remove this comment
+    },
     {
       label: "Duplicate?",
       name: "duplicate_obj",
@@ -115,7 +115,7 @@ const ManageTransactions = (props) => {
           );
         },
       },
-    },*/,
+    },
   ];
   const optionsMUI = {
     filterType: "checkbox",
