@@ -128,6 +128,11 @@ const SpendPlan = (props) => {
                 </thead>
                 <tbody>
                   {props.categoriesThisSpendRange.map((category, i) => {
+                    if (category.name.includes("Income")) {
+                      return (
+                        <React.Fragment key={category.name}></React.Fragment>
+                      );
+                    }
                     return (
                       <SpendPlanRow
                         key={category.name}

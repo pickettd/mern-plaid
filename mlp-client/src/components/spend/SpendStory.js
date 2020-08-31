@@ -154,8 +154,14 @@ class SpendStory extends Component {
               </div>
               <div className="row">
                 {plaid.sortedCategoriesUnderBudget.map((categoryName, i) => {
+                  if (categoryName.includes("Income")) {
+                    return <React.Fragment key={categoryName}></React.Fragment>;
+                  }
                   return (
-                    <div key={i} className="col-lg-3 col-md-4 col-sm-6">
+                    <div
+                      key={categoryName}
+                      className="col-lg-3 col-md-4 col-sm-6"
+                    >
                       <SpendCategoryCard
                         categoryName={categoryName}
                         underBudget={true}
@@ -182,6 +188,9 @@ class SpendStory extends Component {
               </div>
               <div className="row">
                 {plaid.sortedCategoriesOverBudget.map((categoryName, i) => {
+                  if (categoryName.includes("Income")) {
+                    return <React.Fragment key={categoryName}></React.Fragment>;
+                  }
                   return (
                     <div
                       key={categoryName}
