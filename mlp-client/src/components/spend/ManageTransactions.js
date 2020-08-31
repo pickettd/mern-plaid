@@ -73,7 +73,9 @@ const ManageTransactions = (props) => {
                   </Dropdown.Item>
                 );
               })}
-              <Dropdown.Item href="#">Income - Paycheck</Dropdown.Item>
+              <Dropdown.Item eventKey={"Income - Paycheck"}>
+                Income - Paycheck
+              </Dropdown.Item>
             </DropdownButton>
           );
           //return <button className="btn secondary">Change Category</button>;
