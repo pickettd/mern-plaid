@@ -13,9 +13,11 @@ import {
 
 import { PLAID_MOCK_DATA } from "./reduxMockData";
 
+const isLiveData = process.env.REACT_APP_LIVEDATA === "true";
+
 // Try loading some demo/example data
 const initialState = PLAID_MOCK_DATA;
-if (process.env.REACT_APP_LIVEDATA === "true") {
+if (isLiveData) {
   initialState.accounts = [];
   initialState.transactions = [];
   initialState.accountsLoading = true;
