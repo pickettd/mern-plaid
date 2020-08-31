@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { ProgressBar } from "react-bootstrap";
 import { noDecimalCurrencyFormatter } from "../../utils/currencyFormatter";
 import percentFormatter from "../../utils/percentFormatter";
 import childCareLogo from "../../img/spend-plan/childcare.svg";
@@ -31,6 +32,7 @@ import utilitiesLogo from "../../img/spend-plan/utilities.svg";
 const SpendCategoryCard = (props) => {
   let budgetAmount = 0;
   let spentAmount = 0;
+  let percentageNumber = 0;
   let mainValueDisplay = "";
   let subValueDisplay = "";
   let colorBackgroundClass = "";
@@ -41,6 +43,10 @@ const SpendCategoryCard = (props) => {
   }
   if (props.spentAmount) {
     spentAmount = props.spentAmount;
+  }
+
+  if (budgetAmount !== 0) {
+    percentageNumber = spentAmount / budgetAmount;
   }
 
   if (props.categoryName === "Income") {
@@ -85,10 +91,9 @@ const SpendCategoryCard = (props) => {
     mainValueDisplay = noDecimalCurrencyFormatter.format(
       budgetAmount - spentAmount
     );
-    if (budgetAmount !== 0) {
-      subValueDisplay = percentFormatter.format(spentAmount / budgetAmount);
-    } else if (spentAmount === 0) {
-      subValueDisplay = percentFormatter.format(0);
+    if (budgetAmount !== 0 || spentAmount === 0) {
+      subValueDisplay = percentFormatter.format(percentageNumber);
+      percentageNumber *= 100;
     } else {
       subValueDisplay = "--";
     }
@@ -96,10 +101,9 @@ const SpendCategoryCard = (props) => {
     // this is an over budget category
     colorBackgroundClass = "brown-yellow-background";
     subValueDisplay = noDecimalCurrencyFormatter.format(spentAmount);
-    if (budgetAmount !== 0) {
-      mainValueDisplay = percentFormatter.format(spentAmount / budgetAmount);
-    } else if (spentAmount === 0) {
-      mainValueDisplay = percentFormatter.format(0);
+    if (budgetAmount !== 0 || spentAmount === 0) {
+      mainValueDisplay = percentFormatter.format(percentageNumber);
+      percentageNumber *= 100;
     } else {
       mainValueDisplay = "--";
     }
@@ -123,7 +127,12 @@ const SpendCategoryCard = (props) => {
             {props.underBudget ? "Available" : "Spent"}
           </span>
         </h4>
-        <div className="card-description">graph</div>
+        <div className="card-description">
+          <ProgressBar
+            now={props.underBudget ? percentageNumber : 100}
+            variant={props.underBudget ? "success" : "warning"}
+          />
+        </div>
         <div className="card-footer">
           <div className="row mt-3">
             <div className="col">
