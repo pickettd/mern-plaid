@@ -30,6 +30,11 @@ const store = configureStore({
 const Routing = () => {
   const { isAuthenticated, isLoading } = useAuth0();
 
+  const isLiveData = process.env.REACT_APP_LIVEDATA === "true";
+  const accessCheck = process.env.REACT_APP_ACCESSCHECK
+    ? process.env.REACT_APP_ACCESSCHECK
+    : "";
+
   if (isLoading) {
     return <Loading />;
   }
@@ -37,14 +42,14 @@ const Routing = () => {
   return (
     <>
       <Header />
-      {isAuthenticated && process.env.REACT_APP_LIVEDATA === "true" ? (
-        <AccountBootstrap />
-      ) : (
-        <></>
-      )}
+      {isAuthenticated && isLiveData ? <AccountBootstrap /> : <></>}
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + "/"}>
-          {isAuthenticated ? <Redirect to="/spend-story" /> : <HomePage />}
+          {isAuthenticated ? (
+            <Redirect to="/spend-story" />
+          ) : (
+            <HomePage accessCheck={accessCheck} />
+          )}
         </Route>
         <PrivateRoute path="/spend-story" component={SpendStory} />
         <PrivateRoute path="/spend-plan" component={SpendPlan} />
