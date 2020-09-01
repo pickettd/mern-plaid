@@ -11,7 +11,14 @@ module.exports = function validateBudgetInput(data) {
   // Convert empty fields to an empty string so we can use validator functions
   inputBudgetName = !isEmpty(inputBudgetName) ? inputBudgetName : "";
   // Note that budgetAmount should be coerced to a string for the validator library
-  inputBudgetAmount = !isEmpty(inputBudgetAmount) ? inputBudgetAmount + "" : "";
+  // The reason that we have to check if it is zero is because isEmpty considers 0 to be empty
+  if (inputBudgetAmount === "0" || inputBudgetAmount === 0) {
+    inputBudgetAmount = "0";
+  } else {
+    inputBudgetAmount = !isEmpty(inputBudgetAmount)
+      ? inputBudgetAmount + ""
+      : "";
+  }
   // Note that expenseBudgetSum should be coerced to a string for the validator library
   inputBudgetSum = !isEmpty(inputBudgetSum) ? inputBudgetSum + "" : "";
   // Budget Name checks
