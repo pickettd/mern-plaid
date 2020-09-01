@@ -53,7 +53,7 @@ const SpendPlanRow = (props) => {
             Note that the currencyFormatter makes controlled edits difficult, e.g.
             value={currencyFormatter.format(budget)}
         */}
-        <input value={budget} onChange={onChangeValue}></input>
+        <input value={budget} type="number" onChange={onChangeValue}></input>
         <button className="btn secondary" onClick={() => saveButton()}>
           Save
         </button>
