@@ -50,25 +50,37 @@ export const saveUserBudget = (accessToken, budgetData) => (
   }
   const newBudgetAmount = budgetData.payload[budgetData.name];
   const allBudgets = { ...state.auth.budgets, ...budgetData.payload };
-  const newBudgetSum = expenseBudgetSum - oldBudgetAmount + newBudgetAmount;
+
+  const isIncomeBudgetChange = budgetData.name.includes("Income");
+  // The default is to adjust the budget sum based on the new amount coming in
+  let newBudgetSum = expenseBudgetSum - oldBudgetAmount + newBudgetAmount;
+  // But if this is an income budget adjustment, then just use the old expense sum
+  if (isIncomeBudgetChange) {
+    newBudgetSum = expenseBudgetSum;
+  }
+
   const budgetPayload = {
     allBudgets,
     expenseBudgetSum: newBudgetSum,
   };
   dispatch(setCurrentBudgets(budgetPayload));
-  const sortedCategories = updateSortedCategories(
-    categoriesThisSpendRange,
-    spendingByCategory,
-    allBudgets
-  );
-  const updateTransactions = {
-    sortedCategoriesOverBudget: sortedCategories.overBudgets,
-    sortedCategoriesUnderBudget: sortedCategories.underBudgets,
-  };
-  dispatch({
-    type: SET_TRANSACTION_DATA,
-    payload: updateTransactions,
-  });
+
+  // Only need to update sorted categories for over/under budget for expense budget changes
+  if (!isIncomeBudgetChange) {
+    const sortedCategories = updateSortedCategories(
+      categoriesThisSpendRange,
+      spendingByCategory,
+      allBudgets
+    );
+    const updateTransactions = {
+      sortedCategoriesOverBudget: sortedCategories.overBudgets,
+      sortedCategoriesUnderBudget: sortedCategories.underBudgets,
+    };
+    dispatch({
+      type: SET_TRANSACTION_DATA,
+      payload: updateTransactions,
+    });
+  }
   // Note: if we leave this api call in this position for now, the demo for frontend-only
   // will continue to work but the downside is that if there is a
   // server error then the frontend and backend could get out of sync.
