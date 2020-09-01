@@ -32,7 +32,10 @@ const SpendPlanRow = (props) => {
     if (justNumber.charAt(0) === "$") {
       justNumber = justNumber.substring(1);
     }
-    setBudget(justNumber);
+    // This event will still fire even if the input is not a number, it just gives a value of ""
+    if (justNumber !== "") {
+      setBudget(justNumber);
+    }
   };
 
   useEffect(() => {
