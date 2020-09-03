@@ -7,6 +7,8 @@ import { saveUserBudget } from "../../actions/authActions";
 const SpendPlanRow = (props) => {
   const { getAccessTokenSilently } = useAuth0();
   const [budget, setBudget] = useState("");
+  // The onBlur isn't working right now
+  //const [activeRow, setActive] = useState(false);
   const { category, budgets, saveUserBudget } = props;
 
   const saveButton = () => {
@@ -28,6 +30,8 @@ const SpendPlanRow = (props) => {
         getAccessTokenSilently().then((accessToken) => {
           saveUserBudget(accessToken, budgetData);
         });
+        // The onBlur isn't working right now
+        //setActive(false);
       }
   };
 
@@ -38,8 +42,24 @@ const SpendPlanRow = (props) => {
     if (justNumber.charAt(0) === "$") {
       justNumber = justNumber.substring(1);
     }
+
     setBudget(justNumber);
+    // The onBlur isn't working right now
+    //setActive(true);
   };
+
+  // This onblur tries to reset the row value and hide the button.
+  // Problem is that the button hides before the onClick fires/happens
+  // And that problem happens if it is using setBudget or even just setActive(false)
+  /*
+  const onBlur = () => {
+    setActive(false);
+    if (budgets && category && budgets[category.name]) {
+      setBudget(budgets[category.name]);
+    } else {
+      setBudget("");
+    }
+  };*/
 
   useEffect(() => {
     if (budgets && category && budgets[category.name]) {
@@ -59,8 +79,19 @@ const SpendPlanRow = (props) => {
             Note that the currencyFormatter makes controlled edits difficult, e.g.
             value={currencyFormatter.format(budget)}
         */}
-        <input value={budget} type="number" onChange={onChangeValue}></input>
-        <button className="btn secondary" onClick={() => saveButton()}>
+        <input
+          value={budget}
+          type="number"
+          onChange={onChangeValue}
+          // The onBlur isn't working right now
+          //onBlur={onBlur}
+        ></input>
+        <button
+          className="btn secondary"
+          onClick={() => saveButton()}
+          // This is designed to work with the onBlur that isn't working right now
+          //style={{ visibility: activeRow ? "visible" : "hidden" }}
+        >
           Save
         </button>
       </td>
