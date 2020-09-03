@@ -1,6 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
+import moment from "moment";
 
 import {
   GET_ERRORS,
@@ -11,6 +12,7 @@ import {
   GET_USER_INFO,
   TRANSACTIONS_LOADING,
   GET_TRANSACTIONS,
+  SET_SPEND_RANGE_DAYS_SELECTED,
 } from "./types";
 import {
   updateSortedCategories,
@@ -322,6 +324,34 @@ export const setCurrentUser = (decoded) => {
     type: SET_CURRENT_USER,
     payload: decoded,
   };
+};
+
+// Set logged in user budgets
+export const setDaysRange = (numberOfDays) => (dispatch, getState) => {
+  const state = getState();
+  const oldTransactions = state.plaid.transactions;
+  const newTransactionList = [];
+  const momentNow = moment();
+  const momentToCheck = moment().subtract(numberOfDays, "days");
+
+  oldTransactions.forEach((account) => {
+    const newTransactions = account.transactions.filter((transaction) => {
+      return moment(transaction.date).isAfter(momentToCheck);
+    });
+    const newAccount = { ...account, transactions: newTransactions };
+    newTransactionList.push(newAccount);
+  });
+
+  // then dispatch process transaction list
+  dispatch(processTransactionList(newTransactionList, state.auth.budgets));
+  dispatch({
+    type: GET_TRANSACTIONS,
+    payload: newTransactionList,
+  });
+  dispatch({
+    type: SET_SPEND_RANGE_DAYS_SELECTED,
+    payload: numberOfDays,
+  });
 };
 
 // Set logged in user budgets
