@@ -11,31 +11,34 @@ const SpendPlanRow = (props) => {
 
   const saveButton = () => {
     const budgetData = { name: category.name, payload: {} };
+    const trimmedBudgetString = budget.trim();
     // This checks if the string in budget is a number
     let valid = false;
-    if (budget.trim) {
-      valid = !isNaN(budget.trim());
+    // This if will check if budget.trim is an empty string
+    // Also since budget is a string, we don't have to worry about if (0) being false
+    if (trimmedBudgetString) {
+      // Then make sure the budget string is a number value
+      valid = !isNaN(trimmedBudgetString);
     }
-
-    if (valid) {
-      budgetData.payload[category.name] = parseFloat(budget);
-      // We only save the budget if it is a number
-      // But should have UI here to tell the user something wrong happened if it isn't a number
-      getAccessTokenSilently().then((accessToken) => {
-        saveUserBudget(accessToken, budgetData);
-      });
-    }
+    if (trimmedBudgetString === "0")
+      if (valid) {
+        budgetData.payload[category.name] = parseFloat(trimmedBudgetString);
+        // We only save the budget if it is a number
+        // But should have UI here to tell the user something wrong happened if it isn't a number
+        getAccessTokenSilently().then((accessToken) => {
+          saveUserBudget(accessToken, budgetData);
+        });
+      }
   };
 
   const onChangeValue = (event) => {
     let justNumber = event.target.value;
+    // Note this operation shouldn't be necessary anymore
+    // (at least in Chrome, can't type $ into numeric input)
     if (justNumber.charAt(0) === "$") {
       justNumber = justNumber.substring(1);
     }
-    // This event will still fire even if the input is not a number, it just gives a value of ""
-    if (justNumber !== "") {
-      setBudget(justNumber);
-    }
+    setBudget(justNumber);
   };
 
   useEffect(() => {

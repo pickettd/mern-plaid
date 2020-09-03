@@ -24,18 +24,22 @@ const initialState = {
 // The reason we're using a reducer and not useState is because of the total money calculation
 // that relies on the state of the paycheck and other-income in order to setState
 const reducer = (state, action) => {
+  let processPayload = action.payload;
+  if (processPayload === "") {
+    processPayload = "0";
+  }
   switch (action.type) {
     case otherIncomeString:
       return {
         ...state,
         otherIncomeBudget: action.payload,
-        totalIncomeBudget: state.payIncomeBudget + parseFloat(action.payload),
+        totalIncomeBudget: state.payIncomeBudget + parseFloat(processPayload),
       };
     case payIncomeString:
       return {
         ...state,
         payIncomeBudget: action.payload,
-        totalIncomeBudget: state.otherIncomeBudget + parseFloat(action.payload),
+        totalIncomeBudget: state.otherIncomeBudget + parseFloat(processPayload),
       };
     default:
       return state;
@@ -82,11 +86,12 @@ const SpendPlan = (props) => {
       } else {
         budget = otherIncomeBudget;
       }
+      const trimmedBudget = budget.trim();
       // This checks if the string in budget is a number
-      const valid = budget !== "" && !isNaN(budget);
+      const valid = trimmedBudget !== "" && !isNaN(trimmedBudget);
 
       if (valid) {
-        budgetData.payload[categoryName] = parseFloat(budget);
+        budgetData.payload[categoryName] = parseFloat(trimmedBudget);
         // We only save the budget if it is a number
         // But should have UI here to tell the user something wrong happened if it isn't a number
         getAccessTokenSilently().then((accessToken) => {
@@ -99,16 +104,15 @@ const SpendPlan = (props) => {
 
   const onIncomeBudgetChange = (event, categoryName) => {
     let justNumber = event.target.value;
+    // Note this operation shouldn't be necessary anymore
+    // (at least in Chrome, can't type $ into numeric input)
     if (justNumber.charAt(0) === "$") {
       justNumber = justNumber.substring(1);
     }
     const newBudgetAmount = justNumber.trim();
 
-    // This event will still fire even if the input is not a number, it just gives a value of ""
-    // Only dispatch to update the total if this new value is numeric
-    if (newBudgetAmount !== "" && !isNaN(newBudgetAmount)) {
-      dispatch({ type: categoryName, payload: newBudgetAmount });
-    }
+    // We handle the case of an empty string in the reducer
+    dispatch({ type: categoryName, payload: newBudgetAmount });
   };
 
   if (props.accountsLoading || props.transactionsLoading) {
