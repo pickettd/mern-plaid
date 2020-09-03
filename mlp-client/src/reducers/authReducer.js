@@ -3,6 +3,7 @@ import {
   USER_LOADING,
   SET_BUDGETS,
   GET_USER_INFO,
+  SET_SPEND_RANGE_DAYS_SELECTED,
 } from "../actions/types";
 import { AUTH_MOCK_DATA } from "./reduxMockData";
 
@@ -41,6 +42,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...action.payload,
+      };
+    case SET_SPEND_RANGE_DAYS_SELECTED:
+      return {
+        ...state,
+        spendRangeDays: action.payload,
       };
     default:
       return state;
