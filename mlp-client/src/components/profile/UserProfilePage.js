@@ -2,9 +2,15 @@ import React from "react";
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import ColorHeader from "../layout/ColorHeader";
+import { setDaysRange } from "../../actions/authActions";
+
 const UserProfilePage = (props) => {
+  const onClick = (number) => {
+    props.setDaysRange(number);
+  };
+
   const { user } = useAuth0();
-  const spendRangeDaysOptions = [7, 14, 30];
+  //const spendRangeDaysOptions = [7, 14, 30];
   return (
     <>
       <ColorHeader
@@ -26,14 +32,25 @@ const UserProfilePage = (props) => {
             <div className="col">Email: {user.email}</div>
           </div>
           <div className="row">
-            <div className="col">You are using this date range:</div>
+            <div className="col">
+              You are using this date range: {props.spendRangeDays} days
+            </div>
           </div>
-          <div>
+          <div className="row">
+            <div className="col">
+              Change your range:{" "}
+              <button onClick={() => onClick(30)}>30 days</button>
+              <button onClick={() => onClick(14)}>14 days</button>
+              <button onClick={() => onClick(7)}>7 days</button>
+            </div>
+          </div>
+          {/*<div>
             <div className="form-group">
               <select
                 className="selectpicker"
                 data-style="btn btn-default"
-                defaultValue={props.spendRangeDays}
+                value={props.spendRangeDays}
+                readOnly={true}
               >
                 <option disabled value={0}>
                   {" "}
@@ -49,6 +66,11 @@ const UserProfilePage = (props) => {
               </select>
             </div>
           </div>
+          <div>
+            
+            <button onClick={() => onClick(14)}>14 days</button>
+            <button onClick={() => onClick(7)}>7 days</button>
+          </div>*/}
         </div>
       </div>
     </>
@@ -59,6 +81,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
   spendRangeDays: state.auth.spendRangeDays,
 });
+const mapDispatchToProps = { setDaysRange };
 
 // Note that there is probably a better way to do this with React hooks now
-export default connect(mapStateToProps, {})(UserProfilePage);
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfilePage);

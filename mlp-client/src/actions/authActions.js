@@ -331,7 +331,6 @@ export const setDaysRange = (numberOfDays) => (dispatch, getState) => {
   const state = getState();
   const oldTransactions = state.plaid.transactions;
   const newTransactionList = [];
-  const momentNow = moment();
   const momentToCheck = moment().subtract(numberOfDays, "days");
 
   oldTransactions.forEach((account) => {
