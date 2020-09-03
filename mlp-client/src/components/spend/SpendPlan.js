@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback } from "react";
+import React, { /*useState,*/ useReducer, useEffect, useCallback } from "react";
 import Table from "react-bootstrap/Table";
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -53,6 +53,13 @@ const SpendPlan = (props) => {
   const { budgets, saveUserBudget } = props;
   const { payIncomeBudget, otherIncomeBudget } = state;
 
+  // The onBlur isn't working right now
+  //const [activePay, setActivePay] = useState(false);
+  //const [activeOther, setActiveOther] = useState(false);
+  //const mapSetActiveCall = {};
+  //mapSetActiveCall[otherIncomeString] = setActiveOther;
+  //mapSetActiveCall[payIncomeString] = setActivePay;
+
   const setupReducer = useCallback(
     (allBudgets) => {
       if (allBudgets) {
@@ -77,6 +84,22 @@ const SpendPlan = (props) => {
     setupReducer(budgets);
   }, [budgets, setupReducer]);
 
+  // This onblur tries to reset the row value and hide the button.
+  // Problem is that the button hides before the onClick fires/happens
+  // And that problem happens if it is using dispatch or even just setActive(false)
+  /*
+  const onIncomeBlur = (event, categoryName) => {
+    let dispatchValue = "";
+    if (budgets && budgets[categoryName]) {
+      dispatchValue = budgets[categoryName];
+    }
+    dispatch({
+      type: categoryName,
+      payload: dispatchValue,
+    });
+    mapSetActiveCall[categoryName](false);
+  };*/
+
   const onIncomeSave = useCallback(
     (categoryName) => {
       const budgetData = { name: categoryName, payload: {} };
@@ -97,9 +120,18 @@ const SpendPlan = (props) => {
         getAccessTokenSilently().then((accessToken) => {
           saveUserBudget(accessToken, budgetData);
         });
+        // The onBlur isn't working right now
+        //mapSetActiveCall[categoryName](false);
       }
     },
-    [payIncomeBudget, otherIncomeBudget, getAccessTokenSilently, saveUserBudget]
+    [
+      payIncomeBudget,
+      otherIncomeBudget,
+      getAccessTokenSilently,
+      saveUserBudget,
+      // The onBlur isn't working right now
+      //mapSetActiveCall,
+    ]
   );
 
   const onIncomeBudgetChange = (event, categoryName) => {
@@ -113,6 +145,8 @@ const SpendPlan = (props) => {
 
     // We handle the case of an empty string in the reducer
     dispatch({ type: categoryName, payload: newBudgetAmount });
+    // The onBlur isn't working right now
+    //mapSetActiveCall[categoryName](true);
   };
 
   if (props.accountsLoading || props.transactionsLoading) {
@@ -194,6 +228,8 @@ const SpendPlan = (props) => {
                     }
                     type="number"
                     className="form-control"
+                    // The onBlur isn't working right now
+                    //onBlur={(event) => onIncomeBlur(event, payIncomeString)}
                   ></input>
                 </div>
                 <div className="col">
@@ -228,6 +264,8 @@ const SpendPlan = (props) => {
                     }
                     type="number"
                     className="form-control"
+                    // The onBlur isn't working right now
+                    //onBlur={(event) => onIncomeBlur(event, otherIncomeString)}
                   ></input>
                 </div>
               </div>
@@ -236,6 +274,8 @@ const SpendPlan = (props) => {
                   <button
                     onClick={() => onIncomeSave(payIncomeString)}
                     className="btn secondary mt-4"
+                    // This is designed to work with the onBlur that isn't working right now
+                    //style={{ visibility: activePay ? "visible" : "hidden" }}
                   >
                     Save
                   </button>
@@ -244,6 +284,8 @@ const SpendPlan = (props) => {
                   <button
                     onClick={() => onIncomeSave(otherIncomeString)}
                     className="btn secondary mt-4"
+                    // This is designed to work with the onBlur that isn't working right now
+                    //style={{ visibility: activeOther ? "visible" : "hidden" }}
                   >
                     Save
                   </button>
