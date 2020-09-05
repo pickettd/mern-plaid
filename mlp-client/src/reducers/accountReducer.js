@@ -23,6 +23,12 @@ if (isLiveData) {
   initialState.accountsLoading = true;
   initialState.transactionsLoading = true;
   initialState.userFirstVisit = false;
+  initialState.incomeSum = 0.0;
+  initialState.spendingSum = 0.0;
+  initialState.totalTransactionCount = 0;
+  initialState.reviewedTransactionCount = 0;
+  initialState.categoriesThisSpendRange = [];
+  initialState.spendingByCategory = {};
 }
 // Below here is the normal initial state
 /*const initialState = {

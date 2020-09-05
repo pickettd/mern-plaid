@@ -7,9 +7,15 @@ import {
 } from "../actions/types";
 import { AUTH_MOCK_DATA } from "./reduxMockData";
 
+const isLiveData = process.env.REACT_APP_LIVEDATA === "true";
+
 const isEmpty = require("is-empty");
 // Try loading some demo/example data
 const initialState = AUTH_MOCK_DATA;
+if (isLiveData) {
+  initialState.budgets = {};
+  initialState.expenseBudgetSum = 380;
+}
 // Below here is the normal initial state
 /*const initialState = {
   isAuthenticated: false,
