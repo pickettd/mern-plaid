@@ -13,7 +13,10 @@ const SpendPlanRow = (props) => {
 
   const saveButton = () => {
     const budgetData = { name: category.name, payload: {} };
-    const trimmedBudgetString = budget.trim();
+    let trimmedBudgetString = "";
+    if (budget !== undefined && budget.trim) {
+      trimmedBudgetString = budget.trim();
+    }
     // This checks if the string in budget is a number
     let valid = false;
     // This if will check if budget.trim is an empty string
@@ -22,17 +25,19 @@ const SpendPlanRow = (props) => {
       // Then make sure the budget string is a number value
       valid = !isNaN(trimmedBudgetString);
     }
-    if (trimmedBudgetString === "0")
-      if (valid) {
-        budgetData.payload[category.name] = parseFloat(trimmedBudgetString);
-        // We only save the budget if it is a number
-        // But should have UI here to tell the user something wrong happened if it isn't a number
-        getAccessTokenSilently().then((accessToken) => {
-          saveUserBudget(accessToken, budgetData);
-        });
-        // The onBlur isn't working right now
-        //setActive(false);
-      }
+    if (valid) {
+      budgetData.payload[category.name] = parseFloat(trimmedBudgetString);
+      // We only save the budget if it is a number
+      // But should have UI here to tell the user something wrong happened if it isn't a number
+      getAccessTokenSilently().then((accessToken) => {
+        saveUserBudget(accessToken, budgetData);
+      });
+      // The onBlur isn't working right now
+      //setActive(false);
+    } else {
+      // If the user clicked save but it wasn't a valid number, reset to redux state
+      setBudget(budgets[category.name]);
+    }
   };
 
   const onChangeValue = (event) => {
