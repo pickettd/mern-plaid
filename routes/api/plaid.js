@@ -144,8 +144,8 @@ router.delete("/accounts/:id", checkJwt, (req, res) => {
 // @access Private
 router.post("/accounts/transactions", checkJwt, (req, res) => {
   const now = moment();
+  let dateDaysAgo = moment().subtract(30, "days").format("YYYY-MM-DD");
   const today = now.format("YYYY-MM-DD");
-  const thirtyDaysAgo = now.subtract(30, "days").format("YYYY-MM-DD");
 
   let transactions = [];
   let needUpdate = [];
@@ -159,13 +159,18 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
       let transactionSettings = {};
       if (user) {
         transactionSettings = user.perTransactionSettings;
+        if (user.spendRangeDays) {
+          dateDaysAgo = now
+            .subtract(user.spendRangeDays, "days")
+            .format("YYYY-MM-DD");
+        }
       }
       accounts.forEach(function (account) {
         ACCESS_TOKEN = account.accessToken;
         const institutionName = account.institutionName;
         accountPromises.push(
           client
-            .getTransactions(ACCESS_TOKEN, thirtyDaysAgo, today)
+            .getTransactions(ACCESS_TOKEN, dateDaysAgo, today)
             .then(
               (response) => {
                 let thisAccountTransactions = [];
