@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
@@ -10,8 +10,45 @@ import { currencyFormatter } from "../../utils/currencyFormatter.js";
 import { defaultCategoriesThisSpendRange } from "../../utils/waiwaiCategories.js";
 import { setTransactionSettings } from "../../actions/authActions.js";
 
+const createTableTransactions = (inputTransactions) => {
+  let transactionsData = [];
+  inputTransactions.forEach(function (account) {
+    account.transactions.forEach(function (transaction) {
+      const pushTransaction = {
+        update_id: transaction.transaction_id,
+        review_obj: {
+          id: transaction.transaction_id,
+          isReviewed: transaction.isReviewed,
+        },
+        duplicate_obj: {
+          id: transaction.transaction_id,
+          isDuplicate: transaction.isDuplicate,
+        },
+        account: account.accountName,
+        date: transaction.date,
+        category: transaction.category[0],
+        name: transaction.name,
+        amount: currencyFormatter.format(transaction.amount * -1),
+      };
+      transactionsData.push(pushTransaction);
+    });
+  });
+  return transactionsData;
+};
+
 const ManageTransactions = (props) => {
   const { getAccessTokenSilently } = useAuth0();
+  const [tableTransactions, setTransactions] = useState([]);
+  const { transactions } = props;
+
+  useEffect(() => {
+    // Note that we need to check if the budget was specifically set to 0
+    if (transactions && transactions.length) {
+      const transactionsData = createTableTransactions(transactions);
+      // We should cast propBudget to a string since the rest of the component assumes it is a string
+      setTransactions(transactionsData);
+    }
+  }, [transactions, setTransactions]);
 
   if (props.accountsLoading || props.transactionsLoading) {
     return <Loading />;
@@ -123,31 +160,6 @@ const ManageTransactions = (props) => {
     sortOrder: { name: "date", direction: "desc" },
   };
 
-  let transactionsData = [];
-  if (props.transactions) {
-    props.transactions.forEach(function (account) {
-      account.transactions.forEach(function (transaction) {
-        const pushTransaction = {
-          update_id: transaction.transaction_id,
-          review_obj: {
-            id: transaction.transaction_id,
-            isReviewed: transaction.isReviewed,
-          },
-          duplicate_obj: {
-            id: transaction.transaction_id,
-            isDuplicate: transaction.isDuplicate,
-          },
-          account: account.accountName,
-          date: transaction.date,
-          category: transaction.category[0],
-          name: transaction.name,
-          amount: currencyFormatter.format(transaction.amount * -1),
-        };
-        transactionsData.push(pushTransaction);
-      });
-    });
-  }
-
   return (
     <>
       <ColorHeader
@@ -172,7 +184,7 @@ const ManageTransactions = (props) => {
         <div className="container">
           <MUIDataTable
             title={"Manage Transactions"}
-            data={transactionsData}
+            data={tableTransactions}
             columns={transactionMUIColumns}
             options={optionsMUI}
           />
@@ -184,7 +196,6 @@ const ManageTransactions = (props) => {
 
 const mapStateToProps = (state) => ({
   transactions: state.plaid.transactions,
-  accounts: state.plaid.accounts,
   accountsLoading: state.plaid.accountsLoading,
   transactionsLoading: state.plaid.transactionsLoading,
 });
