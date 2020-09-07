@@ -11,6 +11,7 @@ const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const validateBudgetInput = require("../../validation/budget");
 const validateNewTransactionSettingsInput = require("../../validation/newTransactionSettings");
+const validateNewUserSettingInput = require("../../validation/newUserSetting");
 
 // Load User model
 const User = require("../../models/User");
@@ -198,6 +199,50 @@ router.post("/new-transaction-settings", checkJwt, (req, res) => {
           userId: reqUserId,
           perTransactionSettings: user.perTransactionSettings,
         });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+});
+
+// @route POST api/users/new-user-setting
+// @desc Set fields in user object
+// @access Private
+router.post("/new-user-setting", checkJwt, (req, res) => {
+  const reqUserId = req.user.sub;
+
+  // Form validation
+  const { errors, isValid } = validateNewUserSettingInput(req.body);
+
+  // Check validation
+  if (!isValid) {
+    console.log("NewUserSetting request not valid");
+    return res.status(400).json(errors);
+  }
+
+  const settingString = req.body.settingString;
+  const settingData = req.body.settingData;
+
+  findOrCreateUser(reqUserId).then((user) => {
+    // Is there a way to generalize something like this from Mongoose about field default?
+    // If it were a map we'd need to say user[settingString] = new Map();
+    /*if (!user[settingString]) {
+      user[settingString] = "";
+    }*/
+
+    // Not sure how to generalize something like handling setting a Map?
+    // if the setting were a map we'd have to say user[settingString].set(...etc)
+    user[settingString] = settingData[settingString];
+
+    user
+      .save()
+      .then((user) => {
+        const returnObj = {
+          userId: reqUserId,
+        };
+        returnObj[settingString] = settingData[settingString];
+        res.json(returnObj);
       })
       .catch((err) => {
         console.log(err);
