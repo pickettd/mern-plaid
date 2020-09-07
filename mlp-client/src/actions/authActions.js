@@ -1,7 +1,9 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import moment from "moment";
+
+// We only need moment if we are going to filter transactions frontend-side
+//import moment from "moment";
 
 import {
   GET_ERRORS,
