@@ -9,7 +9,7 @@ const SpendPlanRow = (props) => {
   const [budget, setBudget] = useState("");
   // The onBlur isn't working right now
   //const [activeRow, setActive] = useState(false);
-  const { category, budgets, saveUserBudget } = props;
+  const { category, saveUserBudget, propBudget } = props;
 
   const saveButton = () => {
     const budgetData = { name: category.name, payload: {} };
@@ -36,7 +36,7 @@ const SpendPlanRow = (props) => {
       //setActive(false);
     } else {
       // If the user clicked save but it wasn't a valid number, reset to redux state
-      setBudget(budgets[category.name]);
+      setBudget(propBudget);
     }
   };
 
@@ -67,10 +67,10 @@ const SpendPlanRow = (props) => {
   };*/
 
   useEffect(() => {
-    if (budgets && category && budgets[category.name]) {
-      setBudget(budgets[category.name]);
+    if (propBudget && category) {
+      setBudget(propBudget);
     }
-  }, [budgets, category, setBudget]);
+  }, [propBudget, category, setBudget]);
   /*if (
     props.category.bankName !== "Transfer" &&
     props.category.bankName !== "Payment"
@@ -112,8 +112,6 @@ const SpendPlanRow = (props) => {
   }*/
 };
 const mapStateToProps = (state) => ({
-  budgets: state.auth.budgets,
-  categoryMap: state.auth.categoryMap,
   spendingByCategory: state.plaid.spendingByCategory,
 });
 const mapDispatchToProps = { saveUserBudget };

@@ -320,6 +320,7 @@ const SpendPlan = (props) => {
                       <SpendPlanRow
                         key={category.name}
                         category={category}
+                        propBudget={budgets[category.name]}
                       ></SpendPlanRow>
                     );
                   })}
