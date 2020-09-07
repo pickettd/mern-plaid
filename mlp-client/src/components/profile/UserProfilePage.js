@@ -5,11 +5,15 @@ import ColorHeader from "../layout/ColorHeader";
 import { setDaysRange } from "../../actions/authActions";
 
 const UserProfilePage = (props) => {
+  const { user, getAccessTokenSilently } = useAuth0();
+  const { spendRangeDays } = props;
+
   const onClick = (number) => {
-    props.setDaysRange(number);
+    getAccessTokenSilently().then((accessToken) => {
+      props.setDaysRange(accessToken, number);
+    });
   };
 
-  const { user } = useAuth0();
   //const spendRangeDaysOptions = [7, 14, 30];
   return (
     <>
@@ -33,15 +37,30 @@ const UserProfilePage = (props) => {
           </div>
           <div className="row">
             <div className="col">
-              You are using this date range: {props.spendRangeDays} days
+              You are using this date range: {spendRangeDays} days
             </div>
           </div>
           <div className="row">
             <div className="col">
               Change your range:{" "}
-              <button onClick={() => onClick(30)}>30 days</button>
-              <button onClick={() => onClick(14)}>14 days</button>
-              <button onClick={() => onClick(7)}>7 days</button>
+              <button
+                disabled={spendRangeDays === 30 ? true : false}
+                onClick={() => onClick(30)}
+              >
+                30 days
+              </button>
+              <button
+                disabled={spendRangeDays === 14 ? true : false}
+                onClick={() => onClick(14)}
+              >
+                14 days
+              </button>
+              <button
+                disabled={spendRangeDays === 7 ? true : false}
+                onClick={() => onClick(7)}
+              >
+                7 days
+              </button>
             </div>
           </div>
           {/*<div>

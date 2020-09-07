@@ -18,6 +18,7 @@ import {
   updateSortedCategories,
   processTransactionList,
 } from "../utils/processTransactionList.js";
+import { getTransactions } from "./accountActions.js";
 
 const setAxiosAuth = (token) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -327,13 +328,30 @@ export const setCurrentUser = (decoded) => {
 };
 
 // Set logged in user budgets
-export const setDaysRange = (numberOfDays) => (dispatch, getState) => {
+export const setDaysRange = (accessToken, numberOfDays) => (
+  dispatch,
+  getState
+) => {
   const state = getState();
-  const oldTransactions = state.plaid.transactions;
-  const newTransactionList = [];
-  const momentToCheck = moment().subtract(numberOfDays, "days");
+  const accounts = state.plaid.accounts;
 
-  oldTransactions.forEach((account) => {
+  const settingString = "spendRangeDays";
+  const settingData = {};
+  settingData[settingString] = numberOfDays;
+  const postObject = {
+    settingString,
+    settingData,
+  };
+
+  // This commented out code works to reduce the transaction list on the frontend,
+  // (ie, you can go from 30 days to 14 days) but can't expand again after that
+  // So with it commented out - demos that are running without a frontend can't change date range
+  //-----------------------------------------------------------------------------
+  /*
+    const oldTransactions = state.plaid.transactions;
+    const newTransactionList = [];
+    const momentToCheck = moment().subtract(numberOfDays, "days");
+    oldTransactions.forEach((account) => {
     const newTransactions = account.transactions.filter((transaction) => {
       return moment(transaction.date).isAfter(momentToCheck);
     });
@@ -350,7 +368,32 @@ export const setDaysRange = (numberOfDays) => (dispatch, getState) => {
   dispatch({
     type: SET_SPEND_RANGE_DAYS_SELECTED,
     payload: numberOfDays,
-  });
+  });*/
+  //-----------------------------------------------------------------------------
+  if (accessToken) {
+    setAxiosAuth(accessToken);
+  }
+
+  axios
+    .post(`/api/users/new-user-setting`, postObject)
+    .then((res) => {
+      dispatch(getTransactions(accessToken, accounts));
+      dispatch({
+        type: SET_SPEND_RANGE_DAYS_SELECTED,
+        payload: numberOfDays,
+      });
+      return res;
+    })
+    .catch((err) => {
+      let toSend = err;
+      if (err.response) {
+        toSend = err.response.data;
+      }
+      dispatch({
+        type: GET_ERRORS,
+        payload: toSend,
+      });
+    });
 };
 
 // Set logged in user budgets
