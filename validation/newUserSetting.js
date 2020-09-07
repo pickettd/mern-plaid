@@ -11,12 +11,10 @@ module.exports = function validateNewUserSettingInput(data) {
   let inputSettingData = { ...data.settingData }.toString();
 
   // Convert empty fields to an empty string so we can use validator functions
-  inputSettingString = !isEmpty(data.inputSettingString)
-    ? data.inputSettingString
-    : "";
+  inputSettingString = !isEmpty(inputSettingString) ? inputSettingString : "";
   inputSettingData = !isEmpty(inputSettingData) ? inputSettingData : "";
   // Transaction ID check
-  if (Validator.isEmpty(data.inputSettingString)) {
+  if (Validator.isEmpty(inputSettingString)) {
     errors.inputSettingString = "Setting String field is required";
   }
   if (!validUserSettingStrings[inputSettingString]) {
