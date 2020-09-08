@@ -1,5 +1,6 @@
 .full-page {
-  height: 100vh;
+  height: 90vh;
+  padding-top: 10vh;
   width: 100vw;
   max-width: 100%;
   max-height: 100%;
@@ -22,6 +23,7 @@
   }
   &.mountain-background {
     background: url("../img/background-images/waiwai-background-header.svg");
+    background-color: theme-color("light-blue");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: bottom;

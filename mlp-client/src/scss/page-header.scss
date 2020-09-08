@@ -20,3 +20,9 @@ div.section-header-blue {
     color: white;
   }
 }
+div.section-TempHeader {
+  background-color: theme-color("light-blue");
+  h1 {
+    color: #444;
+  }
+}
