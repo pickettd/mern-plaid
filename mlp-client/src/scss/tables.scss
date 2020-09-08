@@ -26,8 +26,12 @@ table {
     &.secondary {
       border-color: theme-color("dark-green");
       border-width: 0px;
-      color: transparent;
-      background-color: white;
+      color: theme-color("dark-green");
+      background-color: transparent;
+      &:hover {
+        background-color: theme-color("dark-green");
+        color: #fff;
+      }
     }
   }
 }
