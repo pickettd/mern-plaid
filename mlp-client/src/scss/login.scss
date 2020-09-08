@@ -1,15 +1,14 @@
 .full-page {
-  height: 90vh;
-  padding-top: 10vh;
+  height: 100vh;
+
   width: 100vw;
   max-width: 100%;
   max-height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   .login-box {
     text-align: center;
-    margin-top: -10vh;
 
     .button-box {
       width: 350px;

@@ -15,7 +15,9 @@ a.active.dropdown-item {
 .dropdown:hover > .dropdown-menu {
   display: block;
 }
-
+.navbar-nav {
+  font-size: 0.9em;
+}
 .dropdown-item:hover {
   background-color: theme-color("dark-blue");
   color: white;

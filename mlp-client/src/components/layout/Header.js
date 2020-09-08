@@ -43,25 +43,24 @@ const Header = (props) => {
               </LinkContainer>*/}
 
                 <div className="mr-auto navbar-nav">
-                  {/*hover dropdown test*/}
+                  {/*hover dropdown test
                   <NavDropdown
                     renderMenuOnMount={true}
                     title="spend"
                     id="hover-nav-dropdown"
                     className="dropdown-menu-left"
-                  >
-                    <LinkContainer to="/spend-story">
-                      <NavDropdown.Item>spend story</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/manage-transactions">
-                      <NavDropdown.Item>view transactions</NavDropdown.Item>
-                    </LinkContainer>
-                    <LinkContainer to="/spend-plan">
-                      <NavDropdown.Item>manage spend plan</NavDropdown.Item>
-                    </LinkContainer>
-                  </NavDropdown>
+                  >*/}
+                  <LinkContainer to="/spend-story">
+                    <Nav.Link href="#">spend story</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/manage-transactions">
+                    <Nav.Link href="#">transactions</Nav.Link>
+                  </LinkContainer>
+                  <LinkContainer to="/spend-plan">
+                    <Nav.Link href="#">plan</Nav.Link>
+                  </LinkContainer>
 
-                  {/*hover dropdown test END*/}
+                  {/*Nav to add back in
 
                   <LinkContainer to="/save-story">
                     <Nav.Link href="#">save</Nav.Link>
@@ -71,7 +70,7 @@ const Header = (props) => {
                   </LinkContainer>
                   <LinkContainer to="/plan-story">
                     <Nav.Link href="#">plan</Nav.Link>
-                  </LinkContainer>
+                  </LinkContainer>*/}
                 </div>
                 <NavDropdown
                   title={name}

@@ -6,15 +6,14 @@ const Footer = () => {
     <footer>
       <div className="container">
         <div className="row">
-          <div className="mr-auto footer-nav">
-            <Link to="/spend-story">spend</Link>
-            <Link to="/save-story">save</Link>
-            <Link to="/borrow-story">borrow</Link>
-            <Link to="/plan-story">plan</Link>
+          <div className="m-auto footer-nav">
+            <Link to="/spend-story">spend story</Link>
+            <Link to="/manage-transactions">transactions</Link>
+            <Link to="/spend-plan">plan</Link>
           </div>
         </div>
 
-        <div className="row">
+        <div className="row text-center">
           <p className="col-sm">
             <small>
               &copy;{new Date().getFullYear()} WAIWAI | Ua kukulu ʻia i Hawaiʻi
