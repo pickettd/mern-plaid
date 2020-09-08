@@ -4,6 +4,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import MUIDataTable from "mui-datatables"; // https://github.com/gregnb/mui-datatables
 import { useAuth0 } from "@auth0/auth0-react";
+import { Redirect } from "react-router-dom";
 import Loading from "../../utils/loading.js";
 import ColorHeader from "../layout/ColorHeader.js";
 import { currencyFormatter } from "../../utils/currencyFormatter.js";
@@ -15,7 +16,10 @@ const createTableTransactions = (inputTransactions) => {
   inputTransactions.forEach(function (account) {
     account.transactions.forEach(function (transaction) {
       const pushTransaction = {
-        update_id: transaction.transaction_id,
+        update_obj: {
+          id: transaction.transaction_id,
+          name: transaction.category[0],
+        },
         review_obj: {
           id: transaction.transaction_id,
           isReviewed: transaction.isReviewed,
@@ -36,70 +40,70 @@ const createTableTransactions = (inputTransactions) => {
   return transactionsData;
 };
 
-const ManageTransactions = (props) => {
-  const { getAccessTokenSilently } = useAuth0();
-  const [tableTransactions, setTransactions] = useState([]);
-  const { transactions } = props;
+class RenderTable extends React.Component {
+  state = {
+    tableTransactions: [],
+    updatedOnce: false,
+  };
 
-  useEffect(() => {
-    // Note that we need to check if the budget was specifically set to 0
-    if (transactions && transactions.length) {
-      const transactionsData = createTableTransactions(transactions);
-      // We should cast propBudget to a string since the rest of the component assumes it is a string
-      setTransactions(transactionsData);
-    }
-  }, [transactions, setTransactions]);
-
-  if (props.accountsLoading || props.transactionsLoading) {
-    return <Loading />;
-  }
-  const onCategorySelect = (eventkey, event, update_id) => {
+  onCategorySelect = (eventkey, event, update_id, updateValue) => {
     const transactionPayload = {
       transactionID: update_id,
       newMainCategory: eventkey,
     };
-    getAccessTokenSilently().then((accessToken) => {
-      props.setTransactionSettings(accessToken, transactionPayload);
+    this.props.getAccessTokenSilently().then((accessToken) => {
+      this.props.setTransactionSettings(accessToken, transactionPayload);
     });
+    updateValue({ id: update_id, name: eventkey });
   };
-  const onReviewClick = (review_obj) => {
+  onReviewClick = (review_obj, updateValue) => {
     const transactionPayload = {
       transactionID: review_obj.id,
       newReviewedState: !review_obj.isReviewed,
     };
-    getAccessTokenSilently().then((accessToken) => {
-      props.setTransactionSettings(accessToken, transactionPayload);
+    this.props.getAccessTokenSilently().then((accessToken) => {
+      this.props.setTransactionSettings(accessToken, transactionPayload);
     });
+    updateValue({ id: review_obj.id, isReviewed: !review_obj.isReviewed });
   };
-  const onDuplicateClick = (duplicate_obj) => {
+  onDuplicateClick = (duplicate_obj, updateValue) => {
     const transactionPayload = {
       transactionID: duplicate_obj.id,
       newDuplicateState: !duplicate_obj.isDuplicate,
     };
-    getAccessTokenSilently().then((accessToken) => {
-      props.setTransactionSettings(accessToken, transactionPayload);
+    this.props.getAccessTokenSilently().then((accessToken) => {
+      this.props.setTransactionSettings(accessToken, transactionPayload);
+    });
+    updateValue({
+      id: duplicate_obj.id,
+      isDuplicate: !duplicate_obj.isDuplicate,
     });
   };
   // Setting up mui table
-  const transactionMUIColumns = [
+  transactionMUIColumns = [
     { label: "Date", name: "date" },
     { label: "Account", name: "account" },
     { label: "Name", name: "name" },
     { label: "Amount", name: "amount" },
-    { label: "Category", name: "category" },
     {
-      label: "Update",
-      name: "update_id",
+      label: "Category",
+      name: "update_obj",
       options: {
         filter: false,
-        customBodyRender: (dataValue) => {
+        customBodyRender: (dataValue, tableMeta, updateValue) => {
           return (
             <DropdownButton
+              disabled={tableMeta.rowData[6].isDuplicate ? true : false}
               onSelect={(eventkey, event) =>
-                onCategorySelect(eventkey, event, dataValue)
+                this.onCategorySelect(
+                  eventkey,
+                  event,
+                  dataValue.id,
+                  updateValue
+                )
               }
               id="category-dropdown"
-              title="Change Category"
+              title={dataValue.name}
             >
               {defaultCategoriesThisSpendRange.map((category) => {
                 return (
@@ -115,7 +119,6 @@ const ManageTransactions = (props) => {
               </Dropdown.Item>
             </DropdownButton>
           );
-          //return <button className="btn secondary">Change Category</button>;
         },
       },
     },
@@ -124,13 +127,16 @@ const ManageTransactions = (props) => {
       name: "review_obj",
       options: {
         filter: false,
-        customBodyRender: (dataValue) => {
+        customBodyRender: (dataValue, tableMeta, updateValue) => {
+          if (dataValue.isReviewed || tableMeta.rowData[6].isDuplicate) {
+            return <>&#x2713;</>;
+          }
           return (
             <button
-              onClick={() => onReviewClick(dataValue)}
+              onClick={() => this.onReviewClick(dataValue, updateValue)}
               className="btn secondary"
             >
-              {dataValue.isReviewed ? <>Done</> : <>&#x2713;</>}
+              &#x2713;
             </button>
           );
         },
@@ -141,24 +147,87 @@ const ManageTransactions = (props) => {
       name: "duplicate_obj",
       options: {
         filter: false,
-        customBodyRender: (dataValue) => {
+        customBodyRender: (dataValue, tableMeta, updateValue) => {
           return (
             <button
-              onClick={() => onDuplicateClick(dataValue)}
+              name={dataValue.isDuplicate ? "Dupe" : "None"}
+              onClick={() => this.onDuplicateClick(dataValue, updateValue)}
               className="btn secondary"
             >
-              {dataValue.isDuplicate ? <>Dupe</> : <>&#63;</>}
+              {dataValue.isDuplicate ? <>Undo</> : <>Ignore</>}
             </button>
           );
         },
       },
     },
   ];
-  const optionsMUI = {
-    filterType: "checkbox",
-    selectableRows: "none",
-    sortOrder: { name: "date", direction: "desc" },
-  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // We want to keep updating until we have transactions
+    if (this.state.tableTransactions.length === 0) {
+      return true;
+    }
+
+    // Once we have transactions, stop updating
+    return !this.state.updatedOnce;
+  }
+  componentDidUpdate() {
+    // This will set the set of new transactions from props
+    this.setState({
+      tableTransactions: this.props.tableTransactions,
+      updatedOnce: true,
+    });
+  }
+
+  render() {
+    if (this.state.tableTransactions.length === 0) {
+      return <Loading />;
+    }
+    return (
+      <MUIDataTable
+        title={"Manage Transactions"}
+        data={this.state.tableTransactions}
+        columns={this.transactionMUIColumns}
+        options={{
+          filterType: "checkbox",
+          selectableRows: "none",
+          sortOrder: { name: "date", direction: "desc" },
+          setRowProps: (row) => {
+            if (row[6].props.name === "Dupe") {
+              return {
+                style: { textDecoration: "line-through" },
+              };
+            }
+            return {};
+          },
+        }}
+      />
+    );
+  }
+}
+
+const ManageTransactions = (props) => {
+  const { getAccessTokenSilently } = useAuth0();
+  const [tableTransactions, setTransactions] = useState([]);
+  const { transactions, userFirstVisit } = props;
+
+  useEffect(() => {
+    if (transactions && transactions.length) {
+      const transactionsData = createTableTransactions(transactions);
+      setTransactions([...transactionsData]);
+    }
+  }, [transactions, setTransactions]);
+
+  if (userFirstVisit) {
+    return (
+      <div>
+        <Redirect to="/bank-accounts" />
+      </div>
+    );
+  }
+  if (props.accountsLoading || props.transactionsLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -182,11 +251,10 @@ const ManageTransactions = (props) => {
         </div>*/}
       <div className="section table-section">
         <div className="container">
-          <MUIDataTable
-            title={"Manage Transactions"}
-            data={tableTransactions}
-            columns={transactionMUIColumns}
-            options={optionsMUI}
+          <RenderTable
+            tableTransactions={createTableTransactions(transactions)}
+            getAccessTokenSilently={getAccessTokenSilently}
+            setTransactionSettings={props.setTransactionSettings}
           />
         </div>
       </div>
@@ -198,6 +266,7 @@ const mapStateToProps = (state) => ({
   transactions: state.plaid.transactions,
   accountsLoading: state.plaid.accountsLoading,
   transactionsLoading: state.plaid.transactionsLoading,
+  userFirstVisit: state.plaid.userFirstVisit,
 });
 const mapDispatchToProps = { setTransactionSettings };
 
