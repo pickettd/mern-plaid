@@ -41,7 +41,7 @@ const Routing = () => {
 
   return (
     <>
-      <Header />
+      {isAuthenticated ? <Header /> : <></>}
       {isAuthenticated && isLiveData ? <AccountBootstrap /> : <></>}
       <Switch>
         <Route exact path={process.env.PUBLIC_URL + "/"}>
@@ -60,7 +60,7 @@ const Routing = () => {
         <PrivateRoute path="/user-profile" component={UserProfilePage} />
         <PrivateRoute path="/bank-accounts" component={BankAccountsPage} />
       </Switch>
-      <Footer />
+      {isAuthenticated ? <Footer /> : <></>}
     </>
   );
 };
