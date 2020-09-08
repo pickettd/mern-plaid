@@ -1,6 +1,9 @@
 table.table,
 table {
   font-size: 0.9rem;
+  .jss5 {
+    overflow: visible;
+  }
   thead {
     th {
       font-size: 0.75rem;
@@ -22,8 +25,8 @@ table {
     margin-top: 0;
     &.secondary {
       border-color: theme-color("dark-green");
-      border-width: 1px;
-      color: theme-color("dark-green");
+      border-width: 0px;
+      color: transparent;
       background-color: white;
     }
   }
