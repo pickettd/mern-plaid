@@ -41,10 +41,14 @@ const createTableTransactions = (inputTransactions) => {
 };
 
 class RenderTable extends React.Component {
-  state = {
-    tableTransactions: [],
-    updatedOnce: false,
-  };
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = {
+      tableTransactions: [],
+      updatedOnce: false,
+    };
+  }
 
   onCategorySelect = (eventkey, event, update_id, updateValue) => {
     const transactionPayload = {
@@ -177,10 +181,17 @@ class RenderTable extends React.Component {
   }
   componentDidUpdate() {
     // This will set the set of new transactions from props
-    this.setState({
-      tableTransactions: this.props.tableTransactions,
-      updatedOnce: true,
-    });
+    // And we only want to set state once
+    // Note that when we are navigating from another page the html will create a fresh component
+    if (
+      this.props.tableTransactions.length &&
+      this.state.tableTransactions.length === 0
+    ) {
+      this.setState({
+        tableTransactions: this.props.tableTransactions,
+        updatedOnce: true,
+      });
+    }
   }
 
   render() {
@@ -228,9 +239,6 @@ const ManageTransactions = (props) => {
         <Redirect to="/bank-accounts" />
       </div>
     );
-  }
-  if (props.accountsLoading || props.transactionsLoading) {
-    return <Loading />;
   }
 
   return (
