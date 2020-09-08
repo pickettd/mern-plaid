@@ -93,7 +93,11 @@ class RenderTable extends React.Component {
         customBodyRender: (dataValue, tableMeta, updateValue) => {
           return (
             <DropdownButton
-              disabled={tableMeta.rowData[6].isDuplicate ? true : false}
+              disabled={
+                tableMeta.rowData[6] && tableMeta.rowData[6].isDuplicate
+                  ? true
+                  : false
+              }
               onSelect={(eventkey, event) =>
                 this.onCategorySelect(
                   eventkey,
