@@ -218,7 +218,7 @@ const ManageTransactions = (props) => {
     }
   }, [transactions, setTransactions]);
 
-  if (userFirstVisit) {
+  if (userFirstVisit && !tableTransactions.length) {
     return (
       <div>
         <Redirect to="/bank-accounts" />
