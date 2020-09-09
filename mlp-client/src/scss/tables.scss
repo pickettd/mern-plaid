@@ -4,12 +4,28 @@ table {
   .jss5 {
     overflow: visible;
   }
+  tr.reviewed {
+    background: theme-color("light-green");
+    td:nth-child(6) div:nth-child(2) {
+      background: theme-color("green");
+      color: white;
+    }
+    tr.duplicate {
+      background: #f6f6f6;
+      td div {
+        color: #999;
+      }
+    }
+  }
   thead {
     th {
       font-size: 0.75rem;
       font-weight: bold;
       border-top: 0 solid transparent;
       border-bottom: 0 solid transparent;
+      .MuiTableSortLabel-root.MuiTableSortLabel-active {
+        margin-top: 7px;
+      }
     }
   }
   td {
@@ -26,6 +42,7 @@ table {
         background: theme-color("light-blue");
       }
     }
+
     button.btn.save {
       border-radius: 0;
       margin-left: 0.5em;

@@ -33,8 +33,8 @@ const SpendPlan = (props) => {
   return (
     <>
       <ColorHeader
-        mainHeaderText="Spend Plan"
-        subHeaderText="Add your income and budget"
+        mainHeaderText="Plan"
+        subHeaderText="Hoʻoulu. What are you giving your waiwai to?"
         colorClassName="section-header-blue"
       />
       <div className="section">
