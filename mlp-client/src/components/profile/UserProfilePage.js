@@ -19,55 +19,47 @@ const UserProfilePage = (props) => {
     <>
       <ColorHeader
         mainHeaderText="Profile"
-        subHeaderText=""
-        colorClassName="section-header-green"
+        subHeaderText="Manage your account"
+        colorClassName="section-header-blue"
       />
       <div className="section">
         <div className="container">
           <div className="row">
-            <div className="col">
+            <div className="col-sm-4">
               <img className="profile-pic" src={user.picture} alt={user.name} />
             </div>
-          </div>
-          <div className="row">
-            <div className="col">
+
+            <div className="offset-sm-1 col-sm-4">
               <label>Name:</label> {user.name}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
               <label>Email:</label> {user.email}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col">
               <label>You are using this date range:</label> {spendRangeDays}{" "}
               days
+              <div className="row">
+                <div className="col">
+                  <label>Change your range:</label>{" "}
+                  <button
+                    disabled={spendRangeDays === 30 ? true : false}
+                    onClick={() => onClick(30)}
+                  >
+                    30 days
+                  </button>
+                  <button
+                    disabled={spendRangeDays === 14 ? true : false}
+                    onClick={() => onClick(14)}
+                  >
+                    14 days
+                  </button>
+                  <button
+                    disabled={spendRangeDays === 7 ? true : false}
+                    onClick={() => onClick(7)}
+                  >
+                    7 days
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              Change your range:{" "}
-              <button
-                disabled={spendRangeDays === 30 ? true : false}
-                onClick={() => onClick(30)}
-              >
-                30 days
-              </button>
-              <button
-                disabled={spendRangeDays === 14 ? true : false}
-                onClick={() => onClick(14)}
-              >
-                14 days
-              </button>
-              <button
-                disabled={spendRangeDays === 7 ? true : false}
-                onClick={() => onClick(7)}
-              >
-                7 days
-              </button>
-            </div>
-          </div>
+
           {/*<div>
             <div className="form-group">
               <select

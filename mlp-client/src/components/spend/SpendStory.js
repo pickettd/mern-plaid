@@ -113,7 +113,7 @@ class SpendStory extends Component {
                       </h3>
                     </div>
                     <div className="row">
-                      <Link to="/spend-plan" className="btn">
+                      <Link to="/spend-plan" className="btn blue">
                         manage spend plan
                       </Link>
                     </div>

@@ -10,7 +10,7 @@
   }
 }
 a.active.dropdown-item {
-  background: theme-color("dark-blue");
+  background: theme-color("primary");
 }
 .dropdown:hover > .dropdown-menu {
   display: block;
@@ -19,6 +19,6 @@ a.active.dropdown-item {
   font-size: 0.9em;
 }
 .dropdown-item:hover {
-  background-color: theme-color("dark-blue");
+  background-color: theme-color("green");
   color: white;
 }
