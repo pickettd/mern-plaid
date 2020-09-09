@@ -1,7 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Loading from "../../utils/loading.js";
 import { PlaidButton, DeleteAccountButton } from "../../utils/plaidButton.js";
 import ColorHeader from "../layout/ColorHeader";
+import Orientation from "./Orientation.js";
 
 const BankAccountsPage = (props) => {
   const listAccounts = props.accounts.map((account, i) => {
@@ -26,7 +29,11 @@ const BankAccountsPage = (props) => {
     <div className="row">
       <div className="col">
         <PlaidButton
-          buttonText="Connect a new bank account"
+          buttonText={
+            props.userFirstVisit
+              ? "Connect your bank account"
+              : "Connect another bank account"
+          }
           existingAccount={null}
         />
       </div>
@@ -36,17 +43,32 @@ const BankAccountsPage = (props) => {
   return (
     <>
       <ColorHeader
-        mainHeaderText="Bank Accounts"
+        mainHeaderText={
+          props.userFirstVisit ? "First Time Here?" : "Bank Accounts"
+        }
         subHeaderText=""
         colorClassName="section-header-blue"
       />
       <div className="section">
         <div className="container">
-          <div className="row">
-            <div className="col"></div>
-          </div>
+          {props.userFirstVisit ? <Orientation /> : <></>}
           {props.accountsLoading ? <></> : listAccounts}
           {addButton}
+          <br />
+          <div className="row">
+            <div className="col">
+              {props.transactionsLoading ? <Loading /> : <></>}
+              {!props.userFirstVisit && !props.transactionsLoading ? (
+                <>
+                  <Link to="manage-transactions">Review Transactions</Link>
+                  <br />
+                  <Link to="spend-plan">Manage My Plan</Link>
+                </>
+              ) : (
+                <></>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -56,6 +78,8 @@ const BankAccountsPage = (props) => {
 const mapStateToProps = (state) => ({
   accounts: state.plaid.accounts,
   accountsLoading: state.plaid.accountsLoading,
+  transactionsLoading: state.plaid.transactionsLoading,
+  userFirstVisit: state.plaid.userFirstVisit,
 });
 const mapDispatchToProps = {};
 
