@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Form from "react-bootstrap/Form";
+//import { Link } from "react-router-dom";
+//import Form from "react-bootstrap/Form";
 
 const checkboxInstructions = [
   "Link your bank account (or more than one)",
   "Review transactions",
-  "Set your budget",
+  "Setup your plan",
 ];
 
 const Orientation = () => {
@@ -31,13 +31,18 @@ const Orientation = () => {
           Waiwai was built to help you, but we need your help. Here’s a check
           list of three things that you need to do to get going right away:
         </p>
-        <Form>
+        {/*<Form>
           {checkboxInstructions.map((text) => (
             <div key={text} className="mb-3">
               <Form.Check type="checkbox" label={text} />
             </div>
           ))}
-        </Form>
+        </Form>*/}
+        <ul>
+          {checkboxInstructions.map((text) => (
+            <li key={text}>{text}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );
