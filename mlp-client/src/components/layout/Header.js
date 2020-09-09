@@ -83,6 +83,9 @@ const Header = (props) => {
                   <LinkContainer to="/bank-accounts">
                     <NavDropdown.Item href="#">Bank Accounts</NavDropdown.Item>
                   </LinkContainer>
+                  <LinkContainer to="/orientation">
+                    <NavDropdown.Item href="#">Help</NavDropdown.Item>
+                  </LinkContainer>
                   <NavDropdown.Item className="notButton" href="#">
                     <LogoutButton />
                   </NavDropdown.Item>

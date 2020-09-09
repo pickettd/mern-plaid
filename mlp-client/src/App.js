@@ -22,6 +22,7 @@ import BankAccountsPage from "./components/profile/BankAccountsPage.js";
 import UserProfilePage from "./components/profile/UserProfilePage.js";
 import rootReducer from "./reducers";
 import AccountBootstrap from "./components/layout/TransactionBootstrap.js";
+import Orientation from "./components/profile/Orientation.js";
 
 const store = configureStore({
   reducer: rootReducer,
@@ -59,6 +60,7 @@ const Routing = () => {
         />
         <PrivateRoute path="/user-profile" component={UserProfilePage} />
         <PrivateRoute path="/bank-accounts" component={BankAccountsPage} />
+        <PrivateRoute path="/orientation" component={Orientation} />
       </Switch>
       {isAuthenticated ? <Footer /> : <></>}
     </>
