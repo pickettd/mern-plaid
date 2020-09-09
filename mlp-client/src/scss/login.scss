@@ -7,6 +7,10 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
+  &.spinner {
+    align-items: center;
+    background: theme-color("light-blue");
+  }
   .login-box {
     text-align: center;
 
