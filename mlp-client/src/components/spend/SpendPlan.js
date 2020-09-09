@@ -155,8 +155,8 @@ const SpendPlan = (props) => {
   return (
     <>
       <ColorHeader
-        mainHeaderText="Spend"
-        subHeaderText="Plan"
+        mainHeaderText="Spend Plan"
+        subHeaderText="Add your income and budget"
         colorClassName="section-header-blue"
       />
       <div className="section">

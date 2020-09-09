@@ -10,8 +10,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 700;
+  font-family: "proxima-nova", sans-serif;
+  font-weight: 900;
 }
 .small {
   font-size: 45%;
@@ -22,9 +22,14 @@ h6,
   }
 }
 body {
-  font-family: "Montserrat", sans-serif;
+  font-family: "proxima-nova", sans-serif;
 }
 h1,
 .h1 {
   font-size: 305%;
+}
+table {
+  .MuiTableCell-root {
+    font-family: "proxima-nova-condensed", sans-serf;
+  }
 }

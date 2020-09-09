@@ -26,18 +26,23 @@ const UserProfilePage = (props) => {
         <div className="container">
           <div className="row">
             <div className="col">
-              <img src={user.picture} alt={user.name} />
+              <img className="profile-pic" src={user.picture} alt={user.name} />
             </div>
           </div>
           <div className="row">
-            <div className="col">Name: {user.name}</div>
-          </div>
-          <div className="row">
-            <div className="col">Email: {user.email}</div>
+            <div className="col">
+              <label>Name:</label> {user.name}
+            </div>
           </div>
           <div className="row">
             <div className="col">
-              You are using this date range: {spendRangeDays} days
+              <label>Email:</label> {user.email}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <label>You are using this date range:</label> {spendRangeDays}{" "}
+              days
             </div>
           </div>
           <div className="row">
@@ -86,7 +91,7 @@ const UserProfilePage = (props) => {
             </div>
           </div>
           <div>
-            
+
             <button onClick={() => onClick(14)}>14 days</button>
             <button onClick={() => onClick(7)}>7 days</button>
           </div>*/}

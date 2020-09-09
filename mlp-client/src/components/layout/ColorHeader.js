@@ -7,7 +7,7 @@ const ColorHeader = (props) => {
       <div className={"section " + props.colorClassName}>
         <div className="container">
           <div className="row">
-            <div className="col-md-6 col-sm-6 offset-sm-3 justify-content-center text-center">
+            <div className="col">
               <h1>
                 {props.mainHeaderText}
                 <br />

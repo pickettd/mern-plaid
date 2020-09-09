@@ -1,23 +1,25 @@
 div.section-header-green {
-  background: url("../img/background-images/green-header.svg");
-  padding: 10% 0 10%;
+  background: theme-color("light-green");
+  padding: 3% 0;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   margin-top: 0;
   h1 {
-    color: white;
+    color: #444;
+    font-size: 2.25em;
   }
 }
 div.section-header-blue {
-  background: url("../img/background-images/blue-header.svg");
-  padding: 10% 0 10%;
+  background: theme-color("light-blue");
+  padding: 3% 0;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   margin-top: 0;
   h1 {
-    color: white;
+    color: #444;
+    font-size: 2.25em;
   }
 }
 div.section-TempHeader {

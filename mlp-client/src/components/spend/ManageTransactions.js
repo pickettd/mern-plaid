@@ -244,8 +244,8 @@ const ManageTransactions = (props) => {
   return (
     <>
       <ColorHeader
-        mainHeaderText="Transaction"
-        subHeaderText="History"
+        mainHeaderText="Transaction History"
+        subHeaderText="Categorize all your transactions"
         colorClassName="section-header-green"
       />
       {/* Commenting this out because in this version we won't have need/want/save */}
