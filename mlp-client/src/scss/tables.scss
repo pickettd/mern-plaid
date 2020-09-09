@@ -18,6 +18,23 @@ table {
       border-bottom: 1px solid #d8d8d8;
       height: 2em;
     }
+    input.save-focus {
+      border: 1px solid #d8d8d8;
+      padding: 0 0.5em;
+      &:focus {
+        border-color: theme-color("dark-blue");
+        background: theme-color("light-blue");
+      }
+    }
+    button.btn.save {
+      border-radius: 0;
+      margin-left: 0.5em;
+    }
+  }
+  button.dropdown-toggle.btn.btn-primary {
+    border: 1px solid #444;
+    background: #fff;
+    color: #444;
   }
   button.btn {
     padding: 0.25rem 0.5rem;
