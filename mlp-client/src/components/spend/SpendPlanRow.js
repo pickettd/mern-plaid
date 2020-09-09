@@ -4,12 +4,30 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { saveUserBudget } from "../../actions/authActions";
 
+// Note that currently we get a category from plaid called "Income"
+// Transactions that have just the category of "Income" are counted towards other income
+// In the manage transaction page, we show "Income" to the user as "Income - Other"
+// And we give the option to the user to recategorize as "Income - Paycheck"
+const payIncomeString = "Income - Paycheck";
+const payIncomeDisplay = "Paycheck Total";
+const otherIncomeString = "Income";
+const otherIncomeDisplay = "Other Income Total";
+
 const SpendPlanRow = (props) => {
   const { getAccessTokenSilently } = useAuth0();
   const [budget, setBudget] = useState("");
   // The onBlur isn't working right now
   const [activeRow, setActive] = useState(false);
   const { category, saveUserBudget, propBudget } = props;
+
+  let displayCategoryName = "";
+  if (props.category.name === otherIncomeString) {
+    displayCategoryName = otherIncomeDisplay;
+  } else if (props.category.name === payIncomeString) {
+    displayCategoryName = payIncomeDisplay;
+  } else {
+    displayCategoryName = props.category.name;
+  }
 
   const saveButton = () => {
     const budgetData = { name: category.name, payload: {} };
@@ -65,7 +83,7 @@ const SpendPlanRow = (props) => {
   ) {*/
   return (
     <tr>
-      <td>{props.category.name}</td>
+      <td>{displayCategoryName}</td>
       <td></td>
       <td>
         {/* This is a controlled input
