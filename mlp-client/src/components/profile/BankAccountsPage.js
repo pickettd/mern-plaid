@@ -57,7 +57,11 @@ const BankAccountsPage = (props) => {
           <br />
           <div className="row">
             <div className="col">
-              {props.transactionsLoading ? <Loading /> : <></>}
+              {!props.userFirstVisit && props.transactionsLoading ? (
+                <Loading />
+              ) : (
+                <></>
+              )}
               {!props.userFirstVisit && !props.transactionsLoading ? (
                 <>
                   <Link to="manage-transactions">Review Transactions</Link>
