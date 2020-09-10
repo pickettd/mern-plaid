@@ -7,14 +7,14 @@ table {
   tr.reviewed {
     background: theme-color("light-green");
     td:nth-child(6) div:nth-child(2) {
-      background: theme-color("green");
-      color: white;
+      color: theme-color("green");
     }
   }
   tr.duplicate {
     background: #f6f6f6;
     td div {
       color: #999;
+      text-decoration: line-through;
     }
   }
   thead {
@@ -71,4 +71,10 @@ table {
 }
 .MuiPaper-root.MUIDataTable-paper-2.undefined.MuiPaper-elevation4.MuiPaper-rounded {
   box-shadow: 0 0 0 0;
+}
+.MuiTableRow-root.MuiTableRow-hover:hover {
+  background-color: transparent;
+  &.reviewed {
+    background-color: theme-color("light-green");
+  }
 }
