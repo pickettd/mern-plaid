@@ -222,12 +222,15 @@ class RenderTable extends React.Component {
     if (this.state.tableTransactions.length === 0) {
       return <Loading />;
     }
+    // Note that the ability to filter and ability to show/hide columns is turned off for now
     return (
       <MUIDataTable
         title={"Manage Transactions"}
         data={this.state.tableTransactions}
         columns={this.transactionMUIColumns}
         options={{
+          filter: false,
+          viewColumns: false,
           filterType: "checkbox",
           selectableRows: "none",
           sortOrder: { name: "date", direction: "desc" },
