@@ -85,15 +85,23 @@ class RenderTable extends React.Component {
   };
   // Setting up mui table
   transactionMUIColumns = [
-    { label: "Date", name: "date" },
+    { label: "Date", name: "date", options: { filter: false } },
     { label: "Account", name: "account" },
-    { label: "Name", name: "name" },
-    { label: "Amount", name: "amount" },
+    { label: "Name", name: "name", options: { filter: false } },
+    { label: "Amount", name: "amount", options: { filter: false } },
     {
       label: "Category",
       name: "update_obj",
       options: {
         filter: false,
+        sortCompare: (order) => {
+          return (obj1, obj2) => {
+            let val1 = obj1.data.name;
+            let val2 = obj2.data.name;
+            // localeCompare compares 2 strings and returns an int for their sort order
+            return val1.localeCompare(val2) * (order === "asc" ? 1 : -1);
+          };
+        },
         customBodyRender: (dataValue, tableMeta, updateValue) => {
           return (
             <DropdownButton
@@ -135,6 +143,14 @@ class RenderTable extends React.Component {
       name: "review_obj",
       options: {
         filter: false,
+        sortCompare: (order) => {
+          return (obj1, obj2) => {
+            // Coerce the boolean to int to sort
+            let val1 = obj1.data.isReviewed + 0;
+            let val2 = obj2.data.isReviewed + 0;
+            return (val1 - val2) * (order === "asc" ? 1 : -1);
+          };
+        },
         customBodyRender: (dataValue, tableMeta, updateValue) => {
           if (dataValue.isReviewed || tableMeta.rowData[6].isDuplicate) {
             return <>&#x2713;</>;
@@ -155,6 +171,14 @@ class RenderTable extends React.Component {
       name: "duplicate_obj",
       options: {
         filter: false,
+        sortCompare: (order) => {
+          return (obj1, obj2) => {
+            // Coerce the boolean to int to sort
+            let val1 = obj1.data.isDuplicate + 0;
+            let val2 = obj2.data.isDuplicate + 0;
+            return (val1 - val2) * (order === "asc" ? 1 : -1);
+          };
+        },
         customBodyRender: (dataValue, tableMeta, updateValue) => {
           return (
             <button
@@ -207,6 +231,7 @@ class RenderTable extends React.Component {
           filterType: "checkbox",
           selectableRows: "none",
           sortOrder: { name: "date", direction: "desc" },
+          rowsPerPage: 100,
           setRowProps: (row) => {
             if (row[6].props.name === "Dupe") {
               return {
