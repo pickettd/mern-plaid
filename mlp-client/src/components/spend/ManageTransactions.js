@@ -153,7 +153,11 @@ class RenderTable extends React.Component {
         },
         customBodyRender: (dataValue, tableMeta, updateValue) => {
           if (dataValue.isReviewed || tableMeta.rowData[6].isDuplicate) {
-            return <>&#x2713;</>;
+            return (
+              <span name={dataValue.isReviewed ? "Reviewed" : "None"}>
+                &#x2713;
+              </span>
+            );
           }
           return (
             <button
@@ -236,9 +240,16 @@ class RenderTable extends React.Component {
           sortOrder: { name: "date", direction: "desc" },
           rowsPerPage: 100,
           setRowProps: (row) => {
+            let returnClass = "";
             if (row[6].props.name === "Dupe") {
+              returnClass += "duplicate";
+            }
+            if (row[5].props.name === "Reviewed") {
+              returnClass += " reviewed";
+            }
+            if (returnClass !== "") {
               return {
-                style: { textDecoration: "line-through" },
+                className: returnClass,
               };
             }
             return {};
