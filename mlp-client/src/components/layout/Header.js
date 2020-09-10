@@ -6,7 +6,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useAuth0 } from "@auth0/auth0-react";
-import Logo from "../../img/waiwai-logo.svg";
+import Logo from "../../img/waiwai-logo2.svg";
 import LogoutButton from "../../components/profile/LogoutButton.js";
 
 const Header = (props) => {
