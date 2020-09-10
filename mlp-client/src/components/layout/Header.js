@@ -25,7 +25,7 @@ const Header = (props) => {
                 height="30"
                 className="d-inline-block align-top"
               />
-              Waiwai
+              &nbsp;<span class="logo">waiwai</span>
             </Navbar.Brand>
           </NavItem>
         </LinkContainer>

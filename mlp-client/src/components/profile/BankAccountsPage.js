@@ -47,7 +47,7 @@ const BankAccountsPage = (props) => {
           props.userFirstVisit ? "First Time Here?" : "Bank Accounts"
         }
         subHeaderText=""
-        colorClassName="section-header-blue"
+        colorClassName="section-header-green"
       />
       <div className="section">
         <div className="container">

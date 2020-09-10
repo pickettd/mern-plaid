@@ -20,7 +20,7 @@ const UserProfilePage = (props) => {
       <ColorHeader
         mainHeaderText="Profile"
         subHeaderText="Manage your account"
-        colorClassName="section-header-blue"
+        colorClassName="section-header-green"
       />
       <div className="section">
         <div className="container">

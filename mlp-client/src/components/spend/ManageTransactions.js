@@ -285,7 +285,7 @@ const ManageTransactions = (props) => {
       <ColorHeader
         mainHeaderText="Transactions"
         subHeaderText="Mālama. Huli ka lima i lalo."
-        colorClassName="section-header-blue"
+        colorClassName="section-header-green"
       />
       {/* Commenting this out because in this version we won't have need/want/save */}
       {/*<div className="section section-donuts">

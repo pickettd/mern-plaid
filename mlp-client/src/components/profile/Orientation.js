@@ -15,7 +15,7 @@ const Orientation = () => {
       <ColorHeader
         mainHeaderText="How to use"
         subHeaderText="Get the most out of Waiwai"
-        colorClassName="section-header-blue"
+        colorClassName="section-header-green"
       />
       <div className="section">
         <div className="container">
