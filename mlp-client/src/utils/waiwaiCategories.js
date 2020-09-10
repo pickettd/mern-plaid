@@ -1,5 +1,9 @@
 export const defaultCategoriesThisSpendRange = [
   {
+    x: 11,
+    name: "Savings",
+  },
+  {
     x: 1,
     name: "Housing",
   },
@@ -38,10 +42,6 @@ export const defaultCategoriesThisSpendRange = [
   {
     x: 10,
     name: "Entertainment",
-  },
-  {
-    x: 11,
-    name: "Savings",
   },
   {
     x: 12,
