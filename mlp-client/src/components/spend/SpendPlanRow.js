@@ -18,7 +18,18 @@ const SpendPlanRow = (props) => {
   const [budget, setBudget] = useState("");
   // The onBlur isn't working right now
   const [activeRow, setActive] = useState(false);
-  const { category, saveUserBudget, propBudget } = props;
+  const { category, saveUserBudget, propBudget, spendingByCategory } = props;
+
+  // We don't use the prop directly because it might not be defined
+  let actualValue = 0;
+  if (
+    spendingByCategory &&
+    category &&
+    category.name &&
+    spendingByCategory[category.name]
+  ) {
+    actualValue = spendingByCategory[category.name];
+  }
 
   let displayCategoryName = "";
   if (props.category.name === otherIncomeString) {
@@ -104,11 +115,7 @@ const SpendPlanRow = (props) => {
           Save
         </button>
       </td>
-      <td>
-        {currencyFormatter.format(
-          props.spendingByCategory[props.category.name]
-        )}
-      </td>
+      <td>{currencyFormatter.format(actualValue)}</td>
     </tr>
   );
   /*} else {
