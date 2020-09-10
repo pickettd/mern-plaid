@@ -212,7 +212,7 @@ class SpendStory extends Component {
             <div className="container">
               <div className="row mt-5">
                 <div className="col-md-6 offset-md-1">
-                  <h2 className="large-number">
+                  <h2 className="large-number surplus">
                     <span className="small top">Surplus</span>
                     <br />
                     {noDecimalCurrencyFormatter.format(

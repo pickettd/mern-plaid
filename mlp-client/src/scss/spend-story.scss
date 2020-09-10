@@ -21,7 +21,7 @@ div.section-spending-plan {
 }
 div.section-spend-plan-footer {
   background: url("../img/background-images/waiwai-savings-footer.svg");
-  padding: 10% 0 15%;
+  padding: 15% 0 10%;
   margin-top: -10%;
   margin-bottom: -3%;
   background-repeat: no-repeat;
@@ -75,6 +75,9 @@ h1.large-number,
 h3.large-number,
 h2.large-number {
   font-size: 3rem;
+}
+.large-number.surplus {
+  font-size: 5rem;
 }
 .darktext {
   color: #444;
