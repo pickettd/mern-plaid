@@ -120,6 +120,9 @@ module.exports = function translatePlaidCategoriesToWaiwai(plaidCategories) {
       optionalPlaidSubCategory
     );
     returnCategories = [mainWaiwaiCategory, optionalPlaidSubCategory];
+  } else {
+    // In case Plaid doesn't give us categories for some reason
+    returnCategories = ["Personal"];
   }
   return returnCategories;
 };

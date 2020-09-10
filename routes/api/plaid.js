@@ -182,7 +182,10 @@ router.post("/accounts/transactions", checkJwt, (req, res) => {
                       transactionID
                     );
                   }
-                  transaction.plaid_categories = [...transaction.category];
+                  transaction.plaid_categories = [];
+                  if (transaction.category && transaction.category.length) {
+                    transaction.plaid_categories = [...transaction.category];
+                  }
                   transaction.waiwai_categories = translatePlaidCategoriesToWaiwai(
                     transaction.plaid_categories
                   );
