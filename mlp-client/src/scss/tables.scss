@@ -10,11 +10,11 @@ table {
       background: theme-color("green");
       color: white;
     }
-    tr.duplicate {
-      background: #f6f6f6;
-      td div {
-        color: #999;
-      }
+  }
+  tr.duplicate {
+    background: #f6f6f6;
+    td div {
+      color: #999;
     }
   }
   thead {
