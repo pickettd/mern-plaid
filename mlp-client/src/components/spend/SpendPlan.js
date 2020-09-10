@@ -34,7 +34,7 @@ const SpendPlan = (props) => {
     <>
       <ColorHeader
         mainHeaderText="Plan"
-        subHeaderText="Hoʻoulu. What are you giving your waiwai to?"
+        subHeaderText="Kilo. To kilo means to star gaze. It also means to watch closely, observe and examine. Kilo is an important practice for mahi ʻai, lawaiʻa, and navigators. Here you can kilo your expenses for the month, examine where to assign kuleana to ensure waiwai. Comment end  "
         colorClassName="section-header-green"
       />
       <div className="section">
