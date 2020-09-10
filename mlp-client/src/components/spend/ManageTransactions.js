@@ -284,7 +284,7 @@ const ManageTransactions = (props) => {
     <>
       <ColorHeader
         mainHeaderText="Transactions"
-        subHeaderText="Mālama. Huli ka lima i lalo."
+        subHeaderText="Mālama. Huli ka lima i lalo. Like mahi ʻai who tended the loʻi, removing weeds, checking ʻauwai to ensure the wai was moving, here is where you can review and categorize your transactions to mālama waiwai."
         colorClassName="section-header-green"
       />
       {/* Commenting this out because in this version we won't have need/want/save */}
