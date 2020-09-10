@@ -13,7 +13,7 @@ const HomePage = (props) => {
   return (
     <div className="full-page mountain-background">
       <div className="login-box  p-5">
-        <h1>Mālama Wai. Ho'oulu Waiwai</h1>
+        <h1>Mālama Wai. Ho'oulu Waiwai.</h1>
         <p>Manage your financial resources. Grow waiwai.</p>
         <p>To login or signup, please enter your beta invite code:</p>
         <input
