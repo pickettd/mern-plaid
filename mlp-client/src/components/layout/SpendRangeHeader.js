@@ -8,7 +8,7 @@ const SpendRangeHeader = (props) => {
       <div className="section section-header-generic">
         <div className="container">
           <div className="row">
-            <div className="col-md-6 col-sm-6 offset-sm-3 justify-content-center text-center">
+            <div className="col justify-content-center text-center">
               <h1>
                 {props.mainHeaderText}
                 <br />
