@@ -9,6 +9,9 @@ footer {
   .footer-nav {
     a {
       padding: 1em 1.5em;
+      &:hover {
+        color: white;
+      }
     }
   }
   p {
